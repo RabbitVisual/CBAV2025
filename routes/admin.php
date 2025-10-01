@@ -2,42 +2,42 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
-    DashboardController as AdminDashboardController,
-    PeopleDashboardController,
-    ReportController,
-    MemberController,
-    UserController,
-    MinistryController,
-    DepartmentController,
-    CargoController,
     BirthdayController,
-    FinanceController,
-    SystemController,
-    DevocionalController,
+    CargoController,
+    CepController,
+    ChatController,
     ConselhoController,
-    ProfileController as AdminProfileController,
-    PermissionController,
+    DashboardController as AdminDashboardController,
+    DepartmentController,
+    DevocionalController,
+    DocumentoBaixaController,
+    DocumentoDeclaracaoAnualController,
+    EbdAlunoController,
+    EbdAulaController,
+    EbdAvaliacaoController,
+    EbdAvaliacaoGrupoController,
+    EbdCertificadoController,
+    EBD\GruposEstudoController as AdminEbdGruposEstudoController,
+    EbdLicaoController,
+    EbdProfessorController,
+    EbdQuizBiblicoController,
+    EbdQuestaoController,
+    EbdRelatorioController,
+    EbdTurmaController,
     EventoController,
     EventoInscricaoController,
-    ChatController,
-    CepController,
+    FinanceController,
     IntercessorController,
-    DocumentoBaixaController,
-    DocumentoDeclaracaoAnualController
+    MemberController,
+    MinistryController,
+    PeopleDashboardController,
+    PermissionController,
+    ProfileController as AdminProfileController,
+    ReportController,
+    System\NotificationController as AdminSystemNotificationController,
+    SystemController,
+    UserController
 };
-use App\Http\Controllers\Admin\System\NotificationController as AdminSystemNotificationController;
-use App\Http\Controllers\Admin\EbdTurmaController;
-use App\Http\Controllers\Admin\EbdProfessorController;
-use App\Http\Controllers\Admin\EbdAlunoController;
-use App\Http\Controllers\Admin\EbdLicaoController;
-use App\Http\Controllers\Admin\EbdAulaController;
-use App\Http\Controllers\Admin\EbdAvaliacaoController;
-use App\Http\Controllers\Admin\EbdQuestaoController;
-use App\Http\Controllers\Admin\EbdCertificadoController;
-use App\Http\Controllers\Admin\EbdRelatorioController;
-use App\Http\Controllers\Admin\EBD\GruposEstudoController as AdminEbdGruposEstudoController;
-use App\Http\Controllers\Admin\EbdAvaliacaoGrupoController;
-use App\Http\Controllers\Admin\EbdQuizBiblicoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +53,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
         Route::put('/', [AdminProfileController::class, 'update'])->name('update');
-        Route::post('/change-password', [AdminProfileController::class, 'changePassword'])->name('change-password');
     });
 
     // Gestão de Pessoas
@@ -64,15 +63,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
         Route::resource('ministries', MinistryController::class);
         Route::resource('departments', DepartmentController::class);
         Route::resource('cargos', CargoController::class);
-        Route::resource('ceps', CepController::class);
         Route::get('birthdays', [BirthdayController::class, 'index'])->name('birthdays.index');
     });
 
     // Gestão Financeira
     Route::prefix('finance')->name('finance.')->middleware('permission:finance.access')->group(function () {
         Route::get('/', [FinanceController::class, 'index'])->name('dashboard');
-        Route::resource('transactions', FinanceController::class, ['as' => 'transactions']); // Simplificar se FinanceController for refatorado
-        Route::resource('campaigns', FinanceController::class, ['as' => 'campaigns']); // Simplificar se FinanceController for refatorado
         Route::resource('documentos', DocumentoBaixaController::class);
         Route::resource('documentos-declaracao-anual', DocumentoDeclaracaoAnualController::class);
     });
@@ -80,44 +76,31 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
     // Gestão do Sistema
     Route::prefix('system')->name('system.')->middleware('permission:system.access')->group(function () {
         Route::get('/', [SystemController::class, 'index'])->name('index');
-        Route::resource('settings', SystemController::class, ['as' => 'settings', 'only' => ['index', 'update']]);
-        Route::resource('home-config', SystemController::class, ['as' => 'home-config', 'only' => ['index', 'update']]);
-        Route::resource('notifications', AdminSystemNotificationController::class);
+        Route::resource('notifications', AdminSystemNotificationController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
         Route::resource('permissions', PermissionController::class);
     });
 
     // Devocionais
-    Route::prefix('devotionals')->name('devotionals.')->middleware('permission:devotionals.access')->group(function () {
-        Route::resource('/', DevocionalController::class)->parameters(['' => 'devocional']);
-        Route::post('/batch', [DevocionalController::class, 'createBatch'])->name('batch.create');
-        Route::post('/{devocional}/toggle', [DevocionalController::class, 'toggleStatus'])->name('toggle');
-    });
+    Route::resource('devotionals', DevocionalController::class)->middleware('permission:devotionals.access');
+    Route::post('devotionals/batch', [DevocionalController::class, 'createBatch'])->name('devotionals.batch.create');
+    Route.::post('devotionals/{devocional}/toggle', [DevocionalController::class, 'toggleStatus'])->name('devotionals.toggle');
 
     // Conselho
-    Route::prefix('council')->name('council.')->middleware('permission:council.access')->group(function () {
-        Route::get('/', [ConselhoController::class, 'dashboard'])->name('dashboard');
-        Route::resource('reunioes', ConselhoController::class)->except(['destroy']);
-        Route::post('reunioes/{conselho}/iniciar', [ConselhoController::class, 'iniciar'])->name('reunioes.iniciar');
-        Route::post('reunioes/{conselho}/finalizar', [ConselhoController::class, 'finalizar'])->name('reunioes.finalizar');
-        Route::post('reunioes/{conselho}/cancelar', [ConselhoController::class, 'cancelar'])->name('reunioes.cancelar');
-        // Adicionar outras rotas do conselho (pautas, votações, etc.) aqui
-    });
+    Route::resource('council', ConselhoController::class)->middleware('permission:council.access');
 
     // Intercessor (Pedidos de Oração)
-    Route::resource('intercessor', IntercessorController::class)->middleware('permission:intercessor.access');
+    Route::resource('intercessor', IntercessorController::class)->middleware('permission:intercessor.access')->only(['index', 'show', 'update', 'destroy']);
 
     // Eventos
-    Route::prefix('eventos')->name('eventos.')->middleware('permission:eventos.access')->group(function () {
-        Route::resource('/', EventoController::class)->parameters(['' => 'evento']);
-        Route::resource('/{evento}/inscricoes', EventoInscricaoController::class)->except(['index', 'show', 'create', 'edit']);
-    });
+    Route::resource('eventos', EventoController::class)->middleware('permission:eventos.access');
+    Route::resource('eventos.inscricoes', EventoInscricaoController::class)->except(['index', 'show', 'create', 'edit']);
 
     // Chat
     Route::prefix('chat')->name('chat.')->group(function () {
         Route::get('/', [ChatController::class, 'index'])->name('index');
         Route::get('/manage', [ChatController::class, 'manage'])->name('manage');
         Route::get('/stats', [ChatController::class, 'stats'])->name('stats');
-        Route::resource('rooms', ChatController::class)->except(['index']);
+        Route::resource('rooms', ChatController::class, ['except' => ['index']]);
     });
 
     // EBD - ADMIN
@@ -134,6 +117,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
         Route::resource('grupos-estudo', AdminEbdGruposEstudoController::class);
         Route::resource('avaliacoes-grupo', AdminEbdAvaliacaoGrupoController::class);
         Route::resource('quiz-biblico', AdminEbdQuizBiblicoController::class);
-        Route::get('relatorios', [AdminEbdRelatorioController::class, 'index'])->name('relatorios.index');
+        Route::get('relatorios', [EbdRelatorioController::class, 'index'])->name('relatorios.index');
     });
 });
