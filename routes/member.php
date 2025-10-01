@@ -104,18 +104,20 @@ Route::middleware(['auth', 'role.redirect'])->prefix('member')->name('member.')-
 
     // Notificações
     Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/', [MemberNotificationController::class, 'index'])->name('index');
-        Route::get('/header', [MemberNotificationController::class, 'getHeaderNotifications'])->name('header');
-        Route::get('/count-unread', [MemberNotificationController::class, 'countUnread'])->name('count-unread');
-        Route::post('/settings', [MemberNotificationController::class, 'updateSettings'])->name('settings');
-        Route::post('/mark-all-read', [MemberNotificationController::class, 'markAllAsRead'])->name('mark-all-read');
-        Route::delete('/clear-read', [MemberNotificationController::class, 'clearRead'])->name('clear-read');
-        Route::post('/{id}/read', [MemberNotificationController::class, 'markAsRead'])->name('read');
-        Route::post('/{id}/unread', [MemberNotificationController::class, 'markAsUnread'])->name('unread');
-        Route::post('/{id}/star', [MemberNotificationController::class, 'toggleStar'])->name('star');
-        Route::post('/{id}/archive', [MemberNotificationController::class, 'archive'])->name('archive');
-        Route::post('/{id}/action', [MemberNotificationController::class, 'recordAction'])->name('action');
-        Route::delete('/{id}', [MemberNotificationController::class, 'destroy'])->name('delete');
+        Route::get('/', [App\Http\Controllers\Member\NotificationController::class, 'index'])->name('index');
+        Route::get('/header', [App\Http\Controllers\Member\NotificationController::class, 'getHeaderNotifications'])->name('header');
+        Route::get('/count-unread', [App\Http\Controllers\Member\NotificationController::class, 'getUnreadCount'])->name('count-unread');
+        Route::get('/preferences', [App\Http\Controllers\Member\NotificationController::class, 'preferences'])->name('preferences');
+        Route::post('/preferences', [App\Http\Controllers\Member\NotificationController::class, 'updatePreferences'])->name('update-preferences');
+        Route::post('/mark-all-read', [App\Http\Controllers\Member\NotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::post('/cleanup', [App\Http\Controllers\Member\NotificationController::class, 'cleanup'])->name('cleanup');
+        Route::post('/{id}/read', [App\Http\Controllers\Member\NotificationController::class, 'markAsRead'])->name('read');
+        Route::post('/{id}/star', [App\Http\Controllers\Member\NotificationController::class, 'toggleStar'])->name('star');
+        Route::post('/{id}/archive', [App\Http\Controllers\Member\NotificationController::class, 'archive'])->name('archive');
+        Route::post('/{id}/action', [App\Http\Controllers\Member\NotificationController::class, 'recordAction'])->name('action');
+        Route::get('/quiz-alerts', [App\Http\Controllers\Member\NotificationController::class, 'quizAlerts'])->name('quiz-alerts');
+        Route::post('/quiz-alerts/{id}/read', [App\Http\Controllers\Member\NotificationController::class, 'markQuizAlertAsRead'])->name('quiz-alert-read');
+        Route::get('/export', [App\Http\Controllers\Member\NotificationController::class, 'export'])->name('export');
     });
 
     // Mensagens Privadas

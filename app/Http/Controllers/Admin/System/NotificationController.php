@@ -19,7 +19,7 @@ class NotificationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:manage-notifications');
+        $this->middleware('can:notifications.access');
     }
 
     /**
@@ -28,7 +28,7 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $query = Notification::with(['user', 'sender']);
-        
+
         // Aplicar filtros
         if ($request->filled('search')) {
             $search = $request->search;
@@ -37,15 +37,15 @@ class NotificationController extends Controller
                   ->orWhere('message', 'like', "%{$search}%");
             });
         }
-        
+
         if ($request->filled('type')) {
             $query->where('type', $request->type);
         }
-        
+
         if ($request->filled('priority')) {
             $query->where('priority', $request->priority);
         }
-        
+
         if ($request->filled('status')) {
             if ($request->status === 'read') {
                 $query->whereNotNull('read_at');
@@ -53,17 +53,17 @@ class NotificationController extends Controller
                 $query->whereNull('read_at');
             }
         }
-        
+
         if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->date_from);
         }
-        
+
         if ($request->filled('date_to')) {
             $query->whereDate('created_at', '<=', $request->date_to);
         }
-        
+
         $notifications = $query->orderBy('created_at', 'desc')->paginate(20);
-        
+
         // Estatísticas
         $stats = [
             'total' => Notification::count(),
@@ -71,7 +71,7 @@ class NotificationController extends Controller
             'today' => Notification::whereDate('created_at', today())->count(),
             'this_week' => Notification::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
         ];
-        
+
         return view('admin.system.notifications.index', compact('notifications', 'stats'));
     }
 
@@ -83,7 +83,7 @@ class NotificationController extends Controller
         $users = User::where('ativo', true)->orderBy('name')->get();
         $membros = Membro::where('ativo', true)->orderBy('nome')->get();
         $ministerios = Ministerio::where('ativo', true)->orderBy('nome')->get();
-        
+
         return view('admin.system.notifications.create', compact('users', 'membros', 'ministerios'));
     }
 
@@ -197,7 +197,7 @@ class NotificationController extends Controller
         $users = User::where('ativo', true)->orderBy('name')->get();
         $membros = Membro::where('ativo', true)->orderBy('nome')->get();
         $ministerios = Ministerio::where('ativo', true)->orderBy('nome')->get();
-        
+
         return view('admin.system.notifications.edit', compact('notificacao', 'users', 'membros', 'ministerios'));
     }
 
@@ -261,12 +261,12 @@ class NotificationController extends Controller
     {
         try {
             $notificacao->delete();
-            
+
             Log::info('Notificação excluída', [
                 'notification_id' => $notificacao->id,
                 'deleted_by' => Auth::id()
             ]);
-            
+
             return redirect()->route('admin.system.notifications.index')
                            ->with('success', 'Notificação excluída com sucesso!');
         } catch (\Exception $e) {
@@ -283,14 +283,14 @@ class NotificationController extends Controller
     {
         try {
             NotificationService::send($notificacao);
-            
+
             $notificacao->update(['sent_at' => now()]);
-            
+
             Log::info('Notificação enviada', [
                 'notification_id' => $notificacao->id,
                 'sent_by' => Auth::id()
             ]);
-            
+
             return redirect()->back()
                            ->with('success', 'Notificação enviada com sucesso!');
         } catch (\Exception $e) {

@@ -2,80 +2,249 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Notification extends Model
 {
-    use HasFactory, HasUuids;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $table = 'cbav_notifications';
+
     protected $fillable = [
-        'user_id',
+        'uuid',
+        'sender_id',
+        'recipient_type',
+        'recipient_id',
+        'title',
+        'message',
         'type',
-        'notifiable_type',
-        'notifiable_id',
+        'category',
+        'priority',
+        'icon',
+        'color',
+        'action_url',
+        'action_text',
         'data',
-        'read_at',
+        'metadata',
+        'scheduled_at',
+        'sent_at',
+        'expires_at',
+        'is_persistent',
+        'channels',
+        'channel_settings',
+        'status',
+        'failure_reason',
+        'retry_count',
+        'last_retry_at'
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'data' => 'array',
-        'read_at' => 'datetime',
+        'metadata' => 'array',
+        'channels' => 'array',
+        'channel_settings' => 'array',
+        'scheduled_at' => 'datetime',
+        'sent_at' => 'datetime',
+        'expires_at' => 'datetime',
+        'last_retry_at' => 'datetime',
+        'is_persistent' => 'boolean'
     ];
 
-    /**
-     * Get the user that the notification belongs to.
-     */
-    public function user(): BelongsTo
+    // Relacionamentos
+    public function sender(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
-    /**
-     * Get the parent notifiable model (post, comment, etc.).
-     */
-    public function notifiable(): MorphTo
+    public function reads(): HasMany
     {
-        return $this->morphTo();
+        return $this->hasMany(NotificationRead::class);
     }
 
-    /**
-     * Scope a query to only include unread notifications.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    public function scopeUnread($query)
+    // Scopes
+    public function scopeForUser($query, $userId)
     {
-        return $query->whereNull('read_at');
+        return $query->where('recipient_id', $userId)
+                    ->where('recipient_type', 'App\Models\User');
     }
 
-    /**
-     * Mark the notification as read.
-     */
-    public function markAsRead(): bool
+    public function scopeUnreadForUser($query, $userId)
     {
-        return $this->update(['read_at' => now()]);
+        return $query->whereDoesntHave('reads', function ($q) use ($userId) {
+            $q->where('user_id', $userId)->where('is_read', true);
+        });
     }
 
-    /**
-     * Mark the notification as unread.
-     */
-    public function markAsUnread(): bool
+    public function scopeReadForUser($query, $userId)
     {
-        return $this->update(['read_at' => null]);
+        return $query->whereHas('reads', function ($q) use ($userId) {
+            $q->where('user_id', $userId)->where('is_read', true);
+        });
+    }
+
+    public function scopeByType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
+
+    public function scopeByCategory($query, $category)
+    {
+        return $query->where('category', $category);
+    }
+
+    public function scopeByPriority($query, $priority)
+    {
+        return $query->where('priority', $priority);
+    }
+
+    public function scopeSent($query)
+    {
+        return $query->where('status', 'sent');
+    }
+
+    public function scopeScheduled($query)
+    {
+        return $query->where('status', 'scheduled');
+    }
+
+    // Métodos de instância
+    public function isReadBy($userId): bool
+    {
+        return $this->reads()
+                   ->where('user_id', $userId)
+                   ->where('is_read', true)
+                   ->exists();
+    }
+
+    public function isStarredBy($userId): bool
+    {
+        return $this->reads()
+                   ->where('user_id', $userId)
+                   ->where('is_starred', true)
+                   ->exists();
+    }
+
+    public function isArchivedBy($userId): bool
+    {
+        return $this->reads()
+                   ->where('user_id', $userId)
+                   ->where('is_archived', true)
+                   ->exists();
+    }
+
+    public function markAsReadBy($userId): void
+    {
+        $read = $this->reads()->where('user_id', $userId)->first();
+
+        if ($read) {
+            $read->markAsRead();
+        } else {
+            $this->reads()->create([
+                'user_id' => $userId,
+                'is_read' => true,
+                'read_at' => now()
+            ]);
+        }
+    }
+
+    public function markAsUnreadBy($userId): void
+    {
+        $read = $this->reads()->where('user_id', $userId)->first();
+
+        if ($read) {
+            $read->markAsUnread();
+        }
+    }
+
+    public function starBy($userId): void
+    {
+        $read = $this->reads()->where('user_id', $userId)->first();
+
+        if ($read) {
+            $read->star();
+        } else {
+            $this->reads()->create([
+                'user_id' => $userId,
+                'is_starred' => true,
+                'starred_at' => now()
+            ]);
+        }
+    }
+
+    public function unstarBy($userId): void
+    {
+        $read = $this->reads()->where('user_id', $userId)->first();
+
+        if ($read) {
+            $read->unstar();
+        }
+    }
+
+    public function archiveBy($userId): void
+    {
+        $read = $this->reads()->where('user_id', $userId)->first();
+
+        if ($read) {
+            $read->archive();
+        } else {
+            $this->reads()->create([
+                'user_id' => $userId,
+                'is_archived' => true,
+                'archived_at' => now()
+            ]);
+        }
+    }
+
+    // Accessors
+    public function getTimeAgoAttribute(): string
+    {
+        return $this->created_at->diffForHumans();
+    }
+
+    public function getTypeIconAttribute(): string
+    {
+        return $this->icon ?: $this->getDefaultIcon();
+    }
+
+    public function getTypeColorAttribute(): string
+    {
+        return $this->color ?: $this->getDefaultColor();
+    }
+
+    private function getDefaultIcon(): string
+    {
+        $icons = [
+            'info' => 'info-circle',
+            'success' => 'check-circle',
+            'warning' => 'exclamation-triangle',
+            'error' => 'times-circle',
+            'quiz' => 'question-circle',
+            'ministry' => 'users',
+            'financial' => 'dollar-sign',
+            'event' => 'calendar',
+            'council' => 'gavel'
+        ];
+
+        return $icons[$this->type] ?? 'bell';
+    }
+
+    private function getDefaultColor(): string
+    {
+        $colors = [
+            'info' => 'blue',
+            'success' => 'green',
+            'warning' => 'yellow',
+            'error' => 'red',
+            'quiz' => 'purple',
+            'ministry' => 'indigo',
+            'financial' => 'green',
+            'event' => 'blue',
+            'council' => 'gray'
+        ];
+
+        return $colors[$this->type] ?? 'gray';
     }
 }

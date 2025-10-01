@@ -428,7 +428,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
         Route::resource('licoes', AdminEbdLicaoController::class)->parameters(['licoes' => 'licao']);
         Route::resource('aulas', AdminEbdAulaController::class)->parameters(['aulas' => 'aula']);
         Route::resource('avaliacoes', AdminEbdAvaliacaoController::class)->parameters(['avaliacoes' => 'avaliacao']);
-        Route::get('avaliacoes/{avaliacao}/relatorio', [AdminEbdAvaliacoController::class, 'relatorio'])->name('avaliacoes.relatorio');
+        Route::get('avaliacoes/{avaliacao}/relatorio', [AdminEbdAvaliacaoController::class, 'relatorio'])->name('avaliacoes.relatorio');
         Route::resource('questoes', AdminEbdQuestaoController::class)->parameters(['questoes' => 'questao']);
         Route::post('questoes/importar', [AdminEbdQuestaoController::class, 'import'])->name('questoes.import');
         Route::post('questoes/exportar', [AdminEbdQuestaoController::class, 'export'])->name('questoes.export');
