@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img src="public/img/logocbav.png" alt="CBAV Logo" width="200" height="200">
+
 ![CBAV Logo](https://img.shields.io/badge/CBAV-CRM%20Ministerial-blue?style=for-the-badge&logo=church)
 ![Laravel](https://img.shields.io/badge/Laravel-12-red?style=for-the-badge&logo=laravel)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-blue?style=for-the-badge&logo=php)
@@ -9,7 +11,15 @@
 
 **Sistema completo de gestão ministerial para a Congregação Batista Avenida**
 
-Desenvolvido pela **Vertex Solutions LTDA** - CEO Reinan Rodrigues
+---
+
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="150" height="80">
+
+**Desenvolvido pela Vertex Solutions LTDA**
+
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="100" height="100" style="border-radius: 50%;">
+
+**CEO: Reinan Rodrigues**
 
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-+5575992034656-green?style=for-the-badge&logo=whatsapp)](https://wa.me/5575992034656)
 [![Email](https://img.shields.io/badge/Email-r.rodriguesjs@gmail.com-blue?style=for-the-badge&logo=gmail)](mailto:r.rodriguesjs@gmail.com)
@@ -41,6 +51,12 @@ Desenvolvido pela **Vertex Solutions LTDA** - CEO Reinan Rodrigues
 ---
 
 ## 🎯 **Visão Geral**
+
+<div align="center">
+
+<img src="public/img/logocbav.png" alt="CBAV Logo" width="100" height="100">
+
+</div>
 
 O **CBAV CRM Ministerial** é um sistema completo e integrado desenvolvido especificamente para gestão de igrejas e congregações. O sistema oferece uma solução moderna e robusta para administração ministerial, incluindo gestão de membros, controle financeiro, EBD digital, conselho ministerial, devocionais, eventos e muito mais.
 
@@ -494,9 +510,19 @@ tail -f storage/logs/laravel.log
 
 ## 📞 **Suporte**
 
-### **Vertex Solutions LTDA**
+<div align="center">
 
--   **CEO:** Reinan Rodrigues
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="200" height="100">
+
+**Vertex Solutions LTDA**
+
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="120" height="120" style="border-radius: 50%;">
+
+**CEO: Reinan Rodrigues**
+
+</div>
+
+### **Informações de Contato:**
 -   **WhatsApp:** [+55 75 99203-4656](https://wa.me/5575992034656)
 -   **Email:** [r.rodriguesjs@gmail.com](mailto:r.rodriguesjs@gmail.com)
 -   **Website:** [Vertex Solutions](https://vertexsolutions.com.br)
@@ -546,11 +572,23 @@ Este software é propriedade da **Vertex Solutions LTDA** e está protegido por 
 
 <div align="center">
 
+<img src="public/img/logocbav.png" alt="CBAV Logo" width="150" height="150">
+
+**Congregação Batista Avenida**
+
+---
+
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="120" height="60">
+
 **© 2025 Vertex Solutions LTDA - Todos os direitos reservados**
+
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="80" height="80" style="border-radius: 50%;">
+
+**CEO: Reinan Rodrigues**
 
 _Sistema desenvolvido com ❤️ para a glória de Deus_
 
-[![GitHub](https://img.shields.io/badge/GitHub-Private-red?style=for-the-badge&logo=github)](https://github.com/vertex-solutions/cbav-crm)
+[![GitHub](https://img.shields.io/badge/GitHub-Private-red?style=for-the-badge&logo=github)](https://github.com/RabbitVisual/CBAV2025)
 [![WhatsApp](https://img.shields.io/badge/WhatsApp-+5575992034656-green?style=for-the-badge&logo=whatsapp)](https://wa.me/5575992034656)
 
 </div>
