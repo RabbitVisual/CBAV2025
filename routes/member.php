@@ -18,7 +18,6 @@ use App\Http\Controllers\Member\{
     EventoController,
     MessageController,
     MinistryController,
-    NotificationController,
     PedidoOracaoController,
     ProfileController,
     PublicMemberController

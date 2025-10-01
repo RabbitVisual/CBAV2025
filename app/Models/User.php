@@ -117,80 +117,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Boot method para eventos do modelo
+     * Boot method para eventos do modelo.
+     * Ao deletar um usuário, o membro associado também será deletado (se existir).
      */
     protected static function boot()
     {
         parent::boot();
 
-        // Sincronizar dados ao atualizar usuário
-        static::updating(function ($user) {
-            if ($user->isDirty(['name', 'email', 'telefone', 'data_nascimento', 'endereco', 'cidade', 'estado', 'cep', 'ativo'])) {
-                $membro = $user->membro;
-                if ($membro) {
-                    $membro->update([
-                        'nome' => $user->name,
-                        'email' => $user->email,
-                        'telefone' => $user->telefone,
-                        'data_nascimento' => $user->data_nascimento,
-                        'endereco' => $user->endereco,
-                        'cidade' => $user->cidade,
-                        'estado' => $user->estado,
-                        'cep' => $user->cep,
-                        'ativo' => $user->ativo,
-                    ]);
-                }
-            }
-        });
-
-        // Ao deletar usuário, deletar membro associado
         static::deleting(function ($user) {
             if ($user->membro) {
                 $user->membro->delete();
             }
         });
-    }
-
-    /**
-     * Verifica se o usuário é um membro da igreja
-     * Todos os usuários são membros por padrão, exceto se tiverem um role específico
-     */
-    public function isMembro()
-    {
-        // Se tem um registro na tabela membros, é definitivamente um membro
-        if ($this->membro()->exists()) {
-            return true;
-        }
-        
-        // Se não tem nenhum role do sistema, é um membro simples
-        if ($this->getRoleNames()->isEmpty()) {
-            return true;
-        }
-        
-        // Se tem roles do sistema, verificar se tem role 'Membro' ou se é apenas admin
-        $roles = $this->getRoleNames();
-        
-        // Se tem role 'Membro', é membro
-        if ($roles->contains('Membro')) {
-            return true;
-        }
-        
-        // Se tem apenas roles administrativos (Super Admin, Pastor, Tesoureiro, Líder), 
-        // também é considerado membro, mas com privilégios especiais
-        $adminRoles = ['Super Admin', 'Pastor', 'Tesoureiro', 'Líder', 'Conselheiro', 'admin'];
-        $hasOnlyAdminRoles = $roles->every(function($role) use ($adminRoles) {
-            return in_array($role, $adminRoles);
-        });
-        
-        return $hasOnlyAdminRoles;
-    }
-
-    /**
-     * Obtém os dados do membro associado
-     */
-    public function getMembroData()
-    {
-        return $this->membro;
     }
 
     /**
