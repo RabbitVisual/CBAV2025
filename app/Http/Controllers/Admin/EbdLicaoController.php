@@ -5,12 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EbdLicao;
+use App\Services\EbdService;
 
 class EbdLicaoController extends Controller
 {
+    protected $ebdService;
+
+    public function __construct(EbdService $ebdService)
+    {
+        $this->ebdService = $ebdService;
+    }
+
     public function index()
     {
-        $licoes = EbdLicao::orderBy('titulo')->get();
+        $licoes = $this->ebdService->getAllLicoes();
         return view('admin.ebd.licoes.index', compact('licoes'));
     }
 
@@ -35,7 +43,9 @@ class EbdLicaoController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        EbdLicao::create($data);
+
+        $this->ebdService->createLicao($data);
+
         return redirect()->route('admin.ebd.licoes.index')->with('success', 'Lição criada com sucesso!');
     }
 
@@ -65,13 +75,16 @@ class EbdLicaoController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        $licao->update($data);
+
+        $this->ebdService->updateLicao($licao, $data);
+
         return redirect()->route('admin.ebd.licoes.index')->with('success', 'Lição atualizada com sucesso!');
     }
 
     public function destroy(EbdLicao $licao)
     {
-        $licao->delete();
+        $this->ebdService->deleteLicao($licao);
+
         return redirect()->route('admin.ebd.licoes.index')->with('success', 'Lição removida com sucesso!');
     }
-} 
+}

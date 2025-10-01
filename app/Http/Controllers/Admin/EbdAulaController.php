@@ -5,24 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EbdAula;
-use App\Models\EbdTurma;
-use App\Models\EbdLicao;
-use App\Models\EbdProfessor;
+use App\Services\EbdService;
 
 class EbdAulaController extends Controller
 {
+    protected $ebdService;
+
+    public function __construct(EbdService $ebdService)
+    {
+        $this->ebdService = $ebdService;
+    }
+
     public function index()
     {
-        $aulas = EbdAula::with(['turma', 'licao', 'professor'])->orderBy('data_aula', 'desc')->get();
+        $aulas = $this->ebdService->getAllAulas();
         return view('admin.ebd.aulas.index', compact('aulas'));
     }
 
     public function create()
     {
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        $licoes = EbdLicao::ativas()->orderBy('titulo')->get();
-        $professores = EbdProfessor::ativos()->with('membro')->get();
-        return view('admin.ebd.aulas.create', compact('turmas', 'licoes', 'professores'));
+        $data = $this->ebdService->getAulaFormData();
+        return view('admin.ebd.aulas.create', $data);
     }
 
     public function store(Request $request)
@@ -37,9 +40,9 @@ class EbdAulaController extends Controller
             'observacoes' => 'nullable|string',
             'status' => 'required|in:agendada,realizada,cancelada,adiada',
         ]);
-        $data['horario_inicio'] = $data['data_aula'] . ' ' . $data['horario_inicio'];
-        $data['horario_fim'] = $data['data_aula'] . ' ' . $data['horario_fim'];
-        EbdAula::create($data);
+
+        $this->ebdService->createAula($data);
+
         return redirect()->route('admin.ebd.aulas.index')->with('success', 'Aula agendada com sucesso!');
     }
 
@@ -50,10 +53,8 @@ class EbdAulaController extends Controller
 
     public function edit(EbdAula $aula)
     {
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        $licoes = EbdLicao::ativas()->orderBy('titulo')->get();
-        $professores = EbdProfessor::ativos()->with('membro')->get();
-        return view('admin.ebd.aulas.edit', compact('aula', 'turmas', 'licoes', 'professores'));
+        $data = $this->ebdService->getAulaFormData();
+        return view('admin.ebd.aulas.edit', array_merge($data, compact('aula')));
     }
 
     public function update(Request $request, EbdAula $aula)
@@ -68,15 +69,16 @@ class EbdAulaController extends Controller
             'observacoes' => 'nullable|string',
             'status' => 'required|in:agendada,realizada,cancelada,adiada',
         ]);
-        $data['horario_inicio'] = $data['data_aula'] . ' ' . $data['horario_inicio'];
-        $data['horario_fim'] = $data['data_aula'] . ' ' . $data['horario_fim'];
-        $aula->update($data);
+
+        $this->ebdService->updateAula($aula, $data);
+
         return redirect()->route('admin.ebd.aulas.index')->with('success', 'Aula atualizada com sucesso!');
     }
 
     public function destroy(EbdAula $aula)
     {
-        $aula->delete();
+        $this->ebdService->deleteAula($aula);
+
         return redirect()->route('admin.ebd.aulas.index')->with('success', 'Aula removida com sucesso!');
     }
-} 
+}

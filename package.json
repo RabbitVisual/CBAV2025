@@ -7,6 +7,8 @@
         "dev": "vite"
     },
     "devDependencies": {
+        "@fortawesome/fontawesome-free": "^7.0.1",
+        "alpinejs": "^3.15.0",
         "autoprefixer": "10.4.21",
         "axios": "1.11.0",
         "concurrently": "9.2.1",
