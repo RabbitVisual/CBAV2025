@@ -5,22 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EbdAluno;
-use App\Models\EbdTurma;
-use App\Models\Membro;
+use App\Services\EbdService;
 
 class EbdAlunoController extends Controller
 {
+    protected $ebdService;
+
+    public function __construct(EbdService $ebdService)
+    {
+        $this->ebdService = $ebdService;
+    }
+
     public function index()
     {
-        $alunos = EbdAluno::with(['membro', 'turma'])->orderBy('nome')->get();
+        $alunos = $this->ebdService->getAllAlunos();
         return view('admin.ebd.alunos.index', compact('alunos'));
     }
 
     public function create()
     {
-        $membros = Membro::orderBy('nome')->get();
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        return view('admin.ebd.alunos.create', compact('membros', 'turmas'));
+        $data = $this->ebdService->getAlunoFormData();
+        return view('admin.ebd.alunos.create', $data);
     }
 
     public function store(Request $request)
@@ -38,7 +43,9 @@ class EbdAlunoController extends Controller
             'status' => 'required|in:ativo,inativo,transferido',
             'observacoes' => 'nullable|string',
         ]);
-        EbdAluno::create($data);
+
+        $this->ebdService->createAluno($data);
+
         return redirect()->route('admin.ebd.alunos.index')->with('success', 'Aluno matriculado com sucesso!');
     }
 
@@ -49,9 +56,8 @@ class EbdAlunoController extends Controller
 
     public function edit(EbdAluno $aluno)
     {
-        $membros = Membro::orderBy('nome')->get();
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        return view('admin.ebd.alunos.edit', compact('aluno', 'membros', 'turmas'));
+        $data = $this->ebdService->getAlunoFormData();
+        return view('admin.ebd.alunos.edit', array_merge($data, compact('aluno')));
     }
 
     public function update(Request $request, EbdAluno $aluno)
@@ -69,13 +75,16 @@ class EbdAlunoController extends Controller
             'status' => 'required|in:ativo,inativo,transferido',
             'observacoes' => 'nullable|string',
         ]);
-        $aluno->update($data);
+
+        $this->ebdService->updateAluno($aluno, $data);
+
         return redirect()->route('admin.ebd.alunos.index')->with('success', 'Aluno atualizado com sucesso!');
     }
 
     public function destroy(EbdAluno $aluno)
     {
-        $aluno->delete();
+        $this->ebdService->deleteAluno($aluno);
+
         return redirect()->route('admin.ebd.alunos.index')->with('success', 'Aluno removido com sucesso!');
     }
-} 
+}

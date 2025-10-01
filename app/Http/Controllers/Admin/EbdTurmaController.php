@@ -5,12 +5,20 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EbdTurma;
+use App\Services\EbdService;
 
 class EbdTurmaController extends Controller
 {
+    protected $ebdService;
+
+    public function __construct(EbdService $ebdService)
+    {
+        $this->ebdService = $ebdService;
+    }
+
     public function index()
     {
-        $turmas = EbdTurma::orderBy('nome')->get();
+        $turmas = $this->ebdService->getAllTurmas();
         return view('admin.ebd.turmas.index', compact('turmas'));
     }
 
@@ -30,7 +38,9 @@ class EbdTurmaController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        EbdTurma::create($data);
+
+        $this->ebdService->createTurma($data);
+
         return redirect()->route('admin.ebd.turmas.index')->with('success', 'Turma criada com sucesso!');
     }
 
@@ -55,13 +65,16 @@ class EbdTurmaController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        $turma->update($data);
+
+        $this->ebdService->updateTurma($turma, $data);
+
         return redirect()->route('admin.ebd.turmas.index')->with('success', 'Turma atualizada com sucesso!');
     }
 
     public function destroy(EbdTurma $turma)
     {
-        $turma->delete();
+        $this->ebdService->deleteTurma($turma);
+
         return redirect()->route('admin.ebd.turmas.index')->with('success', 'Turma removida com sucesso!');
     }
-} 
+}

@@ -5,22 +5,27 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EbdProfessor;
-use App\Models\EbdTurma;
-use App\Models\Membro;
+use App\Services\EbdService;
 
 class EbdProfessorController extends Controller
 {
+    protected $ebdService;
+
+    public function __construct(EbdService $ebdService)
+    {
+        $this->ebdService = $ebdService;
+    }
+
     public function index()
     {
-        $professores = EbdProfessor::with(['membro', 'turma'])->orderBy('created_at', 'desc')->get();
+        $professores = $this->ebdService->getAllProfessores();
         return view('admin.ebd.professores.index', compact('professores'));
     }
 
     public function create()
     {
-        $membros = Membro::orderBy('nome')->get();
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        return view('admin.ebd.professores.create', compact('membros', 'turmas'));
+        $data = $this->ebdService->getProfessorFormData();
+        return view('admin.ebd.professores.create', $data);
     }
 
     public function store(Request $request)
@@ -34,7 +39,9 @@ class EbdProfessorController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        EbdProfessor::create($data);
+
+        $this->ebdService->createProfessor($data);
+
         return redirect()->route('admin.ebd.professores.index')->with('success', 'Professor cadastrado com sucesso!');
     }
 
@@ -45,9 +52,8 @@ class EbdProfessorController extends Controller
 
     public function edit(EbdProfessor $professor)
     {
-        $membros = Membro::orderBy('nome')->get();
-        $turmas = EbdTurma::ativas()->orderBy('nome')->get();
-        return view('admin.ebd.professores.edit', compact('professor', 'membros', 'turmas'));
+        $data = $this->ebdService->getProfessorFormData();
+        return view('admin.ebd.professores.edit', array_merge($data, compact('professor')));
     }
 
     public function update(Request $request, EbdProfessor $professor)
@@ -61,13 +67,16 @@ class EbdProfessorController extends Controller
             'ativo' => 'boolean',
         ]);
         $data['ativo'] = $request->has('ativo');
-        $professor->update($data);
+
+        $this->ebdService->updateProfessor($professor, $data);
+
         return redirect()->route('admin.ebd.professores.index')->with('success', 'Professor atualizado com sucesso!');
     }
 
     public function destroy(EbdProfessor $professor)
     {
-        $professor->delete();
+        $this->ebdService->deleteProfessor($professor);
+
         return redirect()->route('admin.ebd.professores.index')->with('success', 'Professor removido com sucesso!');
     }
-} 
+}
