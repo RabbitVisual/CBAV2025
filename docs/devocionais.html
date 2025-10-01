@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devocionais - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Devocionais</h1>
+                    <p class="text-sm text-gray-500">Sistema de Devocionais Diários</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-book-open text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Devocionais</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema de devocionais diários e estudos bíblicos</p>
+            <div class="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"A tua palavra é lâmpada para os meus pés e luz para o meu caminho"</p>
+                <p class="text-gray-500 text-sm mt-2">Salmos 119:105</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O módulo de Devocionais oferece uma plataforma completa para criação, publicação e 
+                    compartilhamento de devocionais diários, estudos bíblicos e reflexões espirituais. 
+                    Permite crescimento espiritual contínuo dos membros da igreja.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-teal-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-pen-fancy text-teal-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Criação de Devocionais</h3>
+                        <p class="text-gray-600 text-sm">Editor rico para criar devocionais</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-cyan-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-day text-cyan-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Programação Diária</h3>
+                        <p class="text-gray-600 text-sm">Devocionais programados por data</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Favoritos</h3>
+                        <p class="text-gray-600 text-sm">Sistema de favoritos e compartilhamento</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Principais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-pen-fancy text-teal-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Editor de Devocionais</h3>
+                    <p class="text-gray-600 mb-4">
+                        Editor rico para criação de devocionais com formatação avançada.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Editor WYSIWYG</li>
+                        <li>• Formatação de texto</li>
+                        <li>• Inserção de imagens</li>
+                        <li>• Referências bíblicas</li>
+                        <li>• Preview em tempo real</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-cyan-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-calendar-alt text-cyan-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Programação Diária</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de programação e publicação automática de devocionais.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Programação por data</li>
+                        <li>• Publicação automática</li>
+                        <li>• Calendário de devocionais</li>
+                        <li>• Lembretes diários</li>
+                        <li>• Histórico completo</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-tags text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Categorização</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de categorização e tags para organização dos devocionais.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Categorias temáticas</li>
+                        <li>• Tags personalizadas</li>
+                        <li>• Busca por categoria</li>
+                        <li>• Filtros avançados</li>
+                        <li>• Navegação intuitiva</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-heart text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Favoritos e Compartilhamento</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de favoritos e compartilhamento de devocionais.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Marcar como favorito</li>
+                        <li>• Compartilhar em redes</li>
+                        <li>• Lista de favoritos</li>
+                        <li>• Recomendações</li>
+                        <li>• Histórico de leitura</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Busca Avançada</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de busca e filtros para encontrar devocionais rapidamente.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Busca por texto</li>
+                        <li>• Filtros por categoria</li>
+                        <li>• Busca por autor</li>
+                        <li>• Filtros por data</li>
+                        <li>• Resultados relevantes</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-mobile-alt text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Acesso Mobile</h3>
+                    <p class="text-gray-600 mb-4">
+                        Interface responsiva para acesso em dispositivos móveis.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Design responsivo</li>
+                        <li>• Acesso offline</li>
+                        <li>• Notificações push</li>
+                        <li>• Sincronização</li>
+                        <li>• Experiência otimizada</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Structure -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">devocionais</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE devocionais (
+    id BIGINT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    subtitulo VARCHAR(255),
+    conteudo TEXT NOT NULL,
+    autor_id BIGINT,
+    categoria VARCHAR(100),
+    tags JSON,
+    data_publicacao DATE,
+    data_programada DATE,
+    status ENUM('rascunho', 'publicado', 'programado', 'arquivado'),
+    visualizacoes INT DEFAULT 0,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">devocional_favoritos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE devocional_favoritos (
+    id BIGINT PRIMARY KEY,
+    devocional_id BIGINT,
+    user_id BIGINT,
+    data_favorito DATETIME,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">devocional_visualizacoes</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE devocional_visualizacoes (
+    id BIGINT PRIMARY KEY,
+    devocional_id BIGINT,
+    user_id BIGINT NULL,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    data_visualizacao DATETIME,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">devocional_categorias</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE devocional_categorias (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao TEXT,
+    cor VARCHAR(7),
+    ativo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Controllers e Rotas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Controllers Principais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Admin Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                DevocionalController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                DevocionalCategoriaController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                DevocionalRelatorioController
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Member Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                DevocionalMemberController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                DevocionalFavoritoController
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h4 class="font-semibold text-gray-900 mb-2">Rotas Principais</h4>
+                    <div class="code-block">
+<pre><code>// Rotas Admin
+Route::prefix('admin/devotionals')->name('admin.devotionals.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [DevocionalController::class, 'index'])->name('index');
+    Route::resource('devotionals', DevocionalController::class);
+    Route::resource('categories', DevocionalCategoriaController::class);
+    Route::get('reports', [DevocionalRelatorioController::class, 'index'])->name('reports');
+});
+
+// Rotas Member
+Route::prefix('member/devotionals')->name('member.devotionals.')->middleware(['auth'])->group(function () {
+    Route::get('/', [DevocionalMemberController::class, 'index'])->name('index');
+    Route::get('favorites', [DevocionalFavoritoController::class, 'index'])->name('favorites');
+    Route::post('favorite/{devocional}', [DevocionalFavoritoController::class, 'toggle'])->name('favorite');
+    Route::get('history', [DevocionalMemberController::class, 'history'])->name('history');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Exemplos de Uso</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Código de Exemplo</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Criar Devocional</h4>
+                        <div class="code-block">
+<pre><code>// DevocionalController.php
+public function store(Request $request)
+{
+    $request->validate([
+        'titulo' => 'required|string|max:255',
+        'subtitulo' => 'nullable|string|max:255',
+        'conteudo' => 'required|string',
+        'categoria' => 'nullable|string|max:100',
+        'tags' => 'nullable|array',
+        'data_publicacao' => 'nullable|date',
+        'status' => 'required|in:rascunho,publicado,programado'
+    ]);
+
+    $devocional = Devocional::create([
+        'titulo' => $request->titulo,
+        'subtitulo' => $request->subtitulo,
+        'conteudo' => $request->conteudo,
+        'autor_id' => auth()->id(),
+        'categoria' => $request->categoria,
+        'tags' => $request->tags,
+        'data_publicacao' => $request->data_publicacao ?? now(),
+        'status' => $request->status
+    ]);
+
+    return redirect()->route('admin.devotionals.index')
+        ->with('success', 'Devocional criado com sucesso!');
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Marcar como Favorito</h4>
+                        <div class="code-block">
+<pre><code>// DevocionalFavoritoController.php
+public function toggle(Devocional $devocional)
+{
+    $favorito = DevocionalFavorito::where('devocional_id', $devocional->id)
+        ->where('user_id', auth()->id())
+        ->first();
+
+    if ($favorito) {
+        $favorito->delete();
+        $message = 'Removido dos favoritos';
+    } else {
+        DevocionalFavorito::create([
+            'devocional_id' => $devocional->id,
+            'user_id' => auth()->id(),
+            'data_favorito' => now()
+        ]);
+        $message = 'Adicionado aos favoritos';
+    }
+
+    return response()->json([
+        'success' => true,
+        'message' => $message,
+        'is_favorite' => !$favorito
+    ]);
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Buscar Devocionais</h4>
+                        <div class="code-block">
+<pre><code>// DevocionalMemberController.php
+public function search(Request $request)
+{
+    $query = Devocional::where('status', 'publicado');
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+        $query->where(function($q) use ($search) {
+            $q->where('titulo', 'like', "%{$search}%")
+              ->orWhere('subtitulo', 'like', "%{$search}%")
+              ->orWhere('conteudo', 'like', "%{$search}%");
+        });
+    }
+
+    if ($request->filled('categoria')) {
+        $query->where('categoria', $request->categoria);
+    }
+
+    if ($request->filled('autor')) {
+        $query->where('autor_id', $request->autor);
+    }
+
+    $devocionais = $query->with(['autor', 'favoritos'])
+                         ->orderBy('data_publicacao', 'desc')
+                         ->paginate(12);
+
+    return view('member.devotionals.index', compact('devocionais'));
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Relatórios e Estatísticas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Relatórios Disponíveis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Relatório de Visualizações</h4>
+                        <p class="text-blue-700 text-sm mb-4">
+                            Análise de visualizações e engajamento dos devocionais.
+                        </p>
+                        <ul class="text-sm text-blue-600 space-y-1">
+                            <li>• Visualizações por período</li>
+                            <li>• Devocionais mais lidos</li>
+                            <li>• Engajamento por categoria</li>
+                            <li>• Tendências de leitura</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-2">Relatório de Favoritos</h4>
+                        <p class="text-green-700 text-sm mb-4">
+                            Análise de favoritos e preferências dos usuários.
+                        </p>
+                        <ul class="text-sm text-green-600 space-y-1">
+                            <li>• Devocionais mais favoritados</li>
+                            <li>• Preferências por categoria</li>
+                            <li>• Comportamento dos usuários</li>
+                            <li>• Recomendações</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-2">Relatório de Autores</h4>
+                        <p class="text-purple-700 text-sm mb-4">
+                            Análise de performance dos autores de devocionais.
+                        </p>
+                        <ul class="text-sm text-purple-600 space-y-1">
+                            <li>• Devocionais por autor</li>
+                            <li>• Engajamento por autor</li>
+                            <li>• Categorias preferidas</li>
+                            <li>• Performance comparativa</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-2">Relatório de Categorias</h4>
+                        <p class="text-orange-700 text-sm mb-4">
+                            Análise de categorias e temas mais populares.
+                        </p>
+                        <ul class="text-sm text-orange-600 space-y-1">
+                            <li>• Popularidade por categoria</li>
+                            <li>• Tendências temáticas</li>
+                            <li>• Sazonalidade</li>
+                            <li>• Sugestões de conteúdo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Integrações</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos Integrados</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Gestão de Membros</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de gestão de membros para autores e leitores.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Autores de devocionais</li>
+                            <li>• Perfis de leitores</li>
+                            <li>• Histórico de leitura</li>
+                            <li>• Preferências personalizadas</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Notificações</h4>
+                        <p class="text-gray-600 mb-4">
+                            Notificações automáticas para novos devocionais e lembretes.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Novos devocionais</li>
+                            <li>• Lembretes diários</li>
+                            <li>• Devocionais favoritos</li>
+                            <li>• Recomendações</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Bíblia Digital</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de Bíblia digital para referências.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Referências bíblicas</li>
+                            <li>• Links para versículos</li>
+                            <li>• Contexto bíblico</li>
+                            <li>• Estudos relacionados</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Relatórios</h4>
+                        <p class="text-gray-600 mb-4">
+                            Relatórios consolidados sobre crescimento espiritual.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Relatórios de crescimento</li>
+                            <li>• Análises de engajamento</li>
+                            <li>• Métricas espirituais</li>
+                            <li>• Tendências de leitura</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Devocionais. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

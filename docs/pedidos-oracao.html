@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pedidos de Oração - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .sidebar {
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+        }
+        
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .sidebar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        
+        .sidebar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .content-section {
+            scroll-margin-top: 100px;
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .nav-link.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .version-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4">
+                    <img src="img/logo.png" alt="Vertex Solutions" class="h-8 w-auto">
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">CBAV</h1>
+                        <p class="text-sm text-gray-600">Sistema CRM Ministerial</p>
+                    </div>
+                </div>
+                <nav class="flex space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900">Início</a>
+                    <a href="creditos.html" class="text-gray-600 hover:text-gray-900">Créditos</a>
+                    <a href="licenca.html" class="text-gray-600 hover:text-gray-900">Licença</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-lg h-screen sticky top-0 overflow-y-auto sidebar">
+            <div class="p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Documentação</h2>
+                <nav class="space-y-2">
+                    <a href="index.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-home mr-2"></i>Visão Geral
+                    </a>
+                    <a href="gestao-membros.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-users mr-2"></i>Gestão de Membros
+                    </a>
+                    <a href="sistema-financeiro.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-dollar-sign mr-2"></i>Sistema Financeiro
+                    </a>
+                    <a href="ebd-digital.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-graduation-cap mr-2"></i>EBD Digital
+                    </a>
+                    <a href="eventos.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-calendar mr-2"></i>Eventos
+                    </a>
+                    <a href="conselho.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-gavel mr-2"></i>Conselho Ministerial
+                    </a>
+                    <a href="devocionais.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-book-open mr-2"></i>Devocionais
+                    </a>
+                    <a href="biblia-digital.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-bible mr-2"></i>Bíblia Digital
+                    </a>
+                    <a href="pedidos-oracao.html" class="nav-link active block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-pray mr-2"></i>Pedidos de Oração
+                    </a>
+                    <a href="instalacao.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-download mr-2"></i>Instalação
+                    </a>
+                    <a href="configuracao.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-cog mr-2"></i>Configuração
+                    </a>
+                    <a href="api.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-code mr-2"></i>API e Integrações
+                    </a>
+                    <a href="deploy.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-rocket mr-2"></i>Deploy
+                    </a>
+                    <a href="permissoes.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-shield-alt mr-2"></i>Permissões
+                    </a>
+                    <a href="backup.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-database mr-2"></i>Backup
+                    </a>
+                    <a href="logs.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-file-alt mr-2"></i>Logs
+                    </a>
+                    <a href="contato.html" class="nav-link block px-3 py-2 rounded-lg text-sm font-medium">
+                        <i class="fas fa-envelope mr-2"></i>Contato
+                    </a>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8">
+            <div class="max-w-4xl mx-auto">
+                <!-- Header Section -->
+                <div class="text-center mb-12">
+                    <div class="mb-8">
+                        <div class="w-20 h-20 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-pray text-purple-600 text-3xl"></i>
+                        </div>
+                        <h1 class="text-4xl font-bold text-gray-900 mb-4">Sistema de Pedidos de Oração</h1>
+                        <p class="text-xl text-gray-600 mb-6">Sistema completo para gestão de pedidos de oração e intercessão</p>
+                        <div class="flex justify-center space-x-4">
+                            <span class="version-badge text-white px-3 py-1 rounded-full text-sm font-medium">
+                                v2.0.0
+                            </span>
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                                <i class="fas fa-check mr-1"></i>Ativo
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overview Section -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            O Sistema de Pedidos de Oração é uma funcionalidade essencial que permite aos membros da igreja 
+                            solicitar oração de forma organizada e eficiente. O sistema inclui categorização, prioridades, 
+                            sistema de intercessores e notificações automáticas.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Funcionalidades Principais:</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Criação de pedidos de oração
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Categorização (saúde, família, trabalho, espiritual)
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Sistema de prioridades
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Pedidos anônimos opcionais
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Sistema de intercessores
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-check text-green-500 mr-2"></i>
+                                        Notificações automáticas
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Benefícios:</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Organização eficiente dos pedidos
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Acompanhamento do status
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Histórico completo
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Relatórios e estatísticas
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Integração com notificações
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fas fa-star text-yellow-500 mr-2"></i>
+                                        Interface intuitiva
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features Section -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Detalhadas</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Criação de Pedidos -->
+                        <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-plus text-blue-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">Criação de Pedidos</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Membros podem criar pedidos de oração com informações detalhadas, incluindo título, 
+                                descrição, categoria e prioridade.
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Formulário intuitivo e responsivo</li>
+                                <li>• Validação de dados em tempo real</li>
+                                <li>• Opção de pedidos anônimos</li>
+                                <li>• Controle de compartilhamento</li>
+                            </ul>
+                        </div>
+
+                        <!-- Categorização -->
+                        <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-tags text-green-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">Categorização</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Sistema de categorização para organizar os pedidos de forma eficiente.
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Saúde</li>
+                                <li>• Família</li>
+                                <li>• Trabalho</li>
+                                <li>• Espiritual</li>
+                                <li>• Outros</li>
+                            </ul>
+                        </div>
+
+                        <!-- Sistema de Prioridades -->
+                        <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-exclamation-triangle text-orange-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">Sistema de Prioridades</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Controle de prioridades para direcionar a atenção dos intercessores.
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Baixa (verde)</li>
+                                <li>• Média (amarelo)</li>
+                                <li>• Alta (laranja)</li>
+                                <li>• Urgente (vermelho)</li>
+                            </ul>
+                        </div>
+
+                        <!-- Sistema de Intercessores -->
+                        <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-hands-helping text-purple-600 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900">Sistema de Intercessores</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">
+                                Controle de intercessores que registram suas orações pelos pedidos.
+                            </p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Registro de intercessões</li>
+                                <li>• Tempo de oração</li>
+                                <li>• Tipo de oração</li>
+                                <li>• Observações</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Database Structure -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabela: pedido_oracaos</h3>
+                        <div class="code-block mb-6">
+<pre><code>CREATE TABLE pedido_oracaos (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    membro_id BIGINT UNSIGNED NOT NULL,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT NOT NULL,
+    categoria ENUM('saude', 'familia', 'trabalho', 'espiritual', 'outros'),
+    prioridade ENUM('baixa', 'media', 'alta', 'urgente'),
+    status ENUM('pendente', 'em_oracao', 'atendido', 'arquivado'),
+    data_pedido DATETIME,
+    data_atendimento DATETIME NULL,
+    observacoes TEXT NULL,
+    anonimo BOOLEAN DEFAULT FALSE,
+    pode_compartilhar BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);</code></pre>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabela: intercessor_oracaos</h3>
+                        <div class="code-block">
+<pre><code>CREATE TABLE intercessor_oracaos (
+    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    pedido_id BIGINT UNSIGNED NOT NULL,
+    user_id BIGINT UNSIGNED NOT NULL,
+    data_oracao DATETIME,
+    observacoes TEXT NULL,
+    tempo_oracao INT NULL,
+    tipo_oracao ENUM('individual', 'grupo', 'igreja'),
+    created_at TIMESTAMP NULL,
+    updated_at TIMESTAMP NULL
+);</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Routes -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Rotas Disponíveis</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Área Member (Membros)</h3>
+                        <div class="code-block mb-6">
+<pre><code>GET    /member/pedidos-oracao                    # Lista de pedidos
+GET    /member/pedidos-oracao/create             # Formulário de criação
+POST   /member/pedidos-oracao                    # Salvar novo pedido
+GET    /member/pedidos-oracao/{pedido}           # Visualizar pedido
+GET    /member/pedidos-oracao/{pedido}/edit      # Formulário de edição
+PUT    /member/pedidos-oracao/{pedido}           # Atualizar pedido
+DELETE /member/pedidos-oracao/{pedido}           # Excluir pedido
+POST   /member/pedidos-oracao/{pedido}/marcar-atendido # Marcar como atendido</code></pre>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Área Admin (Intercessores)</h3>
+                        <div class="code-block">
+<pre><code>GET    /admin/intercessor                        # Dashboard
+GET    /admin/intercessor/pedidos                # Lista de pedidos
+GET    /admin/intercessor/pedidos/{pedido}       # Visualizar pedido
+POST   /admin/intercessor/pedidos/{pedido}/intercessao # Registrar intercessão
+PUT    /admin/intercessor/pedidos/{pedido}/status # Atualizar status
+GET    /admin/intercessor/minhas-intercessoes    # Minhas intercessões
+GET    /admin/intercessor/relatorios             # Relatórios</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Installation -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Instalação</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">1. Executar o Comando de Setup</h3>
+                        <div class="code-block mb-6">
+<pre><code>php artisan setup:pedidos-oracao</code></pre>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6">
+                            Este comando irá executar as migrations necessárias, criar roles e permissões, 
+                            limpar cache do sistema e verificar se tudo está funcionando.
+                        </p>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">2. Configurar Usuários Intercessores</h3>
+                        <ol class="list-decimal list-inside space-y-2 text-gray-600">
+                            <li>Acesse o painel admin: <code class="bg-gray-100 px-2 py-1 rounded">/admin</code></li>
+                            <li>Vá em <strong>Pessoas > Usuários</strong></li>
+                            <li>Edite os usuários que serão intercessores</li>
+                            <li>Atribua o role <strong>"intercessor"</strong> a eles</li>
+                        </ol>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-8">3. Testar o Sistema</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-blue-900 mb-3">Como Membro:</h4>
+                                <ol class="list-decimal list-inside space-y-2 text-blue-700 text-sm">
+                                    <li>Acesse: <code>/member/pedidos-oracao</code></li>
+                                    <li>Clique em "Novo Pedido de Oração"</li>
+                                    <li>Preencha o formulário</li>
+                                    <li>Envie o pedido</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="bg-green-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-green-900 mb-3">Como Intercessor:</h4>
+                                <ol class="list-decimal list-inside space-y-2 text-green-700 text-sm">
+                                    <li>Acesse: <code>/admin/intercessor</code></li>
+                                    <li>Veja os pedidos pendentes</li>
+                                    <li>Clique em um pedido para visualizar</li>
+                                    <li>Registre uma intercessão</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Models -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Modelos e Relacionamentos</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">PedidoOracao Model</h3>
+                        <div class="code-block mb-6">
+<pre><code>class PedidoOracao extends Model
+{
+    protected $fillable = [
+        'membro_id',
+        'titulo',
+        'descricao',
+        'categoria',
+        'prioridade',
+        'status',
+        'data_pedido',
+        'data_atendimento',
+        'observacoes',
+        'anonimo',
+        'pode_compartilhar'
+    ];
+
+    public function membro(): BelongsTo
+    {
+        return $this->belongsTo(Membro::class);
+    }
+
+    public function intercessores(): HasMany
+    {
+        return $this->hasMany(Intercessao::class, 'pedido_id');
+    }
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Intercessao Model</h3>
+                        <div class="code-block">
+<pre><code>class Intercessao extends Model
+{
+    protected $fillable = [
+        'pedido_id',
+        'user_id',
+        'data_oracao',
+        'observacoes',
+        'tempo_oracao',
+        'tipo_oracao'
+    ];
+
+    public function pedido(): BelongsTo
+    {
+        return $this->belongsTo(PedidoOracao::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Controllers -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Controladores</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">PedidoOracaoController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Controlador principal para gerenciar pedidos de oração na área de membros.
+                        </p>
+                        <div class="code-block mb-6">
+<pre><code>class PedidoOracaoController extends Controller
+{
+    public function index()     // Listar pedidos
+    public function create()    // Formulário de criação
+    public function store()     // Salvar novo pedido
+    public function show()      // Visualizar pedido
+    public function edit()      // Formulário de edição
+    public function update()    // Atualizar pedido
+    public function destroy()   // Excluir pedido
+    public function marcarAtendido() // Marcar como atendido
+    public function participarIntercessao() // Participar da intercessão
+}</code></pre>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">IntercessorController</h3>
+                        <p class="text-gray-600 mb-4">
+                            Controlador para gerenciar intercessões na área administrativa.
+                        </p>
+                        <div class="code-block">
+<pre><code>class IntercessorController extends Controller
+{
+    public function index()           // Dashboard
+    public function pedidos()         // Lista de pedidos
+    public function show()            // Visualizar pedido
+    public function registrarIntercessao() // Registrar intercessão
+    public function minhasIntercessoes() // Minhas intercessões
+    public function relatorios()      // Relatórios
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Views -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Views e Interface</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3">Área Member</h3>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li>• <code>member/pedidos-oracao/index.blade.php</code></li>
+                                    <li>• <code>member/pedidos-oracao/create.blade.php</code></li>
+                                    <li>• <code>member/pedidos-oracao/show.blade.php</code></li>
+                                    <li>• <code>member/pedidos-oracao/edit.blade.php</code></li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-3">Área Admin</h3>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li>• <code>admin/intercessor/dashboard.blade.php</code></li>
+                                    <li>• <code>admin/intercessor/pedidos.blade.php</code></li>
+                                    <li>• <code>admin/intercessor/show.blade.php</code></li>
+                                    <li>• <code>admin/intercessor/relatorios.blade.php</code></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Permissions -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Permissões e Roles</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Role: intercessor</h3>
+                        <div class="code-block mb-6">
+<pre><code>// Permissões do intercessor
+'intercessor.access'           // Acesso ao sistema de intercessão
+'intercessor.view_pedidos'     // Visualizar pedidos
+'intercessor.registrar_intercessao' // Registrar intercessão
+'intercessor.view_relatorios'  // Visualizar relatórios
+'intercessor.manage_status'    // Gerenciar status dos pedidos</code></pre>
+                        </div>
+
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-4">Permissões de Membros</h3>
+                        <div class="code-block">
+<pre><code>// Permissões de membros
+'pedidos-oracao.create'        // Criar pedidos
+'pedidos-oracao.view_own'      // Visualizar próprios pedidos
+'pedidos-oracao.edit_own'      // Editar próprios pedidos
+'pedidos-oracao.delete_own'    // Excluir próprios pedidos
+'pedidos-oracao.participate'   // Participar de intercessões</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Sistema de Notificações</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <p class="text-gray-600 mb-6">
+                            O sistema integra automaticamente com o sistema de notificações para manter 
+                            todos informados sobre novos pedidos e atualizações.
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-blue-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-blue-900 mb-3">Notificações Automáticas:</h4>
+                                <ul class="text-blue-700 space-y-2">
+                                    <li>• Novo pedido de oração criado</li>
+                                    <li>• Pedido marcado como atendido</li>
+                                    <li>• Nova intercessão registrada</li>
+                                    <li>• Pedido com prioridade urgente</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-green-50 rounded-lg p-6">
+                                <h4 class="font-semibold text-green-900 mb-3">Tipos de Notificação:</h4>
+                                <ul class="text-green-700 space-y-2">
+                                    <li>• Email (se configurado)</li>
+                                    <li>• Notificação interna</li>
+                                    <li>• Push notification</li>
+                                    <li>• SMS (futuro)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports -->
+                <section class="content-section mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Relatórios e Estatísticas</h2>
+                    
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Relatórios Disponíveis:</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li>• Pedidos por categoria</li>
+                                    <li>• Pedidos por prioridade</li>
+                                    <li>• Pedidos por status</li>
+                                    <li>• Intercessões por período</li>
+                                    <li>• Tempo médio de atendimento</li>
+                                    <li>• Intercessores mais ativos</li>
+                                </ul>
+                            </div>
+                            
+                            <div>
+                                <h4 class="font-semibold text-gray-900 mb-3">Estatísticas:</h4>
+                                <ul class="space-y-2 text-gray-600">
+                                    <li>• Total de pedidos</li>
+                                    <li>• Pedidos pendentes</li>
+                                    <li>• Pedidos atendidos</li>
+                                    <li>• Total de intercessões</li>
+                                    <li>• Tempo total de oração</li>
+                                    <li>• Membros mais ativos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer class="mt-16 pt-8 border-t border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-6">
+                            <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                                <i class="fas fa-info-circle mr-2"></i>Créditos
+                            </a>
+                            <a href="licenca.html" class="text-green-600 hover:text-green-800 font-medium">
+                                <i class="fas fa-gavel mr-2"></i>Licença
+                            </a>
+                        </div>
+                        <div class="text-gray-500 text-sm">
+                            © 2025 Vertex Solutions. Todos os direitos reservados.
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active navigation highlighting
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html> 

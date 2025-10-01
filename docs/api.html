@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API e Integrações - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">API e Integrações</h1>
+                    <p class="text-sm text-gray-500">Documentação da API</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-code text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">API e Integrações</h1>
+            <p class="text-xl text-gray-600 mb-6">Documentação completa da API REST do sistema CBAV</p>
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Tudo posso naquele que me fortalece"</p>
+                <p class="text-gray-500 text-sm mt-2">Filipenses 4:13</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral da API</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    A API REST do sistema CBAV fornece acesso programático a todas as funcionalidades 
+                    do sistema. Desenvolvida com Laravel, oferece endpoints seguros e bem documentados 
+                    para integração com aplicações externas.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Autenticação Segura</h3>
+                        <p class="text-gray-600 text-sm">JWT e OAuth2</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-database text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">CRUD Completo</h3>
+                        <p class="text-gray-600 text-sm">Todas as entidades</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Relatórios</h3>
+                        <p class="text-gray-600 text-sm">Dados analíticos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Authentication -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Autenticação</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Métodos de Autenticação</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">JWT Token</h4>
+                        <p class="text-blue-700 mb-4">Autenticação baseada em tokens JWT</p>
+                        <div class="code-block">
+<pre><code>POST /api/auth/login
+{
+    "email": "user@example.com",
+    "password": "password"
+}
+
+Response:
+{
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+    "user": {
+        "id": 1,
+        "name": "User Name",
+        "email": "user@example.com"
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">OAuth2</h4>
+                        <p class="text-green-700 mb-4">Autenticação OAuth2 para aplicações externas</p>
+                        <div class="code-block">
+<pre><code>POST /oauth/token
+{
+    "grant_type": "password",
+    "client_id": "client_id",
+    "client_secret": "client_secret",
+    "username": "user@example.com",
+    "password": "password"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Endpoints -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Endpoints Principais</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos da API</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Gestão de Membros</h4>
+                        <div class="code-block">
+<pre><code># Listar membros
+GET /api/members
+Authorization: Bearer {token}
+
+# Criar membro
+POST /api/members
+{
+    "nome": "João Silva",
+    "email": "joao@email.com",
+    "telefone": "(75) 99999-9999",
+    "data_nascimento": "1990-01-01",
+    "cargo_id": 1
+}
+
+# Atualizar membro
+PUT /api/members/{id}
+{
+    "nome": "João Silva Santos",
+    "email": "joao.silva@email.com"
+}
+
+# Deletar membro
+DELETE /api/members/{id}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Sistema Financeiro</h4>
+                        <div class="code-block">
+<pre><code># Listar transações
+GET /api/transactions
+Authorization: Bearer {token}
+
+# Criar doação
+POST /api/donations
+{
+    "valor": 100.00,
+    "gateway": "stripe",
+    "campanha_id": 1,
+    "doador_nome": "Anônimo",
+    "doador_email": "doador@email.com"
+}
+
+# Relatórios financeiros
+GET /api/finance/reports
+GET /api/finance/reports/monthly
+GET /api/finance/reports/campaigns</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">EBD Digital</h4>
+                        <div class="code-block">
+<pre><code># Listar aulas
+GET /api/ebd/classes
+Authorization: Bearer {token}
+
+# Criar aula
+POST /api/ebd/classes
+{
+    "titulo": "Lição 1 - Introdução",
+    "descricao": "Introdução ao estudo bíblico",
+    "data_aula": "2025-01-15",
+    "professor_id": 1
+}
+
+# Quiz bíblico
+GET /api/ebd/quiz/questions
+POST /api/ebd/quiz/answers
+{
+    "pergunta_id": 1,
+    "resposta": "A"
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Eventos</h4>
+                        <div class="code-block">
+<pre><code># Listar eventos
+GET /api/events
+Authorization: Bearer {token}
+
+# Criar evento
+POST /api/events
+{
+    "titulo": "Culto de Domingo",
+    "descricao": "Culto de domingo às 18h",
+    "data_inicio": "2025-01-19 18:00:00",
+    "local": "Templo Principal",
+    "capacidade_maxima": 200
+}
+
+# Inscrições
+POST /api/events/{id}/register
+{
+    "nome": "Maria Silva",
+    "email": "maria@email.com",
+    "telefone": "(75) 88888-8888"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Response Format -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Formato de Resposta</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Padrão de Resposta</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Sucesso</h4>
+                        <div class="code-block">
+<pre><code>{
+    "success": true,
+    "message": "Operação realizada com sucesso",
+    "data": {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joao@email.com",
+        "created_at": "2025-01-15T10:30:00Z"
+    },
+    "meta": {
+        "total": 1,
+        "page": 1,
+        "per_page": 15
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Erro</h4>
+                        <div class="code-block">
+<pre><code>{
+    "success": false,
+    "message": "Erro na operação",
+    "errors": {
+        "email": ["O email já está em uso"],
+        "telefone": ["Telefone inválido"]
+    },
+    "code": "VALIDATION_ERROR"
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Webhooks -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Webhooks</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Integração com Webhooks</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Webhooks de Pagamento</h4>
+                        <div class="code-block">
+<pre><code># Stripe Webhook
+POST /api/webhooks/stripe
+{
+    "type": "payment_intent.succeeded",
+    "data": {
+        "object": {
+            "id": "pi_1234567890",
+            "amount": 10000,
+            "currency": "brl",
+            "status": "succeeded"
+        }
+    }
+}
+
+# Mercado Pago Webhook
+POST /api/webhooks/mercadopago
+{
+    "type": "payment",
+    "data": {
+        "id": 123456789,
+        "status": "approved",
+        "amount": 100.00
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Webhooks de Sistema</h4>
+                        <div class="code-block">
+<pre><code># Novo membro
+POST /webhook-url
+{
+    "event": "member.created",
+    "data": {
+        "id": 1,
+        "nome": "João Silva",
+        "email": "joao@email.com"
+    }
+}
+
+# Nova doação
+POST /webhook-url
+{
+    "event": "donation.received",
+    "data": {
+        "id": 1,
+        "valor": 100.00,
+        "doador": "Anônimo"
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SDKs -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">SDKs e Bibliotecas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Bibliotecas Disponíveis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">JavaScript/Node.js</h4>
+                        <div class="code-block">
+<pre><code>npm install cbav-api-client
+
+import { CBAVClient } from 'cbav-api-client';
+
+const client = new CBAVClient({
+    baseURL: 'https://api.cbav.com',
+    token: 'your-api-token'
+});
+
+// Usar a API
+const members = await client.members.list();
+const newMember = await client.members.create({
+    nome: 'João Silva',
+    email: 'joao@email.com'
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">PHP</h4>
+                        <div class="code-block">
+<pre><code>composer require cbav/api-client
+
+use CBAV\ApiClient;
+
+$client = new ApiClient([
+    'base_url' => 'https://api.cbav.com',
+    'token' => 'your-api-token'
+]);
+
+// Usar a API
+$members = $client->members()->list();
+$newMember = $client->members()->create([
+    'nome' => 'João Silva',
+    'email' => 'joao@email.com'
+]);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rate Limiting -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Rate Limiting</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Limites de Requisições</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Plano Básico</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                1.000 req/min
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Endpoints básicos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Suporte por email
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Plano Profissional</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                10.000 req/min
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Todos os endpoints
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Suporte prioritário
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Plano Enterprise</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Ilimitado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Endpoints customizados
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Suporte 24/7
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Error Codes -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Códigos de Erro</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Códigos de Status HTTP</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Erros de Cliente (4xx)</h4>
+                        <ul class="text-red-700 space-y-2">
+                            <li><strong>400:</strong> Bad Request - Dados inválidos</li>
+                            <li><strong>401:</strong> Unauthorized - Token inválido</li>
+                            <li><strong>403:</strong> Forbidden - Sem permissão</li>
+                            <li><strong>404:</strong> Not Found - Recurso não encontrado</li>
+                            <li><strong>422:</strong> Unprocessable Entity - Validação falhou</li>
+                            <li><strong>429:</strong> Too Many Requests - Rate limit excedido</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Erros de Servidor (5xx)</h4>
+                        <ul class="text-orange-700 space-y-2">
+                            <li><strong>500:</strong> Internal Server Error - Erro interno</li>
+                            <li><strong>502:</strong> Bad Gateway - Serviço indisponível</li>
+                            <li><strong>503:</strong> Service Unavailable - Manutenção</li>
+                            <li><strong>504:</strong> Gateway Timeout - Timeout</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - API e Integrações. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Permissões - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Sistema de Permissões</h1>
+                    <p class="text-sm text-gray-500">Controle de Acesso e Segurança</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-pink-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-shield-alt text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Sistema de Permissões</h1>
+            <p class="text-xl text-gray-600 mb-6">Controle granular de acesso e segurança</p>
+            <div class="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Tudo posso naquele que me fortalece"</p>
+                <p class="text-gray-500 text-sm mt-2">Filipenses 4:13</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O sistema de permissões do CBAV utiliza o pacote Spatie Laravel Permission para 
+                    fornecer controle granular de acesso. Permite definir roles, permissões e 
+                    atribuir acesso específico a cada usuário do sistema.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users-cog text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Roles</h3>
+                        <p class="text-gray-600 text-sm">Funções e responsabilidades</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-key text-pink-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Permissões</h3>
+                        <p class="text-gray-600 text-sm">Controle granular de acesso</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-shield text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Segurança</h3>
+                        <p class="text-gray-600 text-sm">Proteção de dados</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Roles -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Roles (Funções)</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Funções Principais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Super Admin</h4>
+                        <p class="text-red-700 mb-4">Acesso total ao sistema</p>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Todas as permissões
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Gestão de usuários
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Configurações do sistema
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Logs e auditoria
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Admin</h4>
+                        <p class="text-blue-700 mb-4">Administrador do sistema</p>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Gestão de membros
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Sistema financeiro
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Relatórios
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Configurações básicas
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Secretário</h4>
+                        <p class="text-green-700 mb-4">Gestão administrativa</p>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Cadastro de membros
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Gestão de eventos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Relatórios básicos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Comunicações
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Membro</h4>
+                        <p class="text-purple-700 mb-4">Usuário comum</p>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Visualizar perfil
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Participar de eventos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Acessar EBD
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Fazer doações
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Permissions -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Permissões</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Permissões Granulares</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Gestão de Membros</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <ul class="text-blue-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-eye text-blue-500 mr-2"></i>
+                                    members.view
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-plus text-blue-500 mr-2"></i>
+                                    members.create
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-edit text-blue-500 mr-2"></i>
+                                    members.edit
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-trash text-blue-500 mr-2"></i>
+                                    members.delete
+                                </li>
+                            </ul>
+                            <ul class="text-blue-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-download text-blue-500 mr-2"></i>
+                                    members.export
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-chart-bar text-blue-500 mr-2"></i>
+                                    members.reports
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-birthday-cake text-blue-500 mr-2"></i>
+                                    members.birthdays
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-users text-blue-500 mr-2"></i>
+                                    members.ministries
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Sistema Financeiro</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <ul class="text-green-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-eye text-green-500 mr-2"></i>
+                                    finance.view
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-plus text-green-500 mr-2"></i>
+                                    finance.create
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-edit text-green-500 mr-2"></i>
+                                    finance.edit
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-trash text-green-500 mr-2"></i>
+                                    finance.delete
+                                </li>
+                            </ul>
+                            <ul class="text-green-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                                    finance.reports
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-cog text-green-500 mr-2"></i>
+                                    finance.settings
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-download text-green-500 mr-2"></i>
+                                    finance.export
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-calendar text-green-500 mr-2"></i>
+                                    finance.campaigns
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">EBD Digital</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <ul class="text-purple-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-eye text-purple-500 mr-2"></i>
+                                    ebd.view
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-plus text-purple-500 mr-2"></i>
+                                    ebd.create
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-edit text-purple-500 mr-2"></i>
+                                    ebd.edit
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-trash text-purple-500 mr-2"></i>
+                                    ebd.delete
+                                </li>
+                            </ul>
+                            <ul class="text-purple-700 space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-graduation-cap text-purple-500 mr-2"></i>
+                                    ebd.professors
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-users text-purple-500 mr-2"></i>
+                                    ebd.students
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-certificate text-purple-500 mr-2"></i>
+                                    ebd.certificates
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-chart-bar text-purple-500 mr-2"></i>
+                                    ebd.reports
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Implementação</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Código de Implementação</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Verificar Permissões</h4>
+                        <div class="code-block">
+<pre><code>// Verificar se usuário tem permissão
+if (auth()->user()->can('members.create')) {
+    // Usuário pode criar membros
+}
+
+// Verificar se usuário tem role
+if (auth()->user()->hasRole('admin')) {
+    // Usuário é admin
+}
+
+// Verificar múltiplas permissões
+if (auth()->user()->hasAnyPermission(['members.create', 'members.edit'])) {
+    // Usuário pode criar ou editar membros
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Middleware de Permissão</h4>
+                        <div class="code-block">
+<pre><code>// No arquivo de rotas
+Route::middleware(['auth', 'permission:members.view'])->group(function () {
+    Route::get('/members', [MemberController::class, 'index']);
+});
+
+// Middleware personalizado
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Blade Templates</h4>
+                        <div class="code-block">
+<pre><code>@can('members.create')
+    <a href="{{ route('members.create') }}" class="btn btn-primary">
+        Criar Membro
+    </a>
+@endcan
+
+@role('admin')
+    <div class="admin-panel">
+        <!-- Conteúdo apenas para admins -->
+    </div>
+@endrole
+
+@hasanyrole('admin|secretary')
+    <div class="management-panel">
+        <!-- Conteúdo para admin ou secretário -->
+    </div>
+@endhasanyrole</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Structure -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas de Permissão</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Tabela de Roles</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE roles (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    guard_name VARCHAR(255) DEFAULT 'web',
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Tabela de Permissões</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE permissions (
+    id BIGINT PRIMARY KEY,
+    name VARCHAR(255) UNIQUE NOT NULL,
+    guard_name VARCHAR(255) DEFAULT 'web',
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Tabela de Relacionamento</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE model_has_roles (
+    role_id BIGINT,
+    model_type VARCHAR(255),
+    model_id BIGINT,
+    PRIMARY KEY (role_id, model_id, model_type)
+);
+
+CREATE TABLE model_has_permissions (
+    permission_id BIGINT,
+    model_type VARCHAR(255),
+    model_id BIGINT,
+    PRIMARY KEY (permission_id, model_id, model_type)
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Commands -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Comandos Artisan</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Comandos de Permissão</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Criar Roles</h4>
+                        <div class="code-block">
+<pre><code># Criar role
+php artisan permission:create-role admin
+
+# Criar permissão
+php artisan permission:create-permission members.create
+
+# Atribuir permissão a role
+php artisan permission:assign-permission members.create admin
+
+# Atribuir role a usuário
+php artisan permission:assign-role admin user@email.com</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Verificar Permissões</h4>
+                        <div class="code-block">
+<pre><code># Listar roles
+php artisan permission:show-roles
+
+# Listar permissões
+php artisan permission:show-permissions
+
+# Verificar usuário
+php artisan permission:show-user user@email.com
+
+# Cache de permissões
+php artisan permission:cache-reset</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Best Practices -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Boas Práticas de Segurança</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Recomendações de Segurança</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Princípio do Menor Privilégio</h4>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Conceder apenas permissões necessárias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Revisar permissões regularmente
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Remover permissões não utilizadas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-red-500 mr-2"></i>
+                                Monitorar atividades suspeitas
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Auditoria e Logs</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Registrar todas as ações
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Monitorar tentativas de acesso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Alertas de segurança
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Backup de configurações
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Sistema de Permissões. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

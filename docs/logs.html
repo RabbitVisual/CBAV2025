@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs e Monitoramento - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Logs e Monitoramento</h1>
+                    <p class="text-sm text-gray-500">Sistema de Logs</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-file-alt text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Logs e Monitoramento</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema completo de logs e monitoramento</p>
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Tudo posso naquele que me fortalece"</p>
+                <p class="text-gray-500 text-sm mt-2">Filipenses 4:13</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O sistema de logs do CBAV registra todas as atividades importantes do sistema, 
+                    incluindo erros, ações de usuários, transações e eventos de segurança. 
+                    Fornece monitoramento em tempo real e análise histórica.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-eye text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Monitoramento</h3>
+                        <p class="text-gray-600 text-sm">Acompanhamento em tempo real</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Análise</h3>
+                        <p class="text-gray-600 text-sm">Relatórios e estatísticas</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Segurança</h3>
+                        <p class="text-gray-600 text-sm">Auditoria e compliance</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Types -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Tipos de Logs</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Categorias de Logs</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Logs de Erro</h4>
+                        <p class="text-red-700 mb-4">Registro de erros e exceções</p>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                                Exceções PHP
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-red-500 mr-2"></i>
+                                Erros de banco de dados
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-network-wired text-red-500 mr-2"></i>
+                                Erros de rede
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                                Erros de validação
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Logs de Acesso</h4>
+                        <p class="text-blue-700 mb-4">Registro de acessos e autenticação</p>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-sign-in-alt text-blue-500 mr-2"></i>
+                                Login de usuários
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sign-out-alt text-blue-500 mr-2"></i>
+                                Logout de usuários
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-ban text-blue-500 mr-2"></i>
+                                Tentativas de acesso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-blue-500 mr-2"></i>
+                                Ações de segurança
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Logs de Atividade</h4>
+                        <p class="text-green-700 mb-4">Registro de ações dos usuários</p>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-plus text-green-500 mr-2"></i>
+                                Criação de registros
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-edit text-green-500 mr-2"></i>
+                                Edição de dados
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-trash text-green-500 mr-2"></i>
+                                Exclusão de dados
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-download text-green-500 mr-2"></i>
+                                Exportação de dados
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Logs de Performance</h4>
+                        <p class="text-purple-700 mb-4">Monitoramento de performance</p>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-tachometer-alt text-purple-500 mr-2"></i>
+                                Tempo de resposta
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-purple-500 mr-2"></i>
+                                Queries lentas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-memory text-purple-500 mr-2"></i>
+                                Uso de memória
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-purple-500 mr-2"></i>
+                                Uso de disco
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Configuration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Configuração de Logs</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Configurações do Laravel</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Arquivo config/logging.php</h4>
+                        <div class="code-block">
+<pre><code>'default' => env('LOG_CHANNEL', 'stack'),
+
+'channels' => [
+    'stack' => [
+        'driver' => 'stack',
+        'channels' => ['single', 'daily'],
+        'ignore_exceptions' => false,
+    ],
+    
+    'single' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/laravel.log'),
+        'level' => env('LOG_LEVEL', 'debug'),
+    ],
+    
+    'daily' => [
+        'driver' => 'daily',
+        'path' => storage_path('logs/laravel.log'),
+        'level' => env('LOG_LEVEL', 'debug'),
+        'days' => 14,
+    ],
+    
+    'error' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/error.log'),
+        'level' => 'error',
+    ],
+    
+    'security' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/security.log'),
+        'level' => 'info',
+    ],
+],</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Configuração no .env</h4>
+                        <div class="code-block">
+<pre><code># Configurações de Log
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+# Logs específicos
+ERROR_LOG_CHANNEL=error
+SECURITY_LOG_CHANNEL=security
+PERFORMANCE_LOG_CHANNEL=daily</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Usage -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Uso de Logs</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Exemplos de Implementação</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Logs Básicos</h4>
+                        <div class="code-block">
+<pre><code>// Log de informação
+Log::info('Usuário criado com sucesso', [
+    'user_id' => $user->id,
+    'email' => $user->email
+]);
+
+// Log de erro
+Log::error('Erro ao processar pagamento', [
+    'user_id' => $user->id,
+    'amount' => $amount,
+    'error' => $exception->getMessage()
+]);
+
+// Log de warning
+Log::warning('Tentativa de login falhou', [
+    'email' => $email,
+    'ip' => request()->ip()
+]);
+
+// Log de debug
+Log::debug('Query executada', [
+    'sql' => $query->toSql(),
+    'bindings' => $query->getBindings()
+]);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Logs de Atividade</h4>
+                        <div class="code-block">
+<pre><code>// Log de criação
+Log::info('Membro criado', [
+    'action' => 'create',
+    'model' => 'Member',
+    'user_id' => auth()->id(),
+    'data' => $member->toArray()
+]);
+
+// Log de atualização
+Log::info('Membro atualizado', [
+    'action' => 'update',
+    'model' => 'Member',
+    'user_id' => auth()->id(),
+    'member_id' => $member->id,
+    'changes' => $member->getChanges()
+]);
+
+// Log de exclusão
+Log::info('Membro excluído', [
+    'action' => 'delete',
+    'model' => 'Member',
+    'user_id' => auth()->id(),
+    'member_id' => $member->id
+]);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Logs de Segurança</h4>
+                        <div class="code-block">
+<pre><code>// Log de login
+Log::channel('security')->info('Login realizado', [
+    'user_id' => $user->id,
+    'email' => $user->email,
+    'ip' => request()->ip(),
+    'user_agent' => request()->userAgent()
+]);
+
+// Log de tentativa de acesso
+Log::channel('security')->warning('Tentativa de acesso negada', [
+    'email' => $email,
+    'ip' => request()->ip(),
+    'reason' => 'Senha incorreta'
+]);
+
+// Log de permissão negada
+Log::channel('security')->warning('Acesso negado', [
+    'user_id' => auth()->id(),
+    'permission' => 'members.delete',
+    'route' => request()->route()->getName()
+]);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monitoring -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Monitoramento</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Sistema de Monitoramento</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Monitoramento de Erros</h4>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                                Alertas de erro em tempo real
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-chart-line text-red-500 mr-2"></i>
+                                Taxa de erro por período
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-bell text-red-500 mr-2"></i>
+                                Notificações automáticas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-history text-red-500 mr-2"></i>
+                                Histórico de erros
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Monitoramento de Performance</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>
+                                Tempo de resposta
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                Queries lentas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-memory text-blue-500 mr-2"></i>
+                                Uso de recursos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-chart-bar text-blue-500 mr-2"></i>
+                                Métricas de performance
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Monitoramento de Segurança</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                                Tentativas de acesso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-user-shield text-green-500 mr-2"></i>
+                                Ações de usuários
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-circle text-green-500 mr-2"></i>
+                                Violações de segurança
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-eye text-green-500 mr-2"></i>
+                                Auditoria de ações
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Monitoramento de Negócio</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-users text-purple-500 mr-2"></i>
+                                Atividade de usuários
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-chart-line text-purple-500 mr-2"></i>
+                                Métricas de uso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-purple-500 mr-2"></i>
+                                Padrões de acesso
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-analytics text-purple-500 mr-2"></i>
+                                Análise de comportamento
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Analysis -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Análise de Logs</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Ferramentas de Análise</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Comandos de Análise</h4>
+                        <div class="code-block">
+<pre><code># Ver logs em tempo real
+tail -f storage/logs/laravel.log
+
+# Buscar erros específicos
+grep "ERROR" storage/logs/laravel.log
+
+# Contar erros por período
+grep -c "ERROR" storage/logs/laravel-$(date +%Y-%m-%d).log
+
+# Analisar logs de segurança
+tail -f storage/logs/security.log
+
+# Ver logs de performance
+grep "slow query" storage/logs/laravel.log</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Relatórios de Logs</h4>
+                        <div class="code-block">
+<pre><code>// Gerar relatório de erros
+php artisan log:analyze --type=error --days=7
+
+// Relatório de segurança
+php artisan log:analyze --type=security --days=30
+
+// Relatório de performance
+php artisan log:analyze --type=performance --days=7
+
+// Exportar logs
+php artisan log:export --start=2025-01-01 --end=2025-01-31</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Log Retention -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Retenção de Logs</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Política de Retenção</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Logs de Erro</h4>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-red-500 mr-2"></i>
+                                Retenção: 90 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-archive text-red-500 mr-2"></i>
+                                Arquivo após 30 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-trash text-red-500 mr-2"></i>
+                                Exclusão após 90 dias
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Logs de Segurança</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-blue-500 mr-2"></i>
+                                Retenção: 1 ano
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-archive text-blue-500 mr-2"></i>
+                                Arquivo após 90 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-trash text-blue-500 mr-2"></i>
+                                Exclusão após 1 ano
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Logs de Atividade</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-green-500 mr-2"></i>
+                                Retenção: 6 meses
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-archive text-green-500 mr-2"></i>
+                                Arquivo após 30 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-trash text-green-500 mr-2"></i>
+                                Exclusão após 6 meses
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Logs de Performance</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-purple-500 mr-2"></i>
+                                Retenção: 30 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-archive text-purple-500 mr-2"></i>
+                                Arquivo após 7 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-trash text-purple-500 mr-2"></i>
+                                Exclusão após 30 dias
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Logs e Monitoramento. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bíblia Digital - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Bíblia Digital</h1>
+                    <p class="text-sm text-gray-500">Sistema de Bíblia Digital Completo</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-bible text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Bíblia Digital</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema completo de Bíblia digital com recursos avançados</p>
+            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"A tua palavra é lâmpada para os meus pés e luz para o meu caminho"</p>
+                <p class="text-gray-500 text-sm mt-2">Salmos 119:105</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O módulo de Bíblia Digital oferece acesso completo às Escrituras Sagradas com recursos 
+                    avançados de busca, estudo e compartilhamento. Permite crescimento espiritual através 
+                    da tecnologia moderna.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-search text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Busca Avançada</h3>
+                        <p class="text-gray-600 text-sm">Busca por texto, versículo e referência</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-bookmark text-orange-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Favoritos</h3>
+                        <p class="text-gray-600 text-sm">Sistema de favoritos e anotações</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-share-alt text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Compartilhamento</h3>
+                        <p class="text-gray-600 text-sm">Compartilhar versículos e estudos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Principais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Busca Avançada</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de busca completo com múltiplas opções de pesquisa.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Busca por texto</li>
+                        <li>• Busca por referência</li>
+                        <li>• Busca por palavra-chave</li>
+                        <li>• Filtros por livro</li>
+                        <li>• Resultados relevantes</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-bookmark text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Sistema de Favoritos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Marcar e organizar versículos favoritos com anotações.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Marcar versículos favoritos</li>
+                        <li>• Adicionar anotações</li>
+                        <li>• Organizar por categorias</li>
+                        <li>• Sincronização entre dispositivos</li>
+                        <li>• Histórico de favoritos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-share-alt text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Compartilhamento</h3>
+                    <p class="text-gray-600 mb-4">
+                        Compartilhar versículos e estudos em redes sociais.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Compartilhar versículos</li>
+                        <li>• Imagens personalizadas</li>
+                        <li>• Integração com redes sociais</li>
+                        <li>• Códigos QR</li>
+                        <li>• Links diretos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-history text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Histórico de Leitura</h3>
+                    <p class="text-gray-600 mb-4">
+                        Controle de leitura e progresso nos estudos bíblicos.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Histórico de leitura</li>
+                        <li>• Progresso por livro</li>
+                        <li>• Estatísticas de leitura</li>
+                        <li>• Metas de leitura</li>
+                        <li>• Lembretes diários</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-random text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Versículo do Dia</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de versículo do dia com reflexões e estudos.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Versículo diário</li>
+                        <li>• Reflexões automáticas</li>
+                        <li>• Notificações diárias</li>
+                        <li>• Compartilhamento automático</li>
+                        <li>• Histórico de versículos</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-mobile-alt text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Acesso Mobile</h3>
+                    <p class="text-gray-600 mb-4">
+                        Interface responsiva para acesso em dispositivos móveis.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Design responsivo</li>
+                        <li>• Acesso offline</li>
+                        <li>• Notificações push</li>
+                        <li>• Sincronização</li>
+                        <li>• Experiência otimizada</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Structure -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">biblia_livros</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE biblia_livros (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    abreviacao VARCHAR(10),
+    testamento ENUM('antigo', 'novo'),
+    ordem INT,
+    capitulos INT,
+    ativo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">biblia_capitulos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE biblia_capitulos (
+    id BIGINT PRIMARY KEY,
+    livro_id BIGINT,
+    numero INT,
+    titulo VARCHAR(255),
+    versiculos INT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">biblia_versiculos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE biblia_versiculos (
+    id BIGINT PRIMARY KEY,
+    capitulo_id BIGINT,
+    numero INT,
+    texto TEXT NOT NULL,
+    referencia VARCHAR(50),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">biblia_favoritos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE biblia_favoritos (
+    id BIGINT PRIMARY KEY,
+    user_id BIGINT,
+    versiculo_id BIGINT,
+    anotacao TEXT,
+    categoria VARCHAR(100),
+    data_favorito DATETIME,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">biblia_historico</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE biblia_historico (
+    id BIGINT PRIMARY KEY,
+    user_id BIGINT,
+    versiculo_id BIGINT,
+    tipo ENUM('visualizacao', 'favorito', 'compartilhamento'),
+    data_acesso DATETIME,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Controllers e Rotas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Controllers Principais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Admin Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                BibleController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                BibleRelatorioController
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Member Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                BibleMemberController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                BibleFavoritoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                BibleHistoricoController
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h4 class="font-semibold text-gray-900 mb-2">Rotas Principais</h4>
+                    <div class="code-block">
+<pre><code>// Rotas Admin
+Route::prefix('admin/bible')->name('admin.bible.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [BibleController::class, 'index'])->name('index');
+    Route::get('reports', [BibleRelatorioController::class, 'index'])->name('reports');
+});
+
+// Rotas Member
+Route::prefix('member/bible')->name('member.bible.')->middleware(['auth'])->group(function () {
+    Route::get('/', [BibleMemberController::class, 'index'])->name('index');
+    Route::get('search', [BibleMemberController::class, 'search'])->name('search');
+    Route::get('chapter/{livro}/{capitulo}', [BibleMemberController::class, 'chapter'])->name('chapter');
+    Route::get('verse/{versiculo}', [BibleMemberController::class, 'verse'])->name('verse');
+    Route::get('favorites', [BibleFavoritoController::class, 'index'])->name('favorites');
+    Route::post('favorite/{versiculo}', [BibleFavoritoController::class, 'toggle'])->name('favorite');
+    Route::get('history', [BibleHistoricoController::class, 'index'])->name('history');
+    Route::get('verse-of-day', [BibleMemberController::class, 'verseOfDay'])->name('verse-of-day');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Exemplos de Uso</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Código de Exemplo</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Buscar Versículos</h4>
+                        <div class="code-block">
+<pre><code>// BibleMemberController.php
+public function search(Request $request)
+{
+    $request->validate([
+        'query' => 'required|string|min:3',
+        'livro' => 'nullable|string',
+        'testamento' => 'nullable|in:antigo,novo'
+    ]);
+
+    $query = BibliaVersiculo::with(['capitulo.livro']);
+
+    if ($request->filled('query')) {
+        $search = $request->query;
+        $query->where('texto', 'like', "%{$search}%");
+    }
+
+    if ($request->filled('livro')) {
+        $query->whereHas('capitulo.livro', function($q) use ($request) {
+            $q->where('nome', 'like', "%{$request->livro}%");
+        });
+    }
+
+    if ($request->filled('testamento')) {
+        $query->whereHas('capitulo.livro', function($q) use ($request) {
+            $q->where('testamento', $request->testamento);
+        });
+    }
+
+    $versiculos = $query->orderBy('capitulo.livro.ordem')
+                        ->orderBy('capitulo.numero')
+                        ->orderBy('numero')
+                        ->paginate(20);
+
+    return view('member.bible.search', compact('versiculos'));
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Marcar como Favorito</h4>
+                        <div class="code-block">
+<pre><code>// BibleFavoritoController.php
+public function toggle(BibliaVersiculo $versiculo)
+{
+    $favorito = BibliaFavorito::where('versiculo_id', $versiculo->id)
+        ->where('user_id', auth()->id())
+        ->first();
+
+    if ($favorito) {
+        $favorito->delete();
+        $message = 'Removido dos favoritos';
+    } else {
+        BibliaFavorito::create([
+            'versiculo_id' => $versiculo->id,
+            'user_id' => auth()->id(),
+            'data_favorito' => now()
+        ]);
+        $message = 'Adicionado aos favoritos';
+    }
+
+    // Registrar no histórico
+    BibliaHistorico::create([
+        'user_id' => auth()->id(),
+        'versiculo_id' => $versiculo->id,
+        'tipo' => 'favorito',
+        'data_acesso' => now()
+    ]);
+
+    return response()->json([
+        'success' => true,
+        'message' => $message,
+        'is_favorite' => !$favorito
+    ]);
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Versículo do Dia</h4>
+                        <div class="code-block">
+<pre><code>// BibleMemberController.php
+public function verseOfDay()
+{
+    $hoje = now()->format('Y-m-d');
+    
+    // Buscar versículo do dia baseado na data
+    $versiculo = BibliaVersiculo::inRandomOrder()
+        ->with(['capitulo.livro'])
+        ->first();
+
+    // Se não existir, criar um novo
+    if (!$versiculo) {
+        $versiculo = BibliaVersiculo::with(['capitulo.livro'])
+            ->inRandomOrder()
+            ->first();
+    }
+
+    // Registrar visualização
+    BibliaHistorico::create([
+        'user_id' => auth()->id(),
+        'versiculo_id' => $versiculo->id,
+        'tipo' => 'visualizacao',
+        'data_acesso' => now()
+    ]);
+
+    return view('member.bible.verse-of-day', compact('versiculo'));
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Relatórios e Estatísticas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Relatórios Disponíveis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Relatório de Visualizações</h4>
+                        <p class="text-blue-700 text-sm mb-4">
+                            Análise de visualizações e engajamento dos versículos.
+                        </p>
+                        <ul class="text-sm text-blue-600 space-y-1">
+                            <li>• Versículos mais visualizados</li>
+                            <li>• Padrões de leitura</li>
+                            <li>• Tempo de leitura</li>
+                            <li>• Tendências de busca</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-2">Relatório de Favoritos</h4>
+                        <p class="text-green-700 text-sm mb-4">
+                            Análise de versículos favoritados pelos usuários.
+                        </p>
+                        <ul class="text-sm text-green-600 space-y-1">
+                            <li>• Versículos mais favoritados</li>
+                            <li>• Preferências por livro</li>
+                            <li>• Categorias populares</li>
+                            <li>• Comportamento dos usuários</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-2">Relatório de Busca</h4>
+                        <p class="text-purple-700 text-sm mb-4">
+                            Análise de termos de busca e consultas.
+                        </p>
+                        <ul class="text-sm text-purple-600 space-y-1">
+                            <li>• Termos mais buscados</li>
+                            <li>• Padrões de busca</li>
+                            <li>• Resultados de busca</li>
+                            <li>• Sugestões de melhoria</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-2">Relatório de Crescimento</h4>
+                        <p class="text-orange-700 text-sm mb-4">
+                            Análise do crescimento espiritual dos usuários.
+                        </p>
+                        <ul class="text-sm text-orange-600 space-y-1">
+                            <li>• Frequência de leitura</li>
+                            <li>• Progresso nos estudos</li>
+                            <li>• Engajamento espiritual</li>
+                            <li>• Metas de leitura</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Integrações</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos Integrados</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Devocionais</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de devocionais para referências bíblicas.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Referências automáticas</li>
+                            <li>• Links para versículos</li>
+                            <li>• Contexto bíblico</li>
+                            <li>• Estudos relacionados</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">EBD Digital</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com a Escola Bíblica Dominical para estudos.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Referências nas lições</li>
+                            <li>• Estudos complementares</li>
+                            <li>• Quiz bíblico</li>
+                            <li>• Certificados</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Notificações</h4>
+                        <p class="text-gray-600 mb-4">
+                            Notificações para versículo do dia e lembretes.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Versículo do dia</li>
+                            <li>• Lembretes de leitura</li>
+                            <li>• Favoritos atualizados</li>
+                            <li>• Recomendações</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Relatórios</h4>
+                        <p class="text-gray-600 mb-4">
+                            Relatórios sobre crescimento espiritual e leitura bíblica.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Relatórios de leitura</li>
+                            <li>• Análises de crescimento</li>
+                            <li>• Métricas espirituais</li>
+                            <li>• Tendências de estudo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Bíblia Digital. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

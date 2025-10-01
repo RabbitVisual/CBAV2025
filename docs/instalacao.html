@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalação - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Instalação</h1>
+                    <p class="text-sm text-gray-500">Guia de Instalação do Sistema</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-download text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Instalação do Sistema CBAV</h1>
+            <p class="text-xl text-gray-600 mb-6">Guia completo para instalar o sistema CRM Ministerial</p>
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Instrui o menino no caminho em que deve andar, e até quando envelhecer não se desviará dele"</p>
+                <p class="text-gray-500 text-sm mt-2">Provérbios 22:6</p>
+            </div>
+        </div>
+
+        <!-- Requirements -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Requisitos do Sistema</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Requisitos Mínimos</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Servidor Web</h4>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• Apache 2.4+ ou Nginx</li>
+                            <li>• PHP 8.1 ou superior</li>
+                            <li>• MySQL 8.0 ou MariaDB 10.5+</li>
+                            <li>• SSL/HTTPS (recomendado)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-2">PHP Extensions</h4>
+                        <ul class="text-sm text-green-700 space-y-1">
+                            <li>• BCMath PHP Extension</li>
+                            <li>• Ctype PHP Extension</li>
+                            <li>• JSON PHP Extension</li>
+                            <li>• Mbstring PHP Extension</li>
+                            <li>• OpenSSL PHP Extension</li>
+                            <li>• PDO PHP Extension</li>
+                            <li>• Tokenizer PHP Extension</li>
+                            <li>• XML PHP Extension</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-2">Composer</h4>
+                        <ul class="text-sm text-purple-700 space-y-1">
+                            <li>• Composer 2.0+</li>
+                            <li>• Node.js 16+ (opcional)</li>
+                            <li>• NPM ou Yarn (opcional)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-2">Permissões</h4>
+                        <ul class="text-sm text-orange-700 space-y-1">
+                            <li>• storage/ (755)</li>
+                            <li>• bootstrap/cache/ (755)</li>
+                            <li>• public/ (755)</li>
+                            <li>• .env (644)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Steps -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Passos da Instalação</h2>
+            
+            <div class="space-y-6">
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">1. Preparação do Ambiente</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Verificar Requisitos</h4>
+                            <div class="code-block">
+<pre><code># Verificar versão do PHP
+php -v
+
+# Verificar extensões PHP
+php -m
+
+# Verificar Composer
+composer --version
+
+# Verificar MySQL
+mysql --version</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Configurar Permissões</h4>
+                            <div class="code-block">
+<pre><code># Definir permissões corretas
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/
+chmod 644 .env
+
+# Definir proprietário (se necessário)
+chown -R www-data:www-data storage/
+chown -R www-data:www-data bootstrap/cache/</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">2. Instalação das Dependências</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Instalar Dependências PHP</h4>
+                            <div class="code-block">
+<pre><code># Instalar dependências via Composer
+composer install --no-dev --optimize-autoloader
+
+# Se estiver em desenvolvimento
+composer install</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Instalar Dependências Node.js (Opcional)</h4>
+                            <div class="code-block">
+<pre><code># Instalar dependências JavaScript
+npm install
+
+# Compilar assets
+npm run build
+
+# Para desenvolvimento
+npm run dev</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">3. Configuração do Banco de Dados</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Criar Banco de Dados</h4>
+                            <div class="code-block">
+<pre><code># Acessar MySQL
+mysql -u root -p
+
+# Criar banco de dados
+CREATE DATABASE cbav_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+# Criar usuário (opcional)
+CREATE USER 'cbav_user'@'localhost' IDENTIFIED BY 'sua_senha_segura';
+GRANT ALL PRIVILEGES ON cbav_db.* TO 'cbav_user'@'localhost';
+FLUSH PRIVILEGES;</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Configurar .env</h4>
+                            <div class="code-block">
+<pre><code># Copiar arquivo de exemplo
+cp .env.example .env
+
+# Editar configurações do banco
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cbav_db
+DB_USERNAME=cbav_user
+DB_PASSWORD=sua_senha_segura
+
+# Configurar URL da aplicação
+APP_URL=https://seudominio.com
+APP_ENV=production</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">4. Configuração da Aplicação</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Gerar Chave da Aplicação</h4>
+                            <div class="code-block">
+<pre><code># Gerar chave da aplicação
+php artisan key:generate
+
+# Limpar cache
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Executar Migrações</h4>
+                            <div class="code-block">
+<pre><code># Executar migrações
+php artisan migrate
+
+# Executar seeders (opcional)
+php artisan db:seed
+
+# Verificar status
+php artisan migrate:status</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-lg p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">5. Configuração Final</h3>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Configurar Storage</h4>
+                            <div class="code-block">
+<pre><code># Criar link simbólico para storage
+php artisan storage:link
+
+# Otimizar aplicação
+php artisan optimize
+
+# Configurar filas (se necessário)
+php artisan queue:work</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-semibold text-gray-900 mb-2">Configurar Cron Jobs</h4>
+                            <div class="code-block">
+<pre><code># Adicionar ao crontab
+crontab -e
+
+# Adicionar linha
+* * * * * cd /path/to/cbav && php artisan schedule:run >> /dev/null 2>&1</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Configurações Importantes</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Configurações do .env</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Configurações Básicas</h4>
+                        <div class="code-block">
+<pre><code>APP_NAME="Sistema CBAV"
+APP_ENV=production
+APP_KEY=base64:sua_chave_aqui
+APP_DEBUG=false
+APP_URL=https://seudominio.com
+
+LOG_CHANNEL=stack
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=error</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Configurações de Email</h4>
+                        <div class="code-block">
+<pre><code>MAIL_MAILER=smtp
+MAIL_HOST=seudominio.com
+MAIL_PORT=587
+MAIL_USERNAME=noreply@seudominio.com
+MAIL_PASSWORD=sua_senha_email
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=noreply@seudominio.com
+MAIL_FROM_NAME="${APP_NAME}"</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Configurações de Pagamento</h4>
+                        <div class="code-block">
+<pre><code># Stripe
+STRIPE_KEY=pk_test_sua_chave_publica
+STRIPE_SECRET=sk_test_sua_chave_secreta
+STRIPE_WEBHOOK_SECRET=whsec_seu_webhook_secret
+
+# Mercado Pago
+MERCADOPAGO_PUBLIC_KEY=TEST_sua_chave_publica
+MERCADOPAGO_ACCESS_TOKEN=TEST_sua_access_token
+MERCADOPAGO_WEBHOOK_SECRET=seu_webhook_secret
+
+# PIX
+PIX_CHAVE=sua_chave_pix
+PIX_BENEFICIARIO_NOME="Nome do Beneficiário"
+PIX_BENEFICIARIO_CPF_CNPJ=seu_cpf_cnpj
+PIX_BANCO=codigo_do_banco</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Solução de Problemas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Problemas Comuns</h3>
+                
+                <div class="space-y-6">
+                    <div class="border-l-4 border-red-500 pl-6">
+                        <h4 class="font-semibold text-red-900 mb-2">Erro de Permissões</h4>
+                        <p class="text-red-700 mb-2">Se houver erro de permissões:</p>
+                        <div class="code-block">
+<pre><code># Corrigir permissões
+sudo chown -R www-data:www-data storage/
+sudo chown -R www-data:www-data bootstrap/cache/
+sudo chmod -R 755 storage/
+sudo chmod -R 755 bootstrap/cache/</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-yellow-500 pl-6">
+                        <h4 class="font-semibold text-yellow-900 mb-2">Erro de Composer</h4>
+                        <p class="text-yellow-700 mb-2">Se houver erro no Composer:</p>
+                        <div class="code-block">
+<pre><code># Limpar cache do Composer
+composer clear-cache
+composer install --no-dev --optimize-autoloader
+
+# Se persistir, deletar vendor e reinstalar
+rm -rf vendor/
+composer install</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-blue-500 pl-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Erro de Banco de Dados</h4>
+                        <p class="text-blue-700 mb-2">Se houver erro de conexão:</p>
+                        <div class="code-block">
+<pre><code># Verificar conexão
+php artisan tinker
+DB::connection()->getPdo();
+
+# Recriar tabelas (cuidado!)
+php artisan migrate:fresh --seed
+
+# Verificar status
+php artisan migrate:status</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="border-l-4 border-green-500 pl-6">
+                        <h4 class="font-semibold text-green-900 mb-2">Erro de Cache</h4>
+                        <p class="text-green-700 mb-2">Se houver problemas de cache:</p>
+                        <div class="code-block">
+<pre><code># Limpar todos os caches
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+
+# Otimizar aplicação
+php artisan optimize</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Verification -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Verificação da Instalação</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Comandos de Verificação</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Verificar Status Geral</h4>
+                        <div class="code-block">
+<pre><code># Verificar status da aplicação
+php artisan about
+
+# Verificar configurações
+php artisan config:show
+
+# Verificar rotas
+php artisan route:list
+
+# Verificar migrações
+php artisan migrate:status</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Verificar Permissões</h4>
+                        <div class="code-block">
+<pre><code># Verificar permissões
+ls -la storage/
+ls -la bootstrap/cache/
+ls -la public/storage
+
+# Verificar proprietário
+ls -la .env</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Testar Funcionalidades</h4>
+                        <div class="code-block">
+<pre><code># Testar conexão com banco
+php artisan tinker
+DB::connection()->getPdo();
+
+# Testar envio de email
+php artisan tinker
+Mail::raw('Teste', function($message) { $message->to('teste@email.com'); });
+
+# Verificar logs
+tail -f storage/logs/laravel.log</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Instalação. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

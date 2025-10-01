@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Eventos - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Sistema de Eventos</h1>
+                    <p class="text-sm text-gray-500">Gestão Completa de Eventos</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-calendar-alt text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Sistema de Eventos</h1>
+            <p class="text-xl text-gray-600 mb-6">Gestão completa de eventos da igreja</p>
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Não deixando a nossa congregação, como é costume de alguns, antes admoestando-nos uns aos outros"</p>
+                <p class="text-gray-500 text-sm mt-2">Hebreus 10:25</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O Sistema de Eventos do CBAV oferece controle total sobre todos os eventos da igreja, 
+                    desde cultos regulares até eventos especiais, conferências e atividades ministeriais. 
+                    Permite gestão de inscrições, controle de presença e comunicação eficiente.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-calendar-plus text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Criação de Eventos</h3>
+                        <p class="text-gray-600 text-sm">Interface intuitiva para criar eventos</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Gestão de Inscrições</h3>
+                        <p class="text-gray-600 text-sm">Controle de participantes e capacidade</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-bar text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Relatórios</h3>
+                        <p class="text-gray-600 text-sm">Análises e estatísticas detalhadas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Principais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-calendar-plus text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Criação de Eventos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema completo para criação e gestão de eventos com informações detalhadas.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Título e descrição do evento</li>
+                        <li>• Data, hora e local</li>
+                        <li>• Capacidade máxima</li>
+                        <li>• Categoria do evento</li>
+                        <li>• Imagem do evento</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-user-plus text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Sistema de Inscrições</h3>
+                    <p class="text-gray-600 mb-4">
+                        Controle completo de inscrições com validações e confirmações.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Inscrições online</li>
+                        <li>• Validação de capacidade</li>
+                        <li>• Confirmação por email</li>
+                        <li>• Lista de espera</li>
+                        <li>• Cancelamento de inscrições</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-clipboard-check text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Controle de Presença</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema para registrar e controlar a presença nos eventos.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Registro de presença</li>
+                        <li>• Lista de participantes</li>
+                        <li>• Relatórios de frequência</li>
+                        <li>• Certificados de participação</li>
+                        <li>• Estatísticas de presença</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-bell text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Notificações</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de notificações automáticas para participantes e organizadores.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Lembretes de eventos</li>
+                        <li>• Confirmação de inscrição</li>
+                        <li>• Alterações de evento</li>
+                        <li>• Cancelamentos</li>
+                        <li>• Notificações em massa</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Relatórios Avançados</h3>
+                    <p class="text-gray-600 mb-4">
+                        Relatórios detalhados e análises sobre eventos e participação.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Relatórios por período</li>
+                        <li>• Análise de participação</li>
+                        <li>• Estatísticas de eventos</li>
+                        <li>• Gráficos interativos</li>
+                        <li>• Exportação de dados</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-mobile-alt text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Interface Responsiva</h3>
+                    <p class="text-gray-600 mb-4">
+                        Interface adaptável para todos os dispositivos e plataformas.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Design responsivo</li>
+                        <li>• Acesso mobile</li>
+                        <li>• Interface intuitiva</li>
+                        <li>• Navegação fácil</li>
+                        <li>• Compatibilidade total</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Structure -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">eventos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE eventos (
+    id BIGINT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    data_inicio DATETIME NOT NULL,
+    data_fim DATETIME,
+    local VARCHAR(255),
+    capacidade_maxima INT,
+    inscricoes_abertas BOOLEAN DEFAULT TRUE,
+    ativo BOOLEAN DEFAULT TRUE,
+    imagem VARCHAR(255),
+    categoria VARCHAR(100),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">evento_inscricoes</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE evento_inscricoes (
+    id BIGINT PRIMARY KEY,
+    evento_id BIGINT,
+    membro_id BIGINT,
+    data_inscricao DATETIME,
+    status ENUM('confirmada', 'pendente', 'cancelada'),
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">evento_presencas</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE evento_presencas (
+    id BIGINT PRIMARY KEY,
+    evento_id BIGINT,
+    membro_id BIGINT,
+    presente BOOLEAN DEFAULT FALSE,
+    data_registro DATETIME,
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Controllers e Rotas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Controllers Principais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Admin Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EventoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                InscricaoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                PresencaController
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Public Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                PublicEventoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                InscricaoPublicController
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h4 class="font-semibold text-gray-900 mb-2">Rotas Principais</h4>
+                    <div class="code-block">
+<pre><code>// Rotas Admin
+Route::prefix('admin/eventos')->name('admin.eventos.')->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', [EventoController::class, 'index'])->name('index');
+    Route::resource('eventos', EventoController::class);
+    Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes');
+    Route::get('presencas', [PresencaController::class, 'index'])->name('presencas');
+});
+
+// Rotas Públicas
+Route::prefix('eventos')->name('eventos.')->group(function () {
+    Route::get('/', [PublicEventoController::class, 'index'])->name('index');
+    Route::get('/{evento}', [PublicEventoController::class, 'show'])->name('show');
+    Route::post('/inscrever', [InscricaoPublicController::class, 'store'])->name('inscrever');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Exemplos de Uso</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Código de Exemplo</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Criar Evento</h4>
+                        <div class="code-block">
+<pre><code>// EventoController.php
+public function store(Request $request)
+{
+    $request->validate([
+        'titulo' => 'required|string|max:255',
+        'descricao' => 'nullable|string',
+        'data_inicio' => 'required|date',
+        'data_fim' => 'nullable|date|after:data_inicio',
+        'local' => 'nullable|string|max:255',
+        'capacidade_maxima' => 'nullable|integer|min:1',
+        'categoria' => 'nullable|string|max:100'
+    ]);
+
+    $evento = Evento::create([
+        'titulo' => $request->titulo,
+        'descricao' => $request->descricao,
+        'data_inicio' => $request->data_inicio,
+        'data_fim' => $request->data_fim,
+        'local' => $request->local,
+        'capacidade_maxima' => $request->capacidade_maxima,
+        'categoria' => $request->categoria,
+        'inscricoes_abertas' => true,
+        'ativo' => true
+    ]);
+
+    if ($request->hasFile('imagem')) {
+        $imagem = $request->file('imagem');
+        $filename = time() . '_' . $evento->id . '.' . $imagem->getClientOriginalExtension();
+        $imagem->storeAs('eventos', $filename, 'public');
+        $evento->update(['imagem' => $filename]);
+    }
+
+    return redirect()->route('admin.eventos.index')
+        ->with('success', 'Evento criado com sucesso!');
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Inscrição em Evento</h4>
+                        <div class="code-block">
+<pre><code>// InscricaoPublicController.php
+public function store(Request $request)
+{
+    $request->validate([
+        'evento_id' => 'required|exists:eventos,id',
+        'nome' => 'required|string|max:255',
+        'email' => 'required|email',
+        'telefone' => 'nullable|string|max:20'
+    ]);
+
+    $evento = Evento::findOrFail($request->evento_id);
+
+    // Verificar capacidade
+    if ($evento->capacidade_maxima && 
+        $evento->inscricoes()->where('status', 'confirmada')->count() >= $evento->capacidade_maxima) {
+        return back()->with('error', 'Evento lotado!');
+    }
+
+    $inscricao = EventoInscricao::create([
+        'evento_id' => $request->evento_id,
+        'nome' => $request->nome,
+        'email' => $request->email,
+        'telefone' => $request->telefone,
+        'data_inscricao' => now(),
+        'status' => 'confirmada'
+    ]);
+
+    // Enviar email de confirmação
+    Mail::to($request->email)->send(new EventoInscricaoMail($inscricao));
+
+    return redirect()->back()
+        ->with('success', 'Inscrição realizada com sucesso!');
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Registrar Presença</h4>
+                        <div class="code-block">
+<pre><code>// PresencaController.php
+public function registrarPresenca(Request $request, Evento $evento)
+{
+    $request->validate([
+        'membro_id' => 'required|exists:membros,id',
+        'presente' => 'required|boolean'
+    ]);
+
+    EventoPresenca::updateOrCreate(
+        [
+            'evento_id' => $evento->id,
+            'membro_id' => $request->membro_id
+        ],
+        [
+            'presente' => $request->presente,
+            'data_registro' => now(),
+            'observacoes' => $request->observacoes
+        ]
+    );
+
+    return response()->json(['success' => true]);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Relatórios e Estatísticas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Relatórios Disponíveis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Relatório de Eventos</h4>
+                        <p class="text-blue-700 text-sm mb-4">
+                            Análise detalhada de todos os eventos realizados.
+                        </p>
+                        <ul class="text-sm text-blue-600 space-y-1">
+                            <li>• Eventos por período</li>
+                            <li>• Taxa de ocupação</li>
+                            <li>• Categorias mais populares</li>
+                            <li>• Performance por evento</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-2">Relatório de Inscrições</h4>
+                        <p class="text-green-700 text-sm mb-4">
+                            Análise de inscrições e participação.
+                        </p>
+                        <ul class="text-sm text-green-600 space-y-1">
+                            <li>• Taxa de inscrição</li>
+                            <li>• Cancelamentos</li>
+                            <li>• Lista de espera</li>
+                            <li>• Tendências de participação</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-2">Relatório de Presença</h4>
+                        <p class="text-purple-700 text-sm mb-4">
+                            Controle de presença e frequência.
+                        </p>
+                        <ul class="text-sm text-purple-600 space-y-1">
+                            <li>• Taxa de presença</li>
+                            <li>• Frequência por membro</li>
+                            <li>• Eventos mais frequentados</li>
+                            <li>• Certificados de participação</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-2">Relatório de Comunicação</h4>
+                        <p class="text-orange-700 text-sm mb-4">
+                            Análise de notificações e comunicação.
+                        </p>
+                        <ul class="text-sm text-orange-600 space-y-1">
+                            <li>• Notificações enviadas</li>
+                            <li>• Taxa de abertura</li>
+                            <li>• Efetividade da comunicação</li>
+                            <li>• Feedback dos participantes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Integrações</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos Integrados</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Gestão de Membros</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração completa com o sistema de gestão de membros para inscrições e presença.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Inscrições automáticas</li>
+                            <li>• Controle de presença</li>
+                            <li>• Histórico de participação</li>
+                            <li>• Notificações personalizadas</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Notificações</h4>
+                        <p class="text-gray-600 mb-4">
+                            Notificações automáticas para participantes e organizadores de eventos.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Lembretes de eventos</li>
+                            <li>• Confirmações de inscrição</li>
+                            <li>• Alterações de programação</li>
+                            <li>• Certificados automáticos</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema Financeiro</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com doações e campanhas relacionadas a eventos.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Doações para eventos</li>
+                            <li>• Campanhas específicas</li>
+                            <li>• Controle de custos</li>
+                            <li>• Relatórios financeiros</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Relatórios</h4>
+                        <p class="text-gray-600 mb-4">
+                            Relatórios consolidados com dados de eventos e participação.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Relatórios consolidados</li>
+                            <li>• Análises de tendências</li>
+                            <li>• Gráficos interativos</li>
+                            <li>• Exportação de dados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Sistema de Eventos. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup e Restauração - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Backup e Restauração</h1>
+                    <p class="text-sm text-gray-500">Proteção de Dados</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-database text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Backup e Restauração</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema completo de proteção de dados</p>
+            <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Tudo posso naquele que me fortalece"</p>
+                <p class="text-gray-500 text-sm mt-2">Filipenses 4:13</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O sistema de backup do CBAV garante a proteção completa dos dados da igreja, 
+                    incluindo banco de dados, arquivos e configurações. Oferece backup automático, 
+                    restauração rápida e múltiplas opções de armazenamento.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Proteção Completa</h3>
+                        <p class="text-gray-600 text-sm">Backup de todos os dados</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Backup Automático</h3>
+                        <p class="text-gray-600 text-sm">Agendamento inteligente</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-undo text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Restauração Rápida</h3>
+                        <p class="text-gray-600 text-sm">Recuperação em minutos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Backup Strategy -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estratégia de Backup</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tipos de Backup</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Backup Completo</h4>
+                        <p class="text-blue-700 mb-4">Backup de todos os dados do sistema</p>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                Banco de dados completo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-file text-blue-500 mr-2"></i>
+                                Todos os arquivos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-cog text-blue-500 mr-2"></i>
+                                Configurações do sistema
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-image text-blue-500 mr-2"></i>
+                                Imagens e uploads
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Backup Incremental</h4>
+                        <p class="text-green-700 mb-4">Backup apenas das alterações</p>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-sync text-green-500 mr-2"></i>
+                                Apenas dados alterados
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-green-500 mr-2"></i>
+                                Execução mais rápida
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-green-500 mr-2"></i>
+                                Menos espaço em disco
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-green-500 mr-2"></i>
+                                Agendamento diário
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Backup Diferencial</h4>
+                        <p class="text-purple-700 mb-4">Backup desde o último completo</p>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-layer-group text-purple-500 mr-2"></i>
+                                Desde último backup completo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar-week text-purple-500 mr-2"></i>
+                                Execução semanal
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-balance-scale text-purple-500 mr-2"></i>
+                                Equilibrio entre tempo e espaço
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-purple-500 mr-2"></i>
+                                Proteção intermediária
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Backup de Logs</h4>
+                        <p class="text-orange-700 mb-4">Backup de logs e auditoria</p>
+                        <ul class="text-orange-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-file-alt text-orange-500 mr-2"></i>
+                                Logs de sistema
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-user-shield text-orange-500 mr-2"></i>
+                                Logs de auditoria
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-orange-500 mr-2"></i>
+                                Logs de erro
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-chart-line text-orange-500 mr-2"></i>
+                                Logs de performance
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Backup Schedule -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Agendamento de Backup</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Cronograma Automático</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Backup Diário</h4>
+                        <p class="text-red-700 mb-4">Execução diária às 02:00</p>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-red-500 mr-2"></i>
+                                Horário: 02:00
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-sync text-red-500 mr-2"></i>
+                                Tipo: Incremental
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-red-500 mr-2"></i>
+                                Retenção: 30 dias
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-cloud text-red-500 mr-2"></i>
+                                Local: Nuvem + Local
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Backup Semanal</h4>
+                        <p class="text-blue-700 mb-4">Execução semanal aos domingos</p>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-blue-500 mr-2"></i>
+                                Dia: Domingo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-blue-500 mr-2"></i>
+                                Horário: 03:00
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                Tipo: Completo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-archive text-blue-500 mr-2"></i>
+                                Retenção: 12 semanas
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Backup Mensal</h4>
+                        <p class="text-green-700 mb-4">Execução mensal no primeiro dia</p>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar-alt text-green-500 mr-2"></i>
+                                Dia: 1º do mês
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-green-500 mr-2"></i>
+                                Horário: 04:00
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-green-500 mr-2"></i>
+                                Tipo: Completo + Logs
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-infinity text-green-500 mr-2"></i>
+                                Retenção: 12 meses
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Backup Commands -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Comandos de Backup</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Comandos Artisan</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Backup Manual</h4>
+                        <div class="code-block">
+<pre><code># Backup completo
+php artisan backup:run
+
+# Backup apenas banco de dados
+php artisan backup:run --only-db
+
+# Backup apenas arquivos
+php artisan backup:run --only-files
+
+# Backup com notificação
+php artisan backup:run --notify-email=admin@igreja.com
+
+# Backup para local específico
+php artisan backup:run --disk=s3</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Gerenciamento de Backup</h4>
+                        <div class="code-block">
+<pre><code># Listar backups
+php artisan backup:list
+
+# Limpar backups antigos
+php artisan backup:clean
+
+# Verificar integridade
+php artisan backup:verify
+
+# Restaurar backup
+php artisan backup:restore backup-name
+
+# Monitorar backups
+php artisan backup:monitor</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Script de Backup</h4>
+                        <div class="code-block">
+<pre><code>#!/bin/bash
+# Script de backup personalizado
+
+DATE=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/backups/cbav"
+DB_NAME="cbav_production"
+
+# Criar diretório se não existir
+mkdir -p $BACKUP_DIR
+
+# Backup do banco
+mysqldump -u root -p $DB_NAME > $BACKUP_DIR/db_$DATE.sql
+
+# Backup dos arquivos
+tar -czf $BACKUP_DIR/files_$DATE.tar.gz /var/www/html/cbav
+
+# Comprimir backup
+gzip $BACKUP_DIR/db_$DATE.sql
+
+# Limpar backups antigos (30 dias)
+find $BACKUP_DIR -name "*.sql.gz" -mtime +30 -delete
+find $BACKUP_DIR -name "*.tar.gz" -mtime +30 -delete
+
+# Enviar para nuvem
+aws s3 sync $BACKUP_DIR s3://cbav-backups/
+
+echo "Backup concluído: $DATE"</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Storage Options -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Opções de Armazenamento</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Locais de Backup</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Armazenamento Local</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-blue-500 mr-2"></i>
+                                Disco rígido local
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>
+                                Acesso rápido
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-dollar-sign text-blue-500 mr-2"></i>
+                                Sem custo adicional
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-blue-500 mr-2"></i>
+                                Risco de falha física
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Armazenamento em Nuvem</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-cloud text-green-500 mr-2"></i>
+                                AWS S3 / Google Cloud
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-green-500 mr-2"></i>
+                                Alta disponibilidade
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-globe text-green-500 mr-2"></i>
+                                Acesso remoto
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-dollar-sign text-green-500 mr-2"></i>
+                                Custo mensal
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Backup Híbrido</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-sync text-purple-500 mr-2"></i>
+                                Local + Nuvem
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-purple-500 mr-2"></i>
+                                Máxima proteção
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-tachometer-alt text-purple-500 mr-2"></i>
+                                Acesso rápido local
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-cloud text-purple-500 mr-2"></i>
+                                Redundância na nuvem
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Backup Offsite</h4>
+                        <ul class="text-orange-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-building text-orange-500 mr-2"></i>
+                                Local físico separado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-orange-500 mr-2"></i>
+                                Proteção contra desastres
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-truck text-orange-500 mr-2"></i>
+                                Transporte físico
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-orange-500 mr-2"></i>
+                                Recuperação mais lenta
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Restoration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Restauração</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Processo de Restauração</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Restauração de Banco</h4>
+                        <div class="code-block">
+<pre><code># Restaurar backup do banco
+mysql -u root -p cbav_production < backup.sql
+
+# Via Laravel
+php artisan backup:restore-db backup-name
+
+# Restaurar tabelas específicas
+mysql -u root -p cbav_production --database=cbav_production < backup.sql
+
+# Verificar integridade
+php artisan db:check-integrity</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Restauração de Arquivos</h4>
+                        <div class="code-block">
+<pre><code># Extrair backup de arquivos
+tar -xzf backup_files.tar.gz -C /var/www/html/
+
+# Restaurar via Laravel
+php artisan backup:restore-files backup-name
+
+# Restaurar configurações
+cp backup/.env /var/www/html/.env
+
+# Verificar permissões
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Restauração Completa</h4>
+                        <div class="code-block">
+<pre><code># Parar aplicação
+php artisan down
+
+# Restaurar banco
+php artisan backup:restore-db backup-name
+
+# Restaurar arquivos
+php artisan backup:restore-files backup-name
+
+# Limpar cache
+php artisan config:clear
+php artisan cache:clear
+
+# Verificar integridade
+php artisan backup:verify
+
+# Reiniciar aplicação
+php artisan up</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monitoring -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Monitoramento</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Monitoramento de Backup</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Verificações Automáticas</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Integridade dos backups
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-purple-500 mr-2"></i>
+                                Tempo de execução
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-purple-500 mr-2"></i>
+                                Espaço em disco
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-purple-500 mr-2"></i>
+                                Alertas de falha
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Notificações</h4>
+                        <ul class="text-orange-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-orange-500 mr-2"></i>
+                                Email de sucesso/falha
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fab fa-slack text-orange-500 mr-2"></i>
+                                Notificação Slack
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fab fa-telegram text-orange-500 mr-2"></i>
+                                Telegram bot
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-mobile-alt text-orange-500 mr-2"></i>
+                                SMS de emergência
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Backup e Restauração. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

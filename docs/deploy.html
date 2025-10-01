@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Deploy</h1>
+                    <p class="text-sm text-gray-500">Guia de Deploy do Sistema</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-red-500 to-orange-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-rocket text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Deploy do Sistema</h1>
+            <p class="text-xl text-gray-600 mb-6">Guia completo para deploy em produção</p>
+            <div class="bg-gradient-to-r from-red-50 to-orange-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Tudo posso naquele que me fortalece"</p>
+                <p class="text-gray-500 text-sm mt-2">Filipenses 4:13</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O deploy do sistema CBAV é otimizado para garantir máxima performance, 
+                    segurança e confiabilidade em ambiente de produção. Este guia detalha 
+                    todos os passos necessários para um deploy bem-sucedido.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Segurança</h3>
+                        <p class="text-gray-600 text-sm">Configurações de segurança</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-tachometer-alt text-orange-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Performance</h3>
+                        <p class="text-gray-600 text-sm">Otimizações de performance</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-check-circle text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Confiabilidade</h3>
+                        <p class="text-gray-600 text-sm">Monitoramento e backup</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pre-Deploy Checklist -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Checklist Pré-Deploy</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Preparação do Ambiente</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Servidor</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                PHP 8.1+ instalado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                MySQL 8.0+ configurado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                Composer instalado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-blue-500 mr-2"></i>
+                                SSL/HTTPS configurado
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Segurança</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Firewall configurado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Backup automático
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Monitoramento ativo
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                Logs configurados
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Deploy Process -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Processo de Deploy</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Passos do Deploy</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">1. Upload dos Arquivos</h4>
+                        <div class="code-block">
+<pre><code># Compactar projeto
+tar -czf cbav.tar.gz --exclude=node_modules --exclude=.git .
+
+# Upload via FTP/SSH
+scp cbav.tar.gz user@server:/var/www/html/
+
+# Extrair no servidor
+ssh user@server
+cd /var/www/html/
+tar -xzf cbav.tar.gz
+rm cbav.tar.gz</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">2. Configuração do Ambiente</h4>
+                        <div class="code-block">
+<pre><code># Instalar dependências
+composer install --no-dev --optimize-autoloader
+
+# Configurar permissões
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/
+chmod 644 .env
+
+# Configurar proprietário
+chown -R www-data:www-data storage/
+chown -R www-data:www-data bootstrap/cache/</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">3. Configuração da Aplicação</h4>
+                        <div class="code-block">
+<pre><code># Gerar chave da aplicação
+php artisan key:generate
+
+# Configurar cache
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Otimizar aplicação
+php artisan optimize
+
+# Criar link simbólico
+php artisan storage:link</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">4. Banco de Dados</h4>
+                        <div class="code-block">
+<pre><code># Executar migrações
+php artisan migrate --force
+
+# Executar seeders (se necessário)
+php artisan db:seed --force
+
+# Verificar status
+php artisan migrate:status
+
+# Otimizar banco
+php artisan db:optimize</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Production Configuration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Configuração de Produção</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Otimizações para Produção</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Configurações de Segurança</h4>
+                        <ul class="text-red-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-shield-alt text-red-500 mr-2"></i>
+                                Debug desabilitado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-lock text-red-500 mr-2"></i>
+                                HTTPS forçado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-ban text-red-500 mr-2"></i>
+                                Headers de segurança
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-eye-slash text-red-500 mr-2"></i>
+                                Logs de erro
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Configurações de Performance</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-tachometer-alt text-blue-500 mr-2"></i>
+                                Cache otimizado
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                Índices de banco
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-compress text-blue-500 mr-2"></i>
+                                Compressão GZIP
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-image text-blue-500 mr-2"></i>
+                                Otimização de imagens
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-900 mb-2">Arquivo .env de Produção</h4>
+                    <div class="code-block">
+<pre><code>APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://seudominio.com
+
+LOG_CHANNEL=stack
+LOG_LEVEL=error
+
+CACHE_DRIVER=file
+SESSION_DRIVER=database
+QUEUE_CONNECTION=database
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=cbav_production
+DB_USERNAME=cbav_user
+DB_PASSWORD=sua_senha_segura
+
+MAIL_MAILER=smtp
+MAIL_HOST=seudominio.com
+MAIL_PORT=587
+MAIL_USERNAME=noreply@seudominio.com
+MAIL_PASSWORD=sua_senha_email
+MAIL_ENCRYPTION=tls</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monitoring -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Monitoramento</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Sistema de Monitoramento</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Monitoramento de Aplicação</h4>
+                        <ul class="text-green-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-heartbeat text-green-500 mr-2"></i>
+                                Health checks
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                                Métricas de performance
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-exclamation-triangle text-green-500 mr-2"></i>
+                                Alertas de erro
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-green-500 mr-2"></i>
+                                Tempo de resposta
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Monitoramento de Servidor</h4>
+                        <ul class="text-blue-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-server text-blue-500 mr-2"></i>
+                                Uso de CPU/RAM
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-hdd text-blue-500 mr-2"></i>
+                                Espaço em disco
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-network-wired text-blue-500 mr-2"></i>
+                                Tráfego de rede
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-blue-500 mr-2"></i>
+                                Performance do banco
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-900 mb-2">Comandos de Monitoramento</h4>
+                    <div class="code-block">
+<pre><code># Verificar status da aplicação
+php artisan about
+
+# Verificar logs
+tail -f storage/logs/laravel.log
+
+# Verificar filas
+php artisan queue:work --verbose
+
+# Verificar cache
+php artisan cache:clear
+php artisan config:clear
+
+# Verificar banco
+php artisan tinker
+DB::connection()->getPdo();</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Backup Strategy -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estratégia de Backup</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Sistema de Backup</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Backup Automático</h4>
+                        <ul class="text-purple-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-database text-purple-500 mr-2"></i>
+                                Backup diário do banco
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-file text-purple-500 mr-2"></i>
+                                Backup semanal de arquivos
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-cloud text-purple-500 mr-2"></i>
+                                Backup na nuvem
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-purple-500 mr-2"></i>
+                                Verificação de integridade
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Recuperação</h4>
+                        <ul class="text-orange-700 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-undo text-orange-500 mr-2"></i>
+                                Restauração rápida
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-clock text-orange-500 mr-2"></i>
+                                RTO < 4 horas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-calendar text-orange-500 mr-2"></i>
+                                RPO < 24 horas
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-test text-orange-500 mr-2"></i>
+                                Testes de recuperação
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-900 mb-2">Script de Backup</h4>
+                    <div class="code-block">
+<pre><code>#!/bin/bash
+# Script de backup automático
+
+DATE=$(date +%Y%m%d_%H%M%S)
+BACKUP_DIR="/backups/cbav"
+DB_NAME="cbav_production"
+
+# Backup do banco
+mysqldump -u root -p $DB_NAME > $BACKUP_DIR/db_$DATE.sql
+
+# Backup dos arquivos
+tar -czf $BACKUP_DIR/files_$DATE.tar.gz /var/www/html/cbav
+
+# Limpar backups antigos (manter 30 dias)
+find $BACKUP_DIR -name "*.sql" -mtime +30 -delete
+find $BACKUP_DIR -name "*.tar.gz" -mtime +30 -delete
+
+# Enviar para nuvem
+aws s3 sync $BACKUP_DIR s3://cbav-backups/</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Troubleshooting -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Solução de Problemas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Problemas Comuns</h3>
+                
+                <div class="space-y-6">
+                    <div class="feature-card bg-red-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-red-900 mb-3">Erro 500 - Internal Server Error</h4>
+                        <div class="code-block">
+<pre><code># Verificar logs
+tail -f storage/logs/laravel.log
+
+# Verificar permissões
+chmod -R 755 storage/
+chmod -R 755 bootstrap/cache/
+
+# Limpar cache
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+# Verificar .env
+php artisan config:show</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-yellow-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-yellow-900 mb-3">Erro de Conexão com Banco</h4>
+                        <div class="code-block">
+<pre><code># Testar conexão
+php artisan tinker
+DB::connection()->getPdo();
+
+# Verificar configurações
+php artisan config:show database
+
+# Verificar serviço MySQL
+sudo systemctl status mysql
+
+# Verificar credenciais
+mysql -u cbav_user -p cbav_production</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Performance Lenta</h4>
+                        <div class="code-block">
+<pre><code># Otimizar aplicação
+php artisan optimize
+
+# Verificar cache
+php artisan cache:clear
+php artisan config:cache
+
+# Verificar queries lentas
+php artisan tinker
+DB::enableQueryLog();
+// Executar operação
+DB::getQueryLog();
+
+# Verificar índices
+php artisan db:optimize</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Deploy. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

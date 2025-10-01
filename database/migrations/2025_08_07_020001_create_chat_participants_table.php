@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('chat_participants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('chat_room_id')->constrained('chat_rooms')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->enum('tipo', ['admin', 'moderador', 'participante'])->default('participante');
+            $table->boolean('ativo')->default(true);
+            $table->timestamp('ultimo_acesso')->nullable();
+            $table->timestamp('mute_until')->nullable(); // Mute temporário
+            $table->boolean('mute_permanente')->default(false);
+            $table->timestamps();
+            
+            $table->unique(['chat_room_id', 'user_id']);
+            $table->index(['user_id', 'ativo']);
+            $table->index(['chat_room_id', 'ativo']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('chat_participants');
+    }
+}; 

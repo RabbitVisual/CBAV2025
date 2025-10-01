@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBD Digital - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">EBD Digital</h1>
+                    <p class="text-sm text-gray-500">Escola Bíblica Dominical</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-graduation-cap text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">EBD Digital</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema completo de Escola Bíblica Dominical</p>
+            <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"Instrui o menino no caminho em que deve andar, e até quando envelhecer não se desviará dele."</p>
+                <p class="text-gray-500 text-sm mt-2">Provérbios 22:6</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O módulo EBD Digital é um sistema completo para gestão da Escola Bíblica Dominical, oferecendo funcionalidades 
+                    modernas para professores, alunos e administradores. O sistema permite o controle total do processo educacional 
+                    desde a matrícula até a emissão de certificados.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Gestão de Alunos</h3>
+                        <p class="text-gray-600 text-sm">Cadastro, matrículas, frequência e histórico completo</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chalkboard-teacher text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Gestão de Professores</h3>
+                        <p class="text-gray-600 text-sm">Controle de turmas, aulas e avaliações</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-certificate text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Certificados</h3>
+                        <p class="text-gray-600 text-sm">Emissão automática de certificados</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Principais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-user-plus text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Matrícula de Alunos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema completo de matrícula com dados pessoais, informações acadêmicas e histórico.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Dados pessoais completos</li>
+                        <li>• Informações de contato</li>
+                        <li>• Histórico acadêmico</li>
+                        <li>• Foto do aluno</li>
+                        <li>• Status de matrícula</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-users-cog text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Gestão de Turmas</h3>
+                    <p class="text-gray-600 mb-4">
+                        Criação e gestão de turmas com controle de capacidade e horários.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Criação de turmas</li>
+                        <li>• Controle de capacidade</li>
+                        <li>• Horários de aula</li>
+                        <li>• Professores responsáveis</li>
+                        <li>• Status da turma</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-book text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Lições e Conteúdo</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de lições com conteúdo digital, materiais de apoio e exercícios.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Conteúdo digital</li>
+                        <li>• Materiais de apoio</li>
+                        <li>• Exercícios práticos</li>
+                        <li>• Recursos multimídia</li>
+                        <li>• Progresso individual</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-clipboard-check text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Controle de Frequência</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de controle de presença com relatórios e estatísticas.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Registro de presença</li>
+                        <li>• Relatórios de frequência</li>
+                        <li>• Estatísticas por aluno</li>
+                        <li>• Alertas de ausência</li>
+                        <li>• Histórico completo</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-question-circle text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Quiz Bíblico</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de avaliação com quiz bíblico interativo e gamificação.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Questões bíblicas</li>
+                        <li>• Múltipla escolha</li>
+                        <li>• Sistema de pontuação</li>
+                        <li>• Ranking de alunos</li>
+                        <li>• Certificados de conquista</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-certificate text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Certificados</h3>
+                    <p class="text-gray-600 mb-4">
+                        Emissão automática de certificados com validação digital.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Certificados automáticos</li>
+                        <li>• Validação digital</li>
+                        <li>• Código de verificação</li>
+                        <li>• Download em PDF</li>
+                        <li>• Histórico de emissão</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Database Structure -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ebd_alunos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ebd_alunos (
+    id BIGINT PRIMARY KEY,
+    membro_id BIGINT,
+    turma_id BIGINT,
+    data_matricula DATE,
+    status ENUM('ativo', 'inativo', 'concluido'),
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ebd_turmas</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ebd_turmas (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255),
+    descricao TEXT,
+    capacidade INT,
+    professor_id BIGINT,
+    horario VARCHAR(100),
+    status ENUM('ativa', 'inativa', 'concluida'),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ebd_aulas</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ebd_aulas (
+    id BIGINT PRIMARY KEY,
+    turma_id BIGINT,
+    titulo VARCHAR(255),
+    conteudo TEXT,
+    data_aula DATE,
+    status ENUM('agendada', 'realizada', 'cancelada'),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ebd_frequencias</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ebd_frequencias (
+    id BIGINT PRIMARY KEY,
+    aluno_id BIGINT,
+    aula_id BIGINT,
+    presente BOOLEAN DEFAULT FALSE,
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ebd_certificados</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ebd_certificados (
+    id BIGINT PRIMARY KEY,
+    aluno_id BIGINT,
+    turma_id BIGINT,
+    codigo_verificacao VARCHAR(255),
+    data_emissao DATE,
+    arquivo_pdf VARCHAR(255),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Controllers -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Controllers e Rotas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Controllers Principais</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Admin Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdAlunoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdTurmaController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdAulaController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdProfessorController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdCertificadoController
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Member Controllers</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdDashboardController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdLicaoController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdQuizController
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-2"></i>
+                                EbdCertificadoController
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <h4 class="font-semibold text-gray-900 mb-2">Rotas Principais</h4>
+                    <div class="code-block">
+<pre><code>// Rotas Admin
+Route::prefix('admin/ebd')->name('admin.ebd.')->middleware(['auth', 'admin'])->group(function () {
+    Route::resource('alunos', EbdAlunoController::class);
+    Route::resource('turmas', EbdTurmaController::class);
+    Route::resource('aulas', EbdAulaController::class);
+    Route::resource('professores', EbdProfessorController::class);
+    Route::resource('certificados', EbdCertificadoController::class);
+});
+
+// Rotas Member
+Route::prefix('member/ebd')->name('member.ebd.')->middleware(['auth'])->group(function () {
+    Route::get('dashboard', [EbdDashboardController::class, 'index'])->name('dashboard');
+    Route::resource('licoes', EbdLicaoController::class);
+    Route::resource('quiz', EbdQuizController::class);
+    Route::get('certificados', [EbdCertificadoController::class, 'index'])->name('certificados');
+});</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Views -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Views e Interface</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Estrutura de Views</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Admin Views</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-blue-500 mr-2"></i>
+                                admin/ebd/alunos/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-blue-500 mr-2"></i>
+                                admin/ebd/turmas/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-blue-500 mr-2"></i>
+                                admin/ebd/aulas/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-blue-500 mr-2"></i>
+                                admin/ebd/professores/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-blue-500 mr-2"></i>
+                                admin/ebd/certificados/
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Member Views</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-green-500 mr-2"></i>
+                                member/ebd/dashboard/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-green-500 mr-2"></i>
+                                member/ebd/licoes/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-green-500 mr-2"></i>
+                                member/ebd/quiz/
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-folder text-green-500 mr-2"></i>
+                                member/ebd/certificados/
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Usage Examples -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Exemplos de Uso</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Código de Exemplo</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Criar Nova Turma</h4>
+                        <div class="code-block">
+<pre><code>// EbdTurmaController.php
+public function store(Request $request)
+{
+    $request->validate([
+        'nome' => 'required|string|max:255',
+        'descricao' => 'nullable|string',
+        'capacidade' => 'required|integer|min:1',
+        'professor_id' => 'required|exists:users,id',
+        'horario' => 'required|string'
+    ]);
+
+    $turma = EbdTurma::create([
+        'nome' => $request->nome,
+        'descricao' => $request->descricao,
+        'capacidade' => $request->capacidade,
+        'professor_id' => $request->professor_id,
+        'horario' => $request->horario,
+        'status' => 'ativa'
+    ]);
+
+    return redirect()->route('admin.ebd.turmas.index')
+        ->with('success', 'Turma criada com sucesso!');
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Registrar Frequência</h4>
+                        <div class="code-block">
+<pre><code>// EbdFrequenciaController.php
+public function registrarFrequencia(Request $request)
+{
+    $request->validate([
+        'aluno_id' => 'required|exists:ebd_alunos,id',
+        'aula_id' => 'required|exists:ebd_aulas,id',
+        'presente' => 'required|boolean'
+    ]);
+
+    EbdFrequencia::updateOrCreate(
+        [
+            'aluno_id' => $request->aluno_id,
+            'aula_id' => $request->aula_id
+        ],
+        [
+            'presente' => $request->presente,
+            'observacoes' => $request->observacoes
+        ]
+    );
+
+    return response()->json(['success' => true]);
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Gerar Certificado</h4>
+                        <div class="code-block">
+<pre><code>// EbdCertificadoController.php
+public function gerarCertificado(EbdAluno $aluno)
+{
+    $certificado = EbdCertificado::create([
+        'aluno_id' => $aluno->id,
+        'turma_id' => $aluno->turma_id,
+        'codigo_verificacao' => Str::random(32),
+        'data_emissao' => now(),
+        'arquivo_pdf' => $this->gerarPDF($aluno)
+    ]);
+
+    return response()->download($certificado->arquivo_pdf);
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Relatórios e Estatísticas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Relatórios Disponíveis</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-2">Relatório de Frequência</h4>
+                        <p class="text-blue-700 text-sm mb-4">
+                            Estatísticas detalhadas de presença por aluno, turma e período.
+                        </p>
+                        <ul class="text-sm text-blue-600 space-y-1">
+                            <li>• Frequência individual</li>
+                            <li>• Média por turma</li>
+                            <li>• Gráficos de tendência</li>
+                            <li>• Exportação em Excel</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-2">Relatório de Conclusão</h4>
+                        <p class="text-green-700 text-sm mb-4">
+                            Alunos que concluíram cursos e certificados emitidos.
+                        </p>
+                        <ul class="text-sm text-green-600 space-y-1">
+                            <li>• Certificados emitidos</li>
+                            <li>• Taxa de conclusão</li>
+                            <li>• Tempo médio de curso</li>
+                            <li>• Validação de certificados</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-2">Relatório de Desempenho</h4>
+                        <p class="text-purple-700 text-sm mb-4">
+                            Análise de desempenho nos quiz e avaliações.
+                        </p>
+                        <ul class="text-sm text-purple-600 space-y-1">
+                            <li>• Notas médias</li>
+                            <li>• Ranking de alunos</li>
+                            <li>• Questões mais difíceis</li>
+                            <li>• Progresso individual</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-2">Relatório de Turmas</h4>
+                        <p class="text-orange-700 text-sm mb-4">
+                            Informações sobre turmas, professores e capacidade.
+                        </p>
+                        <ul class="text-sm text-orange-600 space-y-1">
+                            <li>• Capacidade das turmas</li>
+                            <li>• Professores por turma</li>
+                            <li>• Horários e locais</li>
+                            <li>• Status das turmas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integration -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Integrações</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos Integrados</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Gestão de Membros</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração completa com o sistema de gestão de membros para cadastro e controle de alunos.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Dados pessoais sincronizados</li>
+                            <li>• Histórico de membro</li>
+                            <li>• Contato e comunicação</li>
+                            <li>• Status de membro</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Notificações</h4>
+                        <p class="text-gray-600 mb-4">
+                            Notificações automáticas para professores, alunos e administradores.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Lembretes de aula</li>
+                            <li>• Notificações de frequência</li>
+                            <li>• Certificados disponíveis</li>
+                            <li>• Alertas de conclusão</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Permissões</h4>
+                        <p class="text-gray-600 mb-4">
+                            Controle granular de acesso baseado em roles e permissões.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Professores (acesso limitado)</li>
+                            <li>• Administradores (acesso total)</li>
+                            <li>• Alunos (acesso próprio)</li>
+                            <li>• Coordenadores (acesso intermediário)</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Relatórios</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de relatórios para análises avançadas.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Relatórios consolidados</li>
+                            <li>• Exportação de dados</li>
+                            <li>• Gráficos interativos</li>
+                            <li>• Dashboards personalizados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - EBD Digital. Desenvolvido por 
+                    <a href="../creditos.blade.php" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="../creditos.blade.php" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 

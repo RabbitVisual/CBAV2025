@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Pessoas - Documentação CBAV</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Voltar à Documentação
+                    </a>
+                </div>
+                <div class="text-center">
+                    <h1 class="text-xl font-bold text-gray-900">Gestão de Pessoas</h1>
+                    <p class="text-sm text-gray-500">Sistema Completo de Gestão Ministerial</p>
+                </div>
+                <div class="w-20"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-6 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-users text-white text-3xl"></i>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Gestão de Pessoas</h1>
+            <p class="text-xl text-gray-600 mb-6">Sistema completo e integrado para gestão ministerial da igreja</p>
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6">
+                <p class="text-gray-700 italic">"E ele mesmo deu uns para apóstolos, e outros para profetas, e outros para evangelistas, e outros para pastores e doutores"</p>
+                <p class="text-gray-500 text-sm mt-2">Efésios 4:11</p>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Visão Geral</h2>
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-gray-600 mb-6">
+                    O módulo de Gestão de Pessoas é o núcleo central do sistema CBAV, oferecendo controle completo sobre 
+                    toda a estrutura organizacional da igreja, desde membros individuais até a hierarquia ministerial completa, 
+                    incluindo departamentos, cargos e usuários do sistema.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-user-plus text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Membros</h3>
+                        <p class="text-gray-600 text-sm">Cadastro completo com dados pessoais e ministeriais</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users-cog text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Usuários</h3>
+                        <p class="text-gray-600 text-sm">Gestão de acesso e permissões do sistema</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-church text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Ministérios</h3>
+                        <p class="text-gray-600 text-sm">Organização ministerial e liderança</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-orange-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-gray-900 mb-2">Relatórios</h3>
+                        <p class="text-gray-600 text-sm">Análises e estatísticas avançadas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Módulos Principais -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Módulos Principais</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Membros -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-user-edit text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Gestão de Membros</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema completo de cadastro e gestão de membros com dados pessoais, familiares e ministeriais.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Cadastro completo com dados pessoais</li>
+                        <li>• Vinculação com cargos e departamentos</li>
+                        <li>• Histórico ministerial detalhado</li>
+                        <li>• Importação e exportação de dados</li>
+                        <li>• Busca avançada e filtros</li>
+                        <li>• Geração de fichas e carteirinhas</li>
+                    </ul>
+                </div>
+                
+                <!-- Usuários -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-users-cog text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Gestão de Usuários</h3>
+                    <p class="text-gray-600 mb-4">
+                        Controle de acesso ao sistema com roles e permissões granulares.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Criação e gestão de usuários</li>
+                        <li>• Sistema de roles e permissões</li>
+                        <li>• Ativação/desativação de contas</li>
+                        <li>• Vinculação com membros</li>
+                        <li>• Controle de acesso por módulo</li>
+                        <li>• Logs de atividade</li>
+                    </ul>
+                </div>
+                
+                <!-- Ministérios -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-church text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Ministérios</h3>
+                    <p class="text-gray-600 mb-4">
+                        Gestão completa da estrutura ministerial com departamentos e liderança.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Criação e gestão de ministérios</li>
+                        <li>• Definição de responsáveis</li>
+                        <li>• Organização por departamentos</li>
+                        <li>• Controle de atividades</li>
+                        <li>• Relatórios de participação</li>
+                        <li>• Exportação de dados ministeriais</li>
+                    </ul>
+                </div>
+                
+                <!-- Departamentos -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-sitemap text-indigo-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Departamentos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Organização departamental dentro dos ministérios com estrutura hierárquica.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Criação de departamentos por ministério</li>
+                        <li>• Definição de responsáveis departamentais</li>
+                        <li>• Vinculação de cargos específicos</li>
+                        <li>• Controle de membros por departamento</li>
+                        <li>• Relatórios departamentais</li>
+                        <li>• Exportação de estrutura organizacional</li>
+                    </ul>
+                </div>
+                
+                <!-- Cargos -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-user-tie text-red-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Cargos</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de cargos vinculados a departamentos com controle de responsabilidades.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Criação de cargos por departamento</li>
+                        <li>• Atribuição de responsabilidades</li>
+                        <li>• Vinculação de membros a cargos</li>
+                        <li>• Histórico de ocupação de cargos</li>
+                        <li>• Controle de status (ativo/inativo)</li>
+                        <li>• Relatórios de distribuição de cargos</li>
+                    </ul>
+                </div>
+                
+                <!-- Aniversariantes -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-birthday-cake text-yellow-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Aniversariantes</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de controle de aniversariantes com notificações e relatórios.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Lista de aniversariantes do mês</li>
+                        <li>• Próximos aniversários</li>
+                        <li>• Exportação de listas</li>
+                        <li>• Integração com notificações</li>
+                        <li>• Relatórios de faixa etária</li>
+                        <li>• Calendário de aniversários</li>
+                    </ul>
+                </div>
+                
+                <!-- Relatórios -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-bar text-teal-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Relatórios Avançados</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema completo de relatórios e estatísticas com exportação em múltiplos formatos.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Relatórios demográficos</li>
+                        <li>• Análises ministeriais</li>
+                        <li>• Estatísticas de crescimento</li>
+                        <li>• Relatórios rápidos e completos</li>
+                        <li>• Exportação em PDF/Excel</li>
+                        <li>• Dashboards interativos</li>
+                    </ul>
+                </div>
+                
+                <!-- Busca e Filtros -->
+                <div class="feature-card bg-white rounded-2xl shadow-lg p-6">
+                    <div class="w-12 h-12 bg-pink-100 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-search text-pink-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Busca Avançada</h3>
+                    <p class="text-gray-600 mb-4">
+                        Sistema de busca e filtros avançados para localizar informações rapidamente.
+                    </p>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>• Busca por nome, email, telefone</li>
+                        <li>• Filtros por status e ministério</li>
+                        <li>• Busca por cargo e departamento</li>
+                        <li>• Filtros de data e localização</li>
+                        <li>• Busca em tempo real</li>
+                        <li>• Salvamento de filtros frequentes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Estrutura do Banco de Dados -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Estrutura do Banco de Dados</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Tabelas Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">membros</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE membros (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    telefone VARCHAR(20),
+    data_nascimento DATE,
+    endereco TEXT,
+    cidade VARCHAR(100),
+    estado VARCHAR(2),
+    cep VARCHAR(10),
+    foto VARCHAR(255),
+    ativo BOOLEAN DEFAULT TRUE,
+    data_batismo DATE,
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">ministerios</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE ministerios (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    responsavel_id BIGINT,
+    data_fundacao DATE,
+    reuniao_semanal VARCHAR(255),
+    observacoes TEXT,
+    ativo BOOLEAN DEFAULT TRUE,
+    cor VARCHAR(7),
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (responsavel_id) REFERENCES users(id)
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">departamentos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE departamentos (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    ministerio_id BIGINT NOT NULL,
+    responsavel_id BIGINT,
+    observacoes TEXT,
+    ativo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (ministerio_id) REFERENCES ministerios(id),
+    FOREIGN KEY (responsavel_id) REFERENCES membros(id)
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">cargos</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE cargos (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    departamento_id BIGINT NOT NULL,
+    responsabilidades TEXT,
+    ativo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (departamento_id) REFERENCES departamentos(id)
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">membro_cargo</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE membro_cargo (
+    id BIGINT PRIMARY KEY,
+    membro_id BIGINT NOT NULL,
+    cargo_id BIGINT NOT NULL,
+    data_inicio DATE,
+    data_fim DATE NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    observacoes TEXT,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (membro_id) REFERENCES membros(id),
+    FOREIGN KEY (cargo_id) REFERENCES cargos(id)
+);</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">membro_ministerio</h4>
+                        <div class="code-block">
+<pre><code>CREATE TABLE membro_ministerio (
+    id BIGINT PRIMARY KEY,
+    membro_id BIGINT NOT NULL,
+    ministerio_id BIGINT NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    data_inicio DATE,
+    data_fim DATE NULL,
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP,
+    FOREIGN KEY (membro_id) REFERENCES membros(id),
+    FOREIGN KEY (ministerio_id) REFERENCES ministerios(id),
+    UNIQUE KEY unique_membro_ministerio (membro_id, ministerio_id)
+);</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rotas e Endpoints -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Rotas e Endpoints</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Estrutura de Rotas</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Rotas de Membros</h4>
+                        <div class="code-block">
+<pre><code>// Membros
+Route::prefix('admin/people/members')->name('admin.people.members.')->group(function () {
+    Route::get('/', [PeopleController::class, 'members'])->name('index');
+    Route::get('/create', [PeopleController::class, 'createMember'])->name('create');
+    Route::post('/', [PeopleController::class, 'storeMember'])->name('store');
+    Route::get('/import', [PeopleController::class, 'importMembers'])->name('import');
+    Route::post('/import', [PeopleController::class, 'processImportMembers'])->name('import.process');
+    Route::get('/export', [PeopleController::class, 'exportMembers'])->name('export');
+    Route::get('/{membro}', [PeopleController::class, 'showMember'])->name('show');
+    Route::get('/{membro}/edit', [PeopleController::class, 'editMember'])->name('edit');
+    Route::put('/{membro}', [PeopleController::class, 'updateMember'])->name('update');
+    Route::delete('/{membro}', [PeopleController::class, 'deleteMember'])->name('delete');
+    Route::get('/{membro}/card', [PeopleController::class, 'memberCard'])->name('card');
+    Route::get('/{membro}/ficha', [PeopleController::class, 'memberCard'])->name('ficha');
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Rotas de Usuários</h4>
+                        <div class="code-block">
+<pre><code>// Usuários
+Route::prefix('admin/people/users')->name('admin.people.users.')->group(function () {
+    Route::get('/', [PeopleController::class, 'users'])->name('index');
+    Route::get('/create', [PeopleController::class, 'createUser'])->name('create');
+    Route::post('/', [PeopleController::class, 'storeUser'])->name('store');
+    Route::get('/{user}', [PeopleController::class, 'showUser'])->name('show');
+    Route::get('/{user}/edit', [PeopleController::class, 'editUser'])->name('edit');
+    Route::put('/{user}', [PeopleController::class, 'updateUser'])->name('update');
+    Route::delete('/{user}', [PeopleController::class, 'deleteUser'])->name('delete');
+    Route::post('/{user}/activate', [PeopleController::class, 'activateUser'])->name('activate');
+    Route::post('/{user}/deactivate', [PeopleController::class, 'deactivateUser'])->name('deactivate');
+    Route::get('/export', [PeopleController::class, 'exportUsers'])->name('export');
+    Route::post('/bulk-action', [PeopleController::class, 'bulkActionUsers'])->name('bulk-action');
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Rotas de Ministérios</h4>
+                        <div class="code-block">
+<pre><code>// Ministérios
+Route::prefix('admin/people/ministries')->name('admin.people.ministries.')->group(function () {
+    Route::get('/', [PeopleController::class, 'ministries'])->name('index');
+    Route::get('/create', [PeopleController::class, 'createMinistry'])->name('create');
+    Route::post('/', [PeopleController::class, 'storeMinistry'])->name('store');
+    Route::get('/{ministerio}', [PeopleController::class, 'showMinistry'])->name('show');
+    Route::get('/{ministerio}/edit', [PeopleController::class, 'editMinistry'])->name('edit');
+    Route::put('/{ministerio}', [PeopleController::class, 'updateMinistry'])->name('update');
+    Route::delete('/{ministerio}', [PeopleController::class, 'deleteMinistry'])->name('delete');
+    Route::get('/export', [PeopleController::class, 'exportMinistries'])->name('export');
+    Route::get('/{ministerio}/export', [PeopleController::class, 'exportMinistry'])->name('ministry.export');
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Rotas de Departamentos</h4>
+                        <div class="code-block">
+<pre><code>// Departamentos
+Route::prefix('admin/people/departments')->name('admin.people.departments.')->group(function () {
+    Route::get('/', [PeopleController::class, 'departments'])->name('index');
+    Route::get('/create', [PeopleController::class, 'createDepartment'])->name('create');
+    Route::post('/', [PeopleController::class, 'storeDepartment'])->name('store');
+    Route::get('/{departamento}', [PeopleController::class, 'showDepartment'])->name('show');
+    Route::get('/{departamento}/edit', [PeopleController::class, 'editDepartment'])->name('edit');
+    Route::put('/{departamento}', [PeopleController::class, 'updateDepartment'])->name('update');
+    Route::delete('/{departamento}', [PeopleController::class, 'deleteDepartment'])->name('delete');
+    Route::get('/{departamento}/export', [PeopleController::class, 'exportDepartment'])->name('export');
+});</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Rotas de Cargos e Relatórios</h4>
+                        <div class="code-block">
+<pre><code>// Cargos
+Route::prefix('admin/people/cargos')->name('admin.people.cargos.')->group(function () {
+    Route::get('/', [PeopleController::class, 'cargos'])->name('index');
+    Route::get('/create', [PeopleController::class, 'createCargo'])->name('create');
+    Route::post('/', [PeopleController::class, 'storeCargo'])->name('store');
+    Route::get('/{cargo}/edit', [PeopleController::class, 'editCargo'])->name('edit');
+    Route::put('/{cargo}', [PeopleController::class, 'updateCargo'])->name('update');
+    Route::delete('/{cargo}', [PeopleController::class, 'deleteCargo'])->name('delete');
+});
+
+// Aniversariantes
+Route::prefix('admin/people/birthdays')->name('admin.people.birthdays.')->group(function () {
+    Route::get('/', [PeopleController::class, 'birthdays'])->name('index');
+    Route::get('/upcoming', [PeopleController::class, 'upcomingBirthdays'])->name('upcoming');
+    Route::get('/export', [PeopleController::class, 'exportBirthdays'])->name('export');
+    Route::get('/upcoming/export', [PeopleController::class, 'exportUpcomingBirthdays'])->name('upcoming.export');
+});
+
+// Relatórios
+Route::prefix('admin/people/reports')->name('admin.people.reports.')->group(function () {
+    Route::get('/', [PeopleController::class, 'reports'])->name('index');
+    Route::get('/export', [PeopleController::class, 'exportReports'])->name('export');
+    Route::get('/export-all', [PeopleController::class, 'exportAllReports'])->name('export-all');
+    Route::get('/members', [PeopleController::class, 'reportsMembers'])->name('members');
+    Route::get('/ministries', [PeopleController::class, 'reportsMinistries'])->name('ministries');
+    Route::get('/birthdays', [PeopleController::class, 'reportsBirthdays'])->name('birthdays');
+    Route::get('/statistics', [PeopleController::class, 'reportsStatistics'])->name('statistics');
+    Route::get('/quick/{tipo}', [PeopleController::class, 'reportsQuick'])->name('quick');
+    Route::get('/complete', [PeopleController::class, 'reportsComplete'])->name('complete');
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Models e Relacionamentos -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Models e Relacionamentos</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Models Principais</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Membro Model</h4>
+                        <div class="code-block">
+<pre><code>class Membro extends Model
+{
+    protected $fillable = [
+        'nome', 'email', 'telefone', 'data_nascimento',
+        'endereco', 'cidade', 'estado', 'cep', 'foto',
+        'ativo', 'data_batismo', 'observacoes'
+    ];
+
+    protected $casts = [
+        'data_nascimento' => 'date',
+        'data_batismo' => 'date',
+        'ativo' => 'boolean',
+    ];
+
+    // Relacionamento com cargos (many-to-many)
+    public function cargos()
+    {
+        return $this->belongsToMany(Cargo::class, 'membro_cargo')
+                    ->withPivot('data_inicio', 'data_fim', 'ativo', 'observacoes')
+                    ->withTimestamps();
+    }
+
+    // Relacionamento com ministérios (many-to-many)
+    public function ministerios()
+    {
+        return $this->belongsToMany(Ministerio::class, 'membro_ministerio')
+                    ->withPivot('ativo', 'data_inicio', 'data_fim')
+                    ->withTimestamps();
+    }
+
+    // Accessor para coleção de ministérios
+    public function getMinisteriosCollectionAttribute()
+    {
+        return collect($this->cargos->pluck('departamento.ministerio')->unique('id'));
+    }
+
+    // Relacionamento com usuário
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Ministerio Model</h4>
+                        <div class="code-block">
+<pre><code>class Ministerio extends Model
+{
+    protected $fillable = [
+        'nome', 'descricao', 'responsavel_id', 'data_fundacao', 
+        'reuniao_semanal', 'observacoes', 'ativo', 'cor'
+    ];
+
+    protected $casts = [
+        'ativo' => 'boolean',
+        'data_fundacao' => 'date',
+    ];
+
+    // Relacionamento com departamentos
+    public function departamentos()
+    {
+        return $this->hasMany(Departamento::class);
+    }
+
+    // Relacionamento com responsável
+    public function responsavel()
+    {
+        return $this->belongsTo(User::class, 'responsavel_id');
+    }
+
+    // Relacionamento com membros através do pivot
+    public function membros()
+    {
+        return $this->belongsToMany(Membro::class, 'membro_ministerio')
+                    ->withPivot('ativo', 'data_inicio', 'data_fim')
+                    ->withTimestamps();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Departamento Model</h4>
+                        <div class="code-block">
+<pre><code>class Departamento extends Model
+{
+    protected $fillable = [
+        'nome', 'descricao', 'ministerio_id', 
+        'responsavel_id', 'observacoes', 'ativo'
+    ];
+
+    protected $casts = [
+        'ativo' => 'boolean',
+    ];
+
+    // Relacionamento com ministério
+    public function ministerio()
+    {
+        return $this->belongsTo(Ministerio::class);
+    }
+
+    // Relacionamento com responsável
+    public function responsavel()
+    {
+        return $this->belongsTo(Membro::class, 'responsavel_id');
+    }
+
+    // Relacionamento com cargos
+    public function cargos()
+    {
+        return $this->hasMany(Cargo::class);
+    }
+
+    // Relacionamento com membros através de cargos
+    public function membros()
+    {
+        return $this->hasManyThrough(Membro::class, Cargo::class, 'departamento_id', 'id', 'id', 'membro_id')
+                    ->join('membro_cargo', 'membros.id', '=', 'membro_cargo.membro_id')
+                    ->where('membro_cargo.ativo', true);
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Cargo Model</h4>
+                        <div class="code-block">
+<pre><code>class Cargo extends Model
+{
+    protected $fillable = [
+        'nome', 'descricao', 'departamento_id',
+        'responsabilidades', 'ativo'
+    ];
+
+    protected $casts = [
+        'ativo' => 'boolean',
+    ];
+
+    // Relacionamento com departamento
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
+    }
+
+    // Relacionamento com membros (many-to-many)
+    public function membros()
+    {
+        return $this->belongsToMany(Membro::class, 'membro_cargo')
+                    ->withPivot('data_inicio', 'data_fim', 'ativo', 'observacoes')
+                    ->withTimestamps();
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funcionalidades Avançadas -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Funcionalidades Avançadas</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="feature-card bg-blue-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-blue-900 mb-3">Importação e Exportação</h4>
+                        <p class="text-blue-700 text-sm mb-4">
+                            Sistema completo de importação/exportação de dados em múltiplos formatos.
+                        </p>
+                        <ul class="text-sm text-blue-600 space-y-1">
+                            <li>• Importação de membros via Excel/CSV</li>
+                            <li>• Exportação de relatórios em PDF</li>
+                            <li>• Exportação de dados em Excel</li>
+                            <li>• Templates de importação</li>
+                            <li>• Validação de dados importados</li>
+                            <li>• Logs de importação</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-green-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-green-900 mb-3">Sistema de Permissões</h4>
+                        <p class="text-green-700 text-sm mb-4">
+                            Controle granular de acesso com roles e permissões específicas.
+                        </p>
+                        <ul class="text-sm text-green-600 space-y-1">
+                            <li>• Permissões por módulo</li>
+                            <li>• Roles personalizáveis</li>
+                            <li>• Controle de acesso departamental</li>
+                            <li>• Permissões de edição específicas</li>
+                            <li>• Logs de acesso</li>
+                            <li>• Auditoria de permissões</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-purple-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-purple-900 mb-3">Geração de Documentos</h4>
+                        <p class="text-purple-700 text-sm mb-4">
+                            Geração automática de documentos e relatórios personalizados.
+                        </p>
+                        <ul class="text-sm text-purple-600 space-y-1">
+                            <li>• Fichas de membros</li>
+                            <li>• Carteirinhas personalizadas</li>
+                            <li>• Relatórios ministeriais</li>
+                            <li>• Listas de aniversariantes</li>
+                            <li>• Organogramas</li>
+                            <li>• Certificados de participação</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="feature-card bg-orange-50 rounded-xl p-6">
+                        <h4 class="font-semibold text-orange-900 mb-3">Dashboard Executivo</h4>
+                        <p class="text-orange-700 text-sm mb-4">
+                            Painel executivo com métricas e KPIs da gestão de pessoas.
+                        </p>
+                        <ul class="text-sm text-orange-600 space-y-1">
+                            <li>• Estatísticas em tempo real</li>
+                            <li>• Gráficos interativos</li>
+                            <li>• Métricas de crescimento</li>
+                            <li>• Indicadores de participação</li>
+                            <li>• Alertas e notificações</li>
+                            <li>• Relatórios automáticos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Integrações -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Integrações do Sistema</h2>
+            
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-900 mb-4">Módulos Integrados</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema Financeiro</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração completa com doações, dízimos e controle financeiro por membro.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Histórico de doações por membro</li>
+                            <li>• Controle de dízimos</li>
+                            <li>• Relatórios financeiros por ministério</li>
+                            <li>• Metas financeiras departamentais</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Eventos</h4>
+                        <p class="text-gray-600 mb-4">
+                            Controle de presença e participação em eventos da igreja.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Inscrições automáticas por ministério</li>
+                            <li>• Controle de presença ministerial</li>
+                            <li>• Relatórios de participação</li>
+                            <li>• Certificados por departamento</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">EBD Digital</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de Escola Bíblica Dominical.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Matrícula automática de membros</li>
+                            <li>• Controle de frequência por cargo</li>
+                            <li>• Certificados EBD</li>
+                            <li>• Professores por departamento</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Chat</h4>
+                        <p class="text-gray-600 mb-4">
+                            Comunicação interna por ministérios e departamentos.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Salas por ministério</li>
+                            <li>• Grupos departamentais</li>
+                            <li>• Comunicação de liderança</li>
+                            <li>• Notificações ministeriais</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Sistema de Notificações</h4>
+                        <p class="text-gray-600 mb-4">
+                            Notificações automáticas para membros e líderes.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Aniversários de membros</li>
+                            <li>• Eventos ministeriais</li>
+                            <li>• Atividades departamentais</li>
+                            <li>• Lembretes de liderança</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Conselho Ministerial</h4>
+                        <p class="text-gray-600 mb-4">
+                            Integração com o sistema de conselho e votações.
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Participação automática de líderes</li>
+                            <li>• Votações por ministério</li>
+                            <li>• Atas de reuniões</li>
+                            <li>• Controle de presença</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="border-t pt-8">
+            <div class="text-center">
+                <p class="text-gray-600 mb-4">
+                    © 2025 Sistema CBAV - Gestão de Pessoas. Desenvolvido por 
+                    <a href="creditos.html" class="text-blue-600 hover:text-blue-800 font-medium">Vertex Solutions</a>
+                </p>
+                <div class="flex justify-center space-x-4 text-sm text-gray-500">
+                    <a href="index.html" class="hover:text-gray-700">Documentação</a>
+                    <a href="creditos.html" class="hover:text-gray-700">Créditos</a>
+                    <a href="../" class="hover:text-gray-700">Sistema</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Add loading animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html> 
