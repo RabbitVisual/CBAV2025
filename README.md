@@ -13,11 +13,11 @@
 
 ---
 
-<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="150" height="80">
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="200" height="100">
 
 **Desenvolvido pela Vertex Solutions LTDA**
 
-<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="100" height="100" style="border-radius: 50%;">
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="120" height="120" style="border-radius: 50%; border: 3px solid #3B82F6; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 **CEO: Reinan Rodrigues**
 
@@ -512,17 +512,18 @@ tail -f storage/logs/laravel.log
 
 <div align="center">
 
-<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="200" height="100">
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="250" height="125">
 
 **Vertex Solutions LTDA**
 
-<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="120" height="120" style="border-radius: 50%;">
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="140" height="140" style="border-radius: 50%; border: 4px solid #3B82F6; box-shadow: 0 6px 12px rgba(0,0,0,0.15);">
 
 **CEO: Reinan Rodrigues**
 
 </div>
 
 ### **Informações de Contato:**
+
 -   **WhatsApp:** [+55 75 99203-4656](https://wa.me/5575992034656)
 -   **Email:** [r.rodriguesjs@gmail.com](mailto:r.rodriguesjs@gmail.com)
 -   **Website:** [Vertex Solutions](https://vertexsolutions.com.br)
@@ -578,11 +579,11 @@ Este software é propriedade da **Vertex Solutions LTDA** e está protegido por 
 
 ---
 
-<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="120" height="60">
+<img src="public/img/logo.png" alt="Vertex Solutions Logo" width="180" height="90">
 
 **© 2025 Vertex Solutions LTDA - Todos os direitos reservados**
 
-<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="80" height="80" style="border-radius: 50%;">
+<img src="public/img/reinanrodrigues.jpg" alt="Reinan Rodrigues - CEO" width="100" height="100" style="border-radius: 50%; border: 3px solid #3B82F6; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
 
 **CEO: Reinan Rodrigues**
 
