@@ -1,62 +1,7 @@
 @php
-use App\Helpers\PermissionHelper;
-
-// Determinar a seção e subseção atual com base na rota
-$currentRoute = request()->route()->getName();
-$currentSection = '';
-$currentSubsection = '';
-
-// Mapear rotas para seções
-if (str_starts_with($currentRoute, 'member.dashboard')) {
-    $currentSection = 'dashboard';
-} elseif (str_starts_with($currentRoute, 'member.profile')) {
-    $currentSection = 'profile';
-} elseif (str_starts_with($currentRoute, 'member.devotionals')) {
-    $currentSection = 'devotionals';
-} elseif (str_starts_with($currentRoute, 'member.bible')) {
-    $currentSection = 'bible';
-} elseif (str_starts_with($currentRoute, 'member.prayer') || str_contains($currentRoute, 'pedidos-oracao')) {
-    $currentSection = 'prayer';
-} elseif (str_starts_with($currentRoute, 'member.events') || str_contains($currentRoute, 'eventos')) {
-    $currentSection = 'events';
-} elseif (str_starts_with($currentRoute, 'member.ministries')) {
-    $currentSection = 'ministries';
-} elseif (str_starts_with($currentRoute, 'member.ebd')) {
-    $currentSection = 'ebd';
-} elseif (str_starts_with($currentRoute, 'member.donations')) {
-    $currentSection = 'donations';
-} elseif (str_starts_with($currentRoute, 'member.chat')) {
-    $currentSection = 'chat';
-} elseif (str_starts_with($currentRoute, 'member.notifications')) {
-    $currentSection = 'notifications';
-}
-
-// Definir categorias expansíveis
-$expandedCategories = session('sidebar_expanded', ['dashboard', 'profile', 'donations', 'communication', 'spiritual', 'events', 'prayer']);
-
-// Obter dados do membro
-$membro = Auth::user()->membro;
-$alunoEbd = null;
-
-// Verificar se o usuário está matriculado na EBD
-if ($membro) {
-    $alunoEbd = \App\Models\EbdAluno::where('membro_id', $membro->id)
-                                    ->where('status', 'ativo')
-                                    ->with('turma')
-                                    ->first();
-}
-
-if (!$alunoEbd) {
-    $alunoEbd = \App\Models\EbdAluno::where('email', Auth::user()->email)
-                                    ->where('status', 'ativo')
-                                    ->with('turma')
-                                    ->first();
-}
-
-// Get unread notifications count
-$unreadCount = auth()->user()->unreadNotifications()->count();
+    // Definir categorias expansíveis
+    $expandedCategories = session('sidebar_expanded', ['dashboard', 'profile', 'donations', 'communication', 'spiritual', 'events', 'prayer']);
 @endphp
-
 <!-- Sidebar -->
 <div id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 transform transition-transform duration-300 ease-in-out lg:translate-x-0 flex flex-col h-screen"
      :class="{ '-translate-x-full': !sidebarOpen, 'translate-x-0': sidebarOpen }"
@@ -203,9 +148,9 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
                    class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 {{ $currentSection === 'notifications' ? 'bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white' }}">
                     <i class="fas fa-bell mr-3 h-5 w-5 {{ $currentSection === 'notifications' ? 'text-primary-600 dark:text-primary-400' : 'text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300' }}"></i>
                     Notificações
-                    @if(isset($unreadCount) && $unreadCount > 0)
+                    @if($unreadNotificationsCount > 0)
                         <span class="ml-auto bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                            {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                            {{ $unreadNotificationsCount > 99 ? '99+' : $unreadNotificationsCount }}
                         </span>
                     @endif
                 </a>
@@ -321,7 +266,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
         </div>
          
          <!-- Acesso Rápido à Área Admin -->
-         @if(PermissionHelper::hasAdminAccess())
+         @if($hasAdminAccess)
          <div class="mb-6">
              <p class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                  Acesso Administrativo
@@ -335,13 +280,13 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
          @endif
          
          <!-- Admin Access (if applicable) -->
-         @if(PermissionHelper::hasAdminAccess())
+         @if($hasAdminAccess)
         <div class="pt-6 mt-6 border-t border-gray-200 dark:border-gray-700">
             <p class="px-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
                 Áreas Especiais
             </p>
             
-            @if(auth()->user()->hasPermissionTo('admin master'))
+            @if(Auth::user()->hasPermissionTo('admin master'))
             <a href="{{ route('admin.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-cogs mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -349,7 +294,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('intercessor.access'))
+            @if(Auth::user()->hasPermissionTo('intercessor.access'))
             <a href="{{ route('admin.intercessor.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-praying-hands mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -357,7 +302,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('council.access'))
+            @if(Auth::user()->hasPermissionTo('council.access'))
             <a href="{{ route('admin.council.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-users-cog mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -365,7 +310,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('people.access'))
+            @if(Auth::user()->hasPermissionTo('people.access'))
             <a href="{{ route('admin.people.index') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-users mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -373,7 +318,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('finance.access'))
+            @if(Auth::user()->hasPermissionTo('finance.access'))
             <a href="{{ route('admin.finance.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-chart-line mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -381,7 +326,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('ebd.access'))
+            @if(Auth::user()->hasPermissionTo('ebd.access'))
             <a href="{{ route('admin.ebd.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-graduation-cap mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -389,7 +334,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('devotionals.access'))
+            @if(Auth::user()->hasPermissionTo('devotionals.access'))
             <a href="{{ route('admin.devotionals.index') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-book mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>
@@ -397,7 +342,7 @@ $unreadCount = auth()->user()->unreadNotifications()->count();
             </a>
             @endif
             
-            @if(auth()->user()->hasPermissionTo('system.access'))
+            @if(Auth::user()->hasPermissionTo('system.access'))
             <a href="{{ route('admin.system.dashboard') }}"
                class="group flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors duration-200 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-white">
                 <i class="fas fa-cog mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300"></i>

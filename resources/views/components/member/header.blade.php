@@ -1,11 +1,3 @@
-@php
-// Obter dados do membro
-$membro = Auth::user()->membro;
-
-// Contar notificações não lidas
-$unreadNotifications = Auth::user()->unreadNotifications()->count();
-@endphp
-
 <!-- Header -->
 <header class="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
     <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
@@ -78,9 +70,9 @@ $unreadNotifications = Auth::user()->unreadNotifications()->count();
                         class="relative p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 transition-colors duration-200">
                     <span class="sr-only">Ver notificações</span>
                     <i class="fas fa-bell h-5 w-5"></i>
-                    @if($unreadNotifications > 0)
+                    @if($unreadNotificationsCount > 0)
                     <span class="absolute -top-0.5 -right-0.5 h-4 w-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                        {{ $unreadNotifications > 9 ? '9+' : $unreadNotifications }}
+                        {{ $unreadNotificationsCount > 9 ? '9+' : $unreadNotificationsCount }}
                     </span>
                     @endif
                 </button>
@@ -99,7 +91,7 @@ $unreadNotifications = Auth::user()->unreadNotifications()->count();
                     <div class="p-4 border-b border-gray-200 dark:border-gray-700">
                         <div class="flex items-center justify-between">
                             <h3 class="text-sm font-medium text-gray-900 dark:text-white">Notificações</h3>
-                            @if($unreadNotifications > 0)
+                            @if($unreadNotificationsCount > 0)
                             <a href="{{ route('member.notifications.mark-all-read') }}" 
                                class="text-xs text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300">
                                 Marcar todas como lidas
@@ -109,7 +101,7 @@ $unreadNotifications = Auth::user()->unreadNotifications()->count();
                     </div>
                     
                     <div class="max-h-64 overflow-y-auto">
-                        @forelse(Auth::user()->notifications()->latest()->limit(5)->get() as $notification)
+                        @forelse($latestNotifications as $notification)
                         <div class="p-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 {{ $notification->read_at ? '' : 'bg-primary-50 dark:bg-primary-900/20' }}">
                             <div class="flex items-start space-x-3">
                                 <div class="flex-shrink-0">
@@ -140,7 +132,7 @@ $unreadNotifications = Auth::user()->unreadNotifications()->count();
                         @endforelse
                     </div>
                     
-                    @if(Auth::user()->notifications()->count() > 5)
+                    @if($latestNotifications->count() > 5)
                     <div class="p-3 border-t border-gray-200 dark:border-gray-700">
                         <a href="{{ route('member.notifications.index') }}" 
                            class="block text-center text-sm text-primary-600 dark:text-primary-400 hover:text-primary-500 dark:hover:text-primary-300">

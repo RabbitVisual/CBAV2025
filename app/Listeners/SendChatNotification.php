@@ -2,16 +2,24 @@
 
 namespace App\Listeners;
 
+use App\Events\ChatMessageSent;
+use App\Events\NotificationCreated;
+use App\Models\ChatParticipant;
+use App\Models\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
-use App\Events\ChatMessageSent;
-use App\Models\ChatParticipant;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class SendChatNotification implements ShouldQueue
 {
     use InteractsWithQueue;
 
+    /**
+     * The name of the queue the job should be sent to.
+     *
+     * @var string|null
+     */
     public $queue = 'notifications';
 
     /**
@@ -38,47 +46,31 @@ class SendChatNotification implements ShouldQueue
                                       ->get();
         
         foreach ($participants as $participant) {
-            // Verificar se o participante não está mutado
-            if (!$participant->isMuted()) {
-                $this->sendNotification($participant->user, $message, $room);
+            // Não enviar notificação se o participante estiver com a sala mutada
+            if ($participant->isMuted()) {
+                continue;
             }
+
+            // Criar a notificação no banco de dados
+            $notification = Notification::create([
+                'user_id' => $participant->user_id,
+                'type' => 'App\Notifications\NewChatMessage', // Tipo para identificar a notificação
+                'notifiable_type' => get_class($message),
+                'notifiable_id' => $message->id,
+                'data' => [
+                    'room_id' => $room->id,
+                    'room_name' => $room->nome,
+                    'sender_id' => $message->user_id,
+                    'sender_name' => $message->user->name,
+                    'sender_photo' => $message->user->profile_photo_url,
+                    'message_preview' => Str::limit($message->mensagem, 50),
+                    'link' => route('member.chat.show', ['room' => $room->id]),
+                ],
+            ]);
+
+            // Disparar um evento para notificar o frontend em tempo real
+            // Este evento será capturado pelo Laravel Echo.
+            event(new NotificationCreated($notification));
         }
     }
-    
-    private function sendNotification($user, $message, $room)
-    {
-        // Aqui você pode integrar com serviços de notificação push
-        // como Firebase, OneSignal, etc.
-        
-        $notificationData = [
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'message' => $message->mensagem,
-            'sender' => $message->user->name,
-            'room' => $room->nome,
-            'timestamp' => now()->toISOString()
-        ];
-        
-        // Log da notificação (para debug)
-        Log::info('Notificação push enviada', $notificationData);
-        
-        // Exemplo de integração com Firebase (comentado)
-        /*
-        $firebase = new Firebase();
-        $firebase->sendNotification([
-            'to' => $user->fcm_token,
-            'notification' => [
-                'title' => "Nova mensagem em {$room->nome}",
-                'body' => "{$message->user->name}: {$message->mensagem}",
-                'icon' => '/icon.png',
-                'click_action' => "/chat/{$room->id}"
-            ],
-            'data' => [
-                'room_id' => $room->id,
-                'message_id' => $message->id,
-                'sender_id' => $message->user_id
-            ]
-        ]);
-        */
-    }
-} 
+}
