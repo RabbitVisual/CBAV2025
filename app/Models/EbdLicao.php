@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class EbdLicao extends Model
 {
@@ -14,25 +14,28 @@ class EbdLicao extends Model
     protected $table = 'ebd_licoes';
 
     protected $fillable = [
-        'titulo',
-        'descricao',
-        'objetivos',
-        'versiculo_chave',
-        'conteudo',
-        'aplicacao_pratica',
-        'oracao',
-        'material_necessario',
-        'duracao_minutos',
-        'dificuldade',
-        'ativo'
+        'disciplina_id', 'titulo', 'descricao', 'objetivos', 'versiculo_chave',
+        'conteudo', 'aplicacao_pratica', 'oracao', 'material_necessario',
+        'duracao_minutos', 'dificuldade', 'ativo'
     ];
 
     protected $casts = [
         'ativo' => 'boolean',
+        'duracao_minutos' => 'integer',
     ];
 
+    // --- RELACIONAMENTOS ---
+
     /**
-     * Relacionamento com aulas
+     * A disciplina a que esta lição pertence.
+     */
+    public function disciplina(): BelongsTo
+    {
+        return $this->belongsTo(Disciplina::class, 'disciplina_id');
+    }
+
+    /**
+     * As aulas associadas a esta lição.
      */
     public function aulas(): HasMany
     {
@@ -40,57 +43,31 @@ class EbdLicao extends Model
     }
 
     /**
-     * Relacionamento com avaliações através das aulas
+     * As atividades práticas associadas a esta lição.
      */
-    public function avaliacoes(): HasManyThrough
+    public function atividades(): HasMany
     {
-        return $this->hasManyThrough(
-            EbdAvaliacao::class,
-            EbdAula::class,
-            'licao_id', // Chave estrangeira em ebd_aulas
-            'aula_id',   // Chave estrangeira em ebd_avaliacoes
-            'id',        // Chave local em ebd_licoes
-            'id'         // Chave local em ebd_aulas
-        );
+        return $this->hasMany(Atividade::class, 'licao_id');
     }
 
-    /**
-     * Obter aulas agendadas
-     */
-    public function aulasAgendadas()
+    // --- SCOPES ---
+
+    public function scopeAtivas($query)
     {
-        return $this->aulas()->where('status', 'agendada');
+        return $query->where('ativo', true);
     }
 
-    /**
-     * Obter aulas realizadas
-     */
-    public function aulasRealizadas()
+    public function scopePorDificuldade($query, string $dificuldade)
     {
-        return $this->aulas()->where('status', 'realizada');
+        return $query->where('dificuldade', $dificuldade);
     }
 
-    /**
-     * Calcular total de aulas
-     */
-    public function getTotalAulasAttribute()
-    {
-        return $this->aulas()->count();
-    }
+    // --- ACCESSORS ---
 
-    /**
-     * Calcular total de avaliações
-     */
-    public function getTotalAvaliacoesAttribute()
+    public function getDuracaoFormatadaAttribute(): string
     {
-        return $this->avaliacoes()->count();
-    }
+        if (!$this->duracao_minutos) return 'N/A';
 
-    /**
-     * Obter duração formatada
-     */
-    public function getDuracaoFormatadaAttribute()
-    {
         $horas = floor($this->duracao_minutos / 60);
         $minutos = $this->duracao_minutos % 60;
         
@@ -100,77 +77,23 @@ class EbdLicao extends Model
         return "{$minutos}min";
     }
 
-    /**
-     * Obter dificuldade formatada
-     */
-    public function getDificuldadeFormatadaAttribute()
+    public function getDificuldadeFormatadaAttribute(): string
     {
         return match($this->dificuldade) {
             'facil' => 'Fácil',
             'medio' => 'Médio',
             'dificil' => 'Difícil',
-            default => 'Médio'
+            default => 'Não definida'
         };
     }
 
-    /**
-     * Obter cor da dificuldade
-     */
-    public function getCorDificuldadeAttribute()
+    public function getCorDificuldadeAttribute(): string
     {
         return match($this->dificuldade) {
-            'facil' => 'bg-green-100 text-green-800',
-            'medio' => 'bg-yellow-100 text-yellow-800',
-            'dificil' => 'bg-red-100 text-red-800',
-            default => 'bg-yellow-100 text-yellow-800'
+            'facil' => 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300',
+            'medio' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300',
+            'dificil' => 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
+            default => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
         };
     }
-
-    /**
-     * Scope para lições ativas
-     */
-    public function scopeAtivas($query)
-    {
-        return $query->where('ativo', true);
-    }
-
-    /**
-     * Scope para buscar por título
-     */
-    public function scopePorTitulo($query, $titulo)
-    {
-        return $query->where('titulo', 'like', "%{$titulo}%");
-    }
-
-    /**
-     * Scope para buscar por dificuldade
-     */
-    public function scopePorDificuldade($query, $dificuldade)
-    {
-        return $query->where('dificuldade', $dificuldade);
-    }
-
-    /**
-     * Scope para lições fáceis
-     */
-    public function scopeFaceis($query)
-    {
-        return $query->where('dificuldade', 'facil');
-    }
-
-    /**
-     * Scope para lições médias
-     */
-    public function scopeMedias($query)
-    {
-        return $query->where('dificuldade', 'medio');
-    }
-
-    /**
-     * Scope para lições difíceis
-     */
-    public function scopeDificeis($query)
-    {
-        return $query->where('dificuldade', 'dificil');
-    }
-} 
+}

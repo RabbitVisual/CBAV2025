@@ -6,30 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Carbon\Carbon;
 
 class Conselho extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'titulo',
-        'descricao',
-        'data_reuniao',
-        'hora_inicio',
-        'hora_fim',
-        'local',
-        'status', // agendada, em_andamento, finalizada, cancelada
-        'tipo', // reuniao_ordinaria, reuniao_extraordinaria, votacao
-        'quorum_minimo',
-        'criado_por',
-        'presidente_id',
-        'secretario_id',
-        'template_id',
-        'observacoes',
-        'ata_finalizada',
-        'data_ata_finalizada'
+        'titulo', 'descricao', 'data_reuniao', 'hora_inicio', 'hora_fim', 'local',
+        'status', 'tipo', 'quorum_minimo', 'criado_por', 'presidente_id',
+        'secretario_id', 'template_id', 'observacoes', 'ata_finalizada', 'data_ata_finalizada'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'data_reuniao' => 'date',
         'hora_inicio' => 'datetime',
@@ -38,6 +36,8 @@ class Conselho extends Model
         'ata_finalizada' => 'boolean',
         'quorum_minimo' => 'integer'
     ];
+
+    // --- RELACIONAMENTOS ---
 
     public function criadoPor(): BelongsTo
     {
@@ -74,37 +74,7 @@ class Conselho extends Model
         return $this->belongsTo(TemplatePauta::class, 'template_id');
     }
 
-    public function getStatusTextAttribute(): string
-    {
-        return match($this->status) {
-            'agendada' => 'Agendada',
-            'em_andamento' => 'Em Andamento',
-            'finalizada' => 'Finalizada',
-            'cancelada' => 'Cancelada',
-            default => 'Desconhecido'
-        };
-    }
-
-    public function getStatusColorAttribute(): string
-    {
-        return match($this->status) {
-            'agendada' => 'blue',
-            'em_andamento' => 'yellow',
-            'finalizada' => 'green',
-            'cancelada' => 'red',
-            default => 'gray'
-        };
-    }
-
-    public function getTipoTextAttribute(): string
-    {
-        return match($this->tipo) {
-            'reuniao_ordinaria' => 'Reunião Ordinária',
-            'reuniao_extraordinaria' => 'Reunião Extraordinária',
-            'votacao' => 'Votação',
-            default => 'Desconhecido'
-        };
-    }
+    // --- SCOPES ---
 
     public function scopeAtivas($query)
     {
@@ -116,14 +86,39 @@ class Conselho extends Model
         return $query->where('status', 'finalizada');
     }
 
-    public function scopePorData($query, $data)
-    {
-        return $query->whereDate('data_reuniao', $data);
-    }
-
     public function scopeProximas($query)
     {
         return $query->where('data_reuniao', '>=', now())->orderBy('data_reuniao');
+    }
+
+    // --- ACCESSORS ---
+
+    public function getStatusTextAttribute(): string
+    {
+        return match($this->status) {
+            'agendada' => 'Agendada', 'em_andamento' => 'Em Andamento',
+            'finalizada' => 'Finalizada', 'cancelada' => 'Cancelada',
+            default => 'Desconhecido'
+        };
+    }
+
+    public function getStatusColorAttribute(): string
+    {
+        return match($this->status) {
+            'agendada' => 'blue', 'em_andamento' => 'yellow',
+            'finalizada' => 'green', 'cancelada' => 'red',
+            default => 'gray'
+        };
+    }
+
+    public function getFormattedDataReuniaoAttribute(): string
+    {
+        return $this->data_reuniao ? Carbon::parse($this->data_reuniao)->format('d/m/Y') : 'N/A';
+    }
+
+    public function getFormattedHoraInicioAttribute(): string
+    {
+        return $this->hora_inicio ? Carbon::parse($this->hora_inicio)->format('H:i') : 'N/A';
     }
 
     public function getQuorumAtualAttribute(): int
@@ -136,18 +131,16 @@ class Conselho extends Model
         return $this->quorum_atual >= $this->quorum_minimo;
     }
 
-    public function getProximoStatusAttribute(): string
+    public function getIsFinishedAttribute(): bool
     {
-        return match($this->status) {
-            'agendada' => 'em_andamento',
-            'em_andamento' => 'finalizada',
-            default => $this->status
-        };
+        return $this->status === 'finalizada' || $this->status === 'cancelada';
     }
+
+    // --- LÓGICA DE NEGÓCIO ---
 
     public function podeIniciar(): bool
     {
-        return $this->status === 'agendada' && $this->data_reuniao <= now();
+        return $this->status === 'agendada' && $this->data_reuniao->isToday() || $this->data_reuniao->isPast();
     }
 
     public function podeFinalizar(): bool
@@ -159,4 +152,4 @@ class Conselho extends Model
     {
         return in_array($this->status, ['agendada', 'em_andamento']);
     }
-} 
+}
