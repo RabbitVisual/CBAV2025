@@ -76,6 +76,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->gr
     // Gestão do Sistema
     Route::prefix('system')->name('system.')->middleware('permission:system.access')->group(function () {
         Route::get('/', [SystemController::class, 'index'])->name('index');
+
+        Route::prefix('settings')->name('settings.')->group(function () {
+            Route::get('/', [SystemController::class, 'settings'])->name('index');
+            Route::put('/', [SystemController::class, 'updateSettings'])->name('update');
+        });
+
         Route::resource('notifications', AdminSystemNotificationController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
         Route::resource('permissions', PermissionController::class);
     });
