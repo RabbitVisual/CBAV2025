@@ -1,50 +1,3 @@
-@php
-use App\Models\Configuracao;
-use App\Helpers\PermissionHelper;
-
-// Garantir que as variáveis de notificações sempre existam (fallback)
-if (!isset($notificacoes)) {
-    $notificacoes = collect();
-}
-if (!isset($notificacoesNaoLidas)) {
-    $notificacoesNaoLidas = 0;
-}
-if (!isset($estatisticasNotificacoes)) {
-    $estatisticasNotificacoes = [
-        'total' => 0,
-        'nao_lidas' => 0,
-        'lidas' => 0,
-        'urgentes' => 0,
-    ];
-}
-
-// Obter dados do membro
-$membro = null;
-$alunoEbd = null;
-if (Auth::check()) {
-    $membro = \App\Models\Membro::where('email', Auth::user()->email)->first();
-    
-    // Verificar se o usuário está matriculado na EBD
-    $alunoEbd = null;
-    
-    // Primeiro tentar pelo membro_id
-    if ($membro) {
-        $alunoEbd = \App\Models\EbdAluno::where('membro_id', $membro->id)
-                                        ->where('status', 'ativo')
-                                        ->with('turma')
-                                        ->first();
-    }
-    
-    // Se não encontrou pelo membro_id, tentar pelo email
-    if (!$alunoEbd) {
-        $alunoEbd = \App\Models\EbdAluno::where('email', Auth::user()->email)
-                                        ->where('status', 'ativo')
-                                        ->with('turma')
-                                        ->first();
-    }
-}
-@endphp
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
       x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' || (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" 
@@ -137,8 +90,8 @@ if (Auth::check()) {
     @stack('styles')
 </head>
 
-<body class="bg-gray-50 dark:bg-gray-900 font-sans antialiased" 
-      x-data="memberDashboard()" 
+<body class="bg-gray-50 dark:bg-gray-900 font-sans antialiased"
+      x-data="memberDashboard()"
       x-init="init()">
     
     <!-- Sidebar -->
@@ -178,23 +131,17 @@ if (Auth::check()) {
             return {
                 sidebarOpen: false,
                 darkMode: localStorage.getItem('darkMode') === 'true',
-                notifications: @json($notificacoes ?? []),
-                unreadCount: {{ $notificacoesNaoLidas ?? 0 }},
-                
+                notifications: @json($latestNotifications),
+                unreadCount: {{ $unreadNotificationsCount }},
+
                 init() {
-                    // Aplicar tema inicial
                     this.applyTheme();
-                    
-                    // Carregar notificações
-                    this.loadNotifications();
-                    
-                    // Listener para mudanças de tema
                     this.$watch('darkMode', (value) => {
                         localStorage.setItem('darkMode', value);
                         this.applyTheme();
                     });
                 },
-                
+
                 applyTheme() {
                     if (this.darkMode) {
                         document.documentElement.classList.add('dark');
@@ -202,23 +149,11 @@ if (Auth::check()) {
                         document.documentElement.classList.remove('dark');
                     }
                 },
-                
+
                 toggleTheme() {
                     this.darkMode = !this.darkMode;
                 },
-                
-                async loadNotifications() {
-                    try {
-                        const response = await fetch('/notificacoes/count-nao-lidas');
-                        if (response.ok) {
-                            const data = await response.json();
-                            this.unreadCount = data.count || 0;
-                        }
-                    } catch (error) {
-                        console.log('Erro ao carregar notificações:', error);
-                    }
-                },
-                
+
                 formatDate(dateString) {
                     if (!dateString) return '';
                     const date = new Date(dateString);
