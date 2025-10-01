@@ -22,3 +22,37 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# CBAV Specific
+/storage/backups
+/storage/logs/*.log
+/storage/system_status.txt
+/storage/installed
+/public/storage
+/public/membros
+/public/img
+/public/css
+/public/js
+/public/test-*.html
+/public/test.txt
+/public/diagnostico.php
+/public/health.php
+
+# Environment files
+.env.local
+.env.staging
+.env.production
+
+# IDE files
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
