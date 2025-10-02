@@ -64,6 +64,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Os pedidos de oração criados pelo usuário.
+     */
+    public function prayerRequests(): HasMany
+    {
+        return $this->hasMany(PrayerRequest::class);
+    }
+
+    /**
      * Boot method para eventos do modelo.
      * Ao deletar um usuário, o perfil associado também será deletado.
      */
