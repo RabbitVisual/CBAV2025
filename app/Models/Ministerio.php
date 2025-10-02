@@ -4,11 +4,40 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * App\Models\Ministerio
+ *
+ * @property int $id
+ * @property string $nome
+ * @property string|null $descricao
+ * @property string|null $cor
+ * @property string|null $icone
+ * @property bool $ativo
+ * @property int|null $responsavel_id
+ * @property \Illuminate\Support\Carbon|null $data_fundacao
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\User|null $responsavel
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property-read int|null $users_count
+ * @method static Builder|Ministerio newModelQuery()
+ * @method static Builder|Ministerio newQuery()
+ * @method static Builder|Ministerio query()
+ * @method static Builder|Ministerio ativos()
+ */
 class Ministerio extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'nome',
         'descricao',
@@ -17,86 +46,39 @@ class Ministerio extends Model
         'ativo',
         'responsavel_id',
         'data_fundacao',
-        'reuniao_semanal',
-        'observacoes'
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'ativo' => 'boolean',
         'data_fundacao' => 'date',
     ];
 
     /**
-     * Relacionamento com responsável (User)
+     * Relacionamento com o usuário responsável pelo ministério.
      */
-    public function responsavel()
+    public function responsavel(): BelongsTo
     {
         return $this->belongsTo(User::class, 'responsavel_id');
     }
 
-    public function departamentos()
+    /**
+     * Relacionamento muitos-para-muitos com os usuários (membros do ministério).
+     */
+    public function users(): BelongsToMany
     {
-        return $this->hasMany(Departamento::class);
+        return $this->belongsToMany(User::class, 'ministerio_user');
     }
 
     /**
-     * Relacionamento simples com membros (para compatibilidade)
+     * Escopo para consultar apenas ministérios ativos.
      */
-    public function membros()
-    {
-        return $this->belongsToMany(Membro::class, 'membro_cargo', 'cargo_id', 'membro_id');
-    }
-
-    /**
-     * Obter membros ativos do ministério
-     */
-    public function getMembrosAtivosAttribute()
-    {
-        return Membro::join('membro_cargo', 'membros.id', '=', 'membro_cargo.membro_id')
-                    ->join('cargos', 'membro_cargo.cargo_id', '=', 'cargos.id')
-                    ->join('departamentos', 'cargos.departamento_id', '=', 'departamentos.id')
-                    ->where('departamentos.ministerio_id', $this->id)
-                    ->where('membro_cargo.ativo', true)
-                    ->where('membros.ativo', true)
-                    ->select('membros.*')
-                    ->get();
-    }
-
-    /**
-     * Contagem de membros ativos
-     */
-    public function getMembrosCountAttribute()
-    {
-        return Membro::join('membro_cargo', 'membros.id', '=', 'membro_cargo.membro_id')
-                    ->join('cargos', 'membro_cargo.cargo_id', '=', 'cargos.id')
-                    ->join('departamentos', 'cargos.departamento_id', '=', 'departamentos.id')
-                    ->where('departamentos.ministerio_id', $this->id)
-                    ->where('membro_cargo.ativo', true)
-                    ->where('membros.ativo', true)
-                    ->count();
-    }
-
-    /**
-     * Scope para ministérios ativos
-     */
-    public function scopeAtivos($query)
+    public function scopeAtivos(Builder $query): Builder
     {
         return $query->where('ativo', true);
-    }
-
-    /**
-     * Scope para ministérios inativos
-     */
-    public function scopeInativos($query)
-    {
-        return $query->where('ativo', false);
-    }
-
-    /**
-     * Relacionamento com eventos
-     */
-    public function eventos()
-    {
-        return $this->hasMany(Evento::class);
     }
 }
