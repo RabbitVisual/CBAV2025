@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{PedidoOracao, Intercessao, User, Membro};
+use App\Models\{PrayerRequest, Intercession, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -15,100 +15,100 @@ class IntercessorService
     {
         return [
             'estatisticas' => [
-                'total_pendentes' => PedidoOracao::where('status', 'pendente')->count(),
-                'total_em_oracao' => PedidoOracao::where('status', 'em_oracao')->count(),
-                'total_atendidos' => PedidoOracao::where('status', 'atendido')->count(),
-                'minhas_intercessoes' => Intercessao::where('user_id', Auth::id())->count(),
+                'total_pendentes' => PrayerRequest::pending()->count(),
+                'total_em_oracao' => PrayerRequest::inPrayer()->count(),
+                'total_atendidos' => PrayerRequest::answered()->count(),
+                'minhas_intercessoes' => Intercession::where('user_id', Auth::id())->count(),
             ],
-            'pedidosPendentes' => PedidoOracao::where('status', 'pendente')->with(['membro.user', 'intercessores.user'])->latest()->take(10)->get(),
-            'pedidosEmOracao' => PedidoOracao::where('status', 'em_oracao')->with(['membro.user', 'intercessores.user'])->latest()->take(10)->get(),
+            'pedidosPendentes' => PrayerRequest::pending()->with(['user.profile', 'intercessions.user'])->latest()->take(10)->get(),
+            'pedidosEmOracao' => PrayerRequest::inPrayer()->with(['user.profile', 'intercessions.user'])->latest()->take(10)->get(),
         ];
     }
 
-    public function getPedidos(Request $request): LengthAwarePaginator
+    public function getPrayerRequests(Request $request): LengthAwarePaginator
     {
-        $query = PedidoOracao::with(['membro.user', 'intercessores']);
+        $query = PrayerRequest::with(['user.profile', 'intercessions']);
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(fn($q) =>
                 $q->where('titulo', 'like', "%{$search}%")
                   ->orWhere('descricao', 'like', "%{$search}%")
-                  ->orWhereHas('membro', fn($mq) => $mq->where('nome', 'like', "%{$search}%"))
+                  ->orWhereHas('user', fn($uq) => $uq->where('name', 'like', "%{$search}%"))
             );
         }
         return $query->latest()->paginate(15);
     }
 
-    public function registrarIntercessao(PedidoOracao $pedido, array $data, User $user): Intercessao
+    public function registerIntercession(PrayerRequest $prayerRequest, array $data, User $user): Intercession
     {
-        $intercessao = $pedido->intercessoes()->create(['user_id' => $user->id] + $data);
-        if ($pedido->status === 'pendente') $this->atualizarStatus($pedido, 'em_oracao');
-        return $intercessao;
+        $intercession = $prayerRequest->intercessions()->create(['user_id' => $user->id] + $data);
+        if ($prayerRequest->status === 'pendente') {
+            $this->updateStatus($prayerRequest, 'em_oracao');
+        }
+        return $intercession;
     }
 
-    public function atualizarStatus(PedidoOracao $pedido, string $novoStatus): bool
+    public function updateStatus(PrayerRequest $prayerRequest, string $newStatus): bool
     {
-        return $pedido->update(['status' => $novoStatus]);
+        return $prayerRequest->update(['status' => $newStatus]);
     }
 
     // --- MÉTODOS DE MEMBRO ---
 
-    public function getMemberPedidos(Membro $membro, Request $request): LengthAwarePaginator
+    public function getMemberPrayerRequests(User $user, Request $request): LengthAwarePaginator
     {
-        $query = $membro->pedidosOracao();
+        $query = $user->prayerRequests();
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('categoria')) $query->where('categoria', $request->categoria);
         return $query->latest()->paginate(10);
     }
 
-    public function getSharedPedidos(Membro $membro)
+    public function getSharedPrayerRequests(User $user)
     {
-        return PedidoOracao::where('membro_id', '!=', $membro->id)
+        return PrayerRequest::where('user_id', '!=', $user->id)
             ->where('pode_compartilhar', true)
             ->where('anonimo', false)
-            ->with('membro.user')
+            ->with('user.profile')
             ->latest()
             ->limit(5)
             ->get();
     }
 
-    public function createPedido(array $data, User $user): PedidoOracao
+    public function createPrayerRequest(array $data, User $user): PrayerRequest
     {
-        if (!$user->membro) throw new \Exception('Usuário não possui um perfil de membro associado.');
-        $data['membro_id'] = $user->membro->id;
-        return PedidoOracao::create($data);
+        return $user->prayerRequests()->create($data);
     }
 
-    public function updatePedido(PedidoOracao $pedido, array $data, User $user): bool
+    public function updatePrayerRequest(PrayerRequest $prayerRequest, array $data, User $user): bool
     {
-        if ($pedido->membro_id !== $user->membro->id) throw new \Exception('Acesso negado.');
-        if ($pedido->status !== 'pendente') throw new \Exception('Apenas pedidos pendentes podem ser editados.');
-        return $pedido->update($data);
+        if ($prayerRequest->user_id !== $user->id) throw new \Exception('Acesso negado.');
+        if ($prayerRequest->status !== 'pendente') throw new \Exception('Apenas pedidos pendentes podem ser editados.');
+        return $prayerRequest->update($data);
     }
 
-    public function deletePedido(PedidoOracao $pedido, User $user): bool
+    public function deletePrayerRequest(PrayerRequest $prayerRequest, User $user): bool
     {
-        if ($pedido->membro_id !== $user->membro->id) throw new \Exception('Acesso negado.');
-        if ($pedido->status !== 'pendente') throw new \Exception('Apenas pedidos pendentes podem ser excluídos.');
-        return $pedido->delete();
+        if ($prayerRequest->user_id !== $user->id) throw new \Exception('Acesso negado.');
+        if ($prayerRequest->status !== 'pendente') throw new \Exception('Apenas pedidos pendentes podem ser excluídos.');
+        return $prayerRequest->delete();
     }
 
-    public function marcarAtendido(PedidoOracao $pedido, User $user): bool
+    public function markAsAnswered(PrayerRequest $prayerRequest, User $user): bool
     {
-        if ($pedido->membro_id !== $user->membro->id) throw new \Exception('Acesso negado.');
-        return $this->atualizarStatus($pedido, 'atendido');
+        if ($prayerRequest->user_id !== $user->id) throw new \Exception('Acesso negado.');
+        return $this->updateStatus($prayerRequest, 'atendido');
     }
 
-    public function participarIntercessao(PedidoOracao $pedido, array $data, User $user): Intercessao
+    public function participateInIntercession(PrayerRequest $prayerRequest, array $data, User $user): Intercession
     {
-        $podeParticipar = $pedido->membro_id === $user->membro->id || ($pedido->pode_compartilhar && !$pedido->anonimo);
-        if (!$podeParticipar) throw new \Exception('Você não pode participar da intercessão deste pedido.');
+        $canParticipate = $prayerRequest->user_id === $user->id || ($prayerRequest->pode_compartilhar && !$prayerRequest->anonimo);
+        if (!$canParticipate) throw new \Exception('Você não pode participar da intercessão deste pedido.');
 
-        if ($pedido->intercessores()->where('user_id', $user->id)->exists()) {
+        if ($prayerRequest->intercessions()->where('user_id', $user->id)->exists()) {
             throw new \Exception('Você já participou da intercessão deste pedido.');
         }
 
-        return $this->registrarIntercessao($pedido, $data, $user);
+        return $this->registerIntercession($prayerRequest, $data, $user);
     }
 }
