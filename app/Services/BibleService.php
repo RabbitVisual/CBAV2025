@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class BibleService
 {
@@ -12,104 +14,59 @@ class BibleService
     private $currentVersion = 'almeida_ra';
     private $bibleData = [];
     private $index = null;
-    
-    // Versões disponíveis
+
     private $versions = [
-        'almeida_ra' => [
-            'name' => 'Almeida Revista e Atualizada',
-            'abbrev' => 'ARA',
-            'file' => 'almeida_ra.json'
-        ],
-        'almeida_rc' => [
-            'name' => 'Almeida Revista e Corrigida',
-            'abbrev' => 'ARC',
-            'file' => 'almeida_rc.json'
-        ],
-        'blivre' => [
-            'name' => 'Bíblia Livre',
-            'abbrev' => 'BL',
-            'file' => 'blivre.json'
-        ]
+        'almeida_ra' => ['name' => 'Almeida Revista e Atualizada', 'abbrev' => 'ARA', 'file' => 'almeida_ra.json'],
+        'almeida_rc' => ['name' => 'Almeida Revista e Corrigida', 'abbrev' => 'ARC', 'file' => 'almeida_rc.json'],
+        'blivre' => ['name' => 'Bíblia Livre', 'abbrev' => 'BL', 'file' => 'blivre.json']
     ];
 
-    // Mapeamento de livros
     private $books = [
-        'gn' => ['name' => 'Gênesis', 'chapters' => 50],
-        'ex' => ['name' => 'Êxodo', 'chapters' => 40],
-        'lv' => ['name' => 'Levítico', 'chapters' => 27],
-        'nm' => ['name' => 'Números', 'chapters' => 36],
-        'dt' => ['name' => 'Deuteronômio', 'chapters' => 34],
-        'js' => ['name' => 'Josué', 'chapters' => 24],
-        'jz' => ['name' => 'Juízes', 'chapters' => 21],
-        'rt' => ['name' => 'Rute', 'chapters' => 4],
-        '1sm' => ['name' => '1 Samuel', 'chapters' => 31],
-        '2sm' => ['name' => '2 Samuel', 'chapters' => 24],
-        '1rs' => ['name' => '1 Reis', 'chapters' => 22],
-        '2rs' => ['name' => '2 Reis', 'chapters' => 25],
-        '1cr' => ['name' => '1 Crônicas', 'chapters' => 29],
-        '2cr' => ['name' => '2 Crônicas', 'chapters' => 36],
-        'ed' => ['name' => 'Esdras', 'chapters' => 10],
-        'ne' => ['name' => 'Neemias', 'chapters' => 13],
-        'et' => ['name' => 'Ester', 'chapters' => 10],
-        'jó' => ['name' => 'Jó', 'chapters' => 42],
-        'sl' => ['name' => 'Salmos', 'chapters' => 150],
-        'pv' => ['name' => 'Provérbios', 'chapters' => 31],
-        'ec' => ['name' => 'Eclesiastes', 'chapters' => 12],
-        'ct' => ['name' => 'Cânticos', 'chapters' => 8],
-        'is' => ['name' => 'Isaías', 'chapters' => 66],
-        'jr' => ['name' => 'Jeremias', 'chapters' => 52],
-        'lm' => ['name' => 'Lamentações', 'chapters' => 5],
-        'ez' => ['name' => 'Ezequiel', 'chapters' => 48],
-        'dn' => ['name' => 'Daniel', 'chapters' => 12],
-        'os' => ['name' => 'Oséias', 'chapters' => 14],
-        'jl' => ['name' => 'Joel', 'chapters' => 3],
-        'am' => ['name' => 'Amós', 'chapters' => 9],
-        'ob' => ['name' => 'Obadias', 'chapters' => 1],
-        'jn' => ['name' => 'Jonas', 'chapters' => 4],
-        'mq' => ['name' => 'Miquéias', 'chapters' => 7],
-        'na' => ['name' => 'Naum', 'chapters' => 3],
-        'hc' => ['name' => 'Habacuque', 'chapters' => 3],
-        'sf' => ['name' => 'Sofonias', 'chapters' => 3],
-        'ag' => ['name' => 'Ageu', 'chapters' => 2],
-        'zc' => ['name' => 'Zacarias', 'chapters' => 14],
-        'ml' => ['name' => 'Malaquias', 'chapters' => 4],
-        'mt' => ['name' => 'Mateus', 'chapters' => 28],
-        'mc' => ['name' => 'Marcos', 'chapters' => 16],
-        'lc' => ['name' => 'Lucas', 'chapters' => 24],
-        'jo' => ['name' => 'João', 'chapters' => 21],
-        'at' => ['name' => 'Atos', 'chapters' => 28],
-        'rm' => ['name' => 'Romanos', 'chapters' => 16],
-        '1co' => ['name' => '1 Coríntios', 'chapters' => 16],
-        '2co' => ['name' => '2 Coríntios', 'chapters' => 13],
-        'gl' => ['name' => 'Gálatas', 'chapters' => 6],
-        'ef' => ['name' => 'Efésios', 'chapters' => 6],
-        'fp' => ['name' => 'Filipenses', 'chapters' => 4],
-        'cl' => ['name' => 'Colossenses', 'chapters' => 4],
-        '1ts' => ['name' => '1 Tessalonicenses', 'chapters' => 5],
-        '2ts' => ['name' => '2 Tessalonicenses', 'chapters' => 3],
-        '1tm' => ['name' => '1 Timóteo', 'chapters' => 6],
-        '2tm' => ['name' => '2 Timóteo', 'chapters' => 4],
-        'tt' => ['name' => 'Tito', 'chapters' => 3],
-        'fm' => ['name' => 'Filemom', 'chapters' => 1],
-        'hb' => ['name' => 'Hebreus', 'chapters' => 13],
-        'tg' => ['name' => 'Tiago', 'chapters' => 5],
-        '1pe' => ['name' => '1 Pedro', 'chapters' => 5],
-        '2pe' => ['name' => '2 Pedro', 'chapters' => 3],
-        '1jo' => ['name' => '1 João', 'chapters' => 5],
-        '2jo' => ['name' => '2 João', 'chapters' => 1],
-        '3jo' => ['name' => '3 João', 'chapters' => 1],
-        'jd' => ['name' => 'Judas', 'chapters' => 1],
-        'ap' => ['name' => 'Apocalipse', 'chapters' => 22]
+        'gn' => ['name' => 'Gênesis', 'chapters' => 50], 'ex' => ['name' => 'Êxodo', 'chapters' => 40],
+        'lv' => ['name' => 'Levítico', 'chapters' => 27], 'nm' => ['name' => 'Números', 'chapters' => 36],
+        'dt' => ['name' => 'Deuteronômio', 'chapters' => 34], 'js' => ['name' => 'Josué', 'chapters' => 24],
+        'jz' => ['name' => 'Juízes', 'chapters' => 21], 'rt' => ['name' => 'Rute', 'chapters' => 4],
+        '1sm' => ['name' => '1 Samuel', 'chapters' => 31], '2sm' => ['name' => '2 Samuel', 'chapters' => 24],
+        '1rs' => ['name' => '1 Reis', 'chapters' => 22], '2rs' => ['name' => '2 Reis', 'chapters' => 25],
+        '1cr' => ['name' => '1 Crônicas', 'chapters' => 29], '2cr' => ['name' => '2 Crônicas', 'chapters' => 36],
+        'ed' => ['name' => 'Esdras', 'chapters' => 10], 'ne' => ['name' => 'Neemias', 'chapters' => 13],
+        'et' => ['name' => 'Ester', 'chapters' => 10], 'jó' => ['name' => 'Jó', 'chapters' => 42],
+        'sl' => ['name' => 'Salmos', 'chapters' => 150], 'pv' => ['name' => 'Provérbios', 'chapters' => 31],
+        'ec' => ['name' => 'Eclesiastes', 'chapters' => 12], 'ct' => ['name' => 'Cânticos', 'chapters' => 8],
+        'is' => ['name' => 'Isaías', 'chapters' => 66], 'jr' => ['name' => 'Jeremias', 'chapters' => 52],
+        'lm' => ['name' => 'Lamentações', 'chapters' => 5], 'ez' => ['name' => 'Ezequiel', 'chapters' => 48],
+        'dn' => ['name' => 'Daniel', 'chapters' => 12], 'os' => ['name' => 'Oséias', 'chapters' => 14],
+        'jl' => ['name' => 'Joel', 'chapters' => 3], 'am' => ['name' => 'Amós', 'chapters' => 9],
+        'ob' => ['name' => 'Obadias', 'chapters' => 1], 'jn' => ['name' => 'Jonas', 'chapters' => 4],
+        'mq' => ['name' => 'Miquéias', 'chapters' => 7], 'na' => ['name' => 'Naum', 'chapters' => 3],
+        'hc' => ['name' => 'Habacuque', 'chapters' => 3], 'sf' => ['name' => 'Sofonias', 'chapters' => 3],
+        'ag' => ['name' => 'Ageu', 'chapters' => 2], 'zc' => ['name' => 'Zacarias', 'chapters' => 14],
+        'ml' => ['name' => 'Malaquias', 'chapters' => 4], 'mt' => ['name' => 'Mateus', 'chapters' => 28],
+        'mc' => ['name' => 'Marcos', 'chapters' => 16], 'lc' => ['name' => 'Lucas', 'chapters' => 24],
+        'jo' => ['name' => 'João', 'chapters' => 21], 'at' => ['name' => 'Atos', 'chapters' => 28],
+        'rm' => ['name' => 'Romanos', 'chapters' => 16], '1co' => ['name' => '1 Coríntios', 'chapters' => 16],
+        '2co' => ['name' => '2 Coríntios', 'chapters' => 13], 'gl' => ['name' => 'Gálatas', 'chapters' => 6],
+        'ef' => ['name' => 'Efésios', 'chapters' => 6], 'fp' => ['name' => 'Filipenses', 'chapters' => 4],
+        'cl' => ['name' => 'Colossenses', 'chapters' => 4], '1ts' => ['name' => '1 Tessalonicenses', 'chapters' => 5],
+        '2ts' => ['name' => '2 Tessalonicenses', 'chapters' => 3], '1tm' => ['name' => '1 Timóteo', 'chapters' => 6],
+        '2tm' => ['name' => '2 Timóteo', 'chapters' => 4], 'tt' => ['name' => 'Tito', 'chapters' => 3],
+        'fm' => ['name' => 'Filemom', 'chapters' => 1], 'hb' => ['name' => 'Hebreus', 'chapters' => 13],
+        'tg' => ['name' => 'Tiago', 'chapters' => 5], '1pe' => ['name' => '1 Pedro', 'chapters' => 5],
+        '2pe' => ['name' => '2 Pedro', 'chapters' => 3], '1jo' => ['name' => '1 João', 'chapters' => 5],
+        '2jo' => ['name' => '2 João', 'chapters' => 1], '3jo' => ['name' => '3 João', 'chapters' => 1],
+        'jd' => ['name' => 'Judas', 'chapters' => 1], 'ap' => ['name' => 'Apocalipse', 'chapters' => 22]
     ];
 
-    public function __construct($version = 'almeida_ra')
+    public function __construct(string $version = 'almeida_ra')
     {
-        $this->setVersion($version);
+        $this->setVersion($sessionVersion = session('bible_version', $version));
         $this->loadBibleData();
     }
 
+    // --- Métodos de Dados da Bíblia ---
+
     /**
-     * Verificar se a Bíblia offline está disponível
+     * Verifica se o arquivo da Bíblia para a versão atual existe.
      */
     public function isAvailable()
     {
@@ -118,29 +75,36 @@ class BibleService
     }
 
     /**
-     * Obter versões disponíveis
+     * Retorna uma lista formatada das versões disponíveis.
      */
-    public function getVersions()
+    public function getFormattedVersions(): array
     {
-        $available = [];
-        foreach ($this->versions as $key => $version) {
-            if (Storage::exists($this->storagePath . '/' . $version['file'])) {
-                $available[$key] = $version;
+        $availableVersions = [];
+        foreach ($this->versions as $code => $versionInfo) {
+            if (Storage::exists($this->storagePath . '/' . $versionInfo['file'])) {
+                $availableVersions[] = [
+                    'code' => $code,
+                    'name' => $versionInfo['name'],
+                    'abbrev' => $versionInfo['abbrev']
+                ];
             }
         }
-        return $available;
+        return $availableVersions;
     }
 
     /**
-     * Definir versão atual
+     * Define a versão da Bíblia a ser usada e a armazena na sessão.
      */
-    public function setVersion($version)
+    public function setVersion(string $version): bool
     {
         if (array_key_exists($version, $this->versions)) {
             $this->currentVersion = $version;
-            $this->loadBibleData();
+            session(['bible_version' => $version]); // Armazena na sessão
+            $this->loadBibleData(); // Recarrega os dados da nova versão
+            Log::info("Versão da Bíblia alterada para: {$version}");
             return true;
         }
+        Log::warning("Tentativa de definir uma versão inválida da Bíblia: {$version}");
         return false;
     }
 
@@ -153,73 +117,52 @@ class BibleService
     }
 
     /**
-     * Obter informações da versão atual
+     * Retorna informações detalhadas sobre a versão atual.
      */
-    public function getCurrentVersionInfo()
+    public function getCurrentVersionInfo(): ?array
     {
-        if (!isset($this->versions[$this->currentVersion])) {
-            return null;
-        }
-        return $this->versions[$this->currentVersion];
+        return $this->versions[$this->currentVersion] ?? null;
     }
 
     /**
-     * Carregar dados da Bíblia
+     * Carrega os dados da Bíblia da versão atual a partir de um arquivo JSON, usando cache.
      */
     private function loadBibleData()
     {
         if (!$this->isAvailable()) {
+            $this->bibleData = [];
             return;
         }
 
         $version = $this->versions[$this->currentVersion];
         $cacheKey = "bible_data_{$this->currentVersion}";
 
-        // Usar cache em arquivo para evitar problemas com dados grandes
-        $this->bibleData = Cache::store('file')->remember($cacheKey, 3600, function () use ($version) {
+        // Cache para evitar recarregamentos constantes do arquivo JSON
+        $this->bibleData = Cache::remember($cacheKey, now()->addHours(24), function () use ($version) {
             $content = Storage::get($this->storagePath . '/' . $version['file']);
-            return json_decode($content, true);
+            return json_decode($content, true) ?? [];
         });
     }
 
     /**
-     * Buscar versículo por referência
+     * Busca um único versículo por sua referência (ex: "João 3:16").
      */
     public function getVerse($reference, $version = null)
     {
         if ($version) {
-            $this->setVersion($version);
+            if (!$this->setVersion($version)) return null;
         }
 
-        if (!$this->isAvailable() || !$this->bibleData) {
-            return null;
-        }
+        if (!$this->isAvailable() || empty($this->bibleData)) return null;
 
         $parsed = $this->parseReference($reference);
-        if (!$parsed) {
-            return null;
-        }
+        if (!$parsed) return null;
 
-        // Buscar versículo na estrutura correta
         foreach ($this->bibleData['verses'] as $verse) {
             if ($verse['book_name'] === $this->books[$parsed['book']]['name'] &&
-                $verse['chapter'] == $parsed['chapter'] &&
-                $verse['verse'] == $parsed['verse']) {
-                
-                // Construir a referência a partir dos dados disponíveis
-                $reference = $verse['book_name'] . ' ' . $verse['chapter'] . ':' . $verse['verse'];
-                
-                $versionInfo = $this->getCurrentVersionInfo();
-                return [
-                    'text' => $verse['text'],
-                    'reference' => $reference,
-                    'book' => $parsed['book'],
-                    'chapter' => $parsed['chapter'],
-                    'verse' => $parsed['verse'],
-                    'version' => $versionInfo ? $versionInfo['name'] : 'N/A',
-                    'version_abbrev' => $versionInfo ? $versionInfo['abbrev'] : 'N/A',
-                    'source' => 'offline'
-                ];
+                (int)$verse['chapter'] === $parsed['chapter'] &&
+                (int)$verse['verse'] === $parsed['verse']) {
+                return $this->formatVerseOutput($verse, $parsed['book']);
             }
         }
 
@@ -227,60 +170,45 @@ class BibleService
     }
 
     /**
-     * Buscar capítulo completo
+     * Busca um capítulo inteiro por nome do livro e número do capítulo.
      */
     public function getChapter($book, $chapter, $version = null)
     {
         if ($version) {
-            $this->setVersion($version);
+            if (!$this->setVersion($version)) return null;
         }
 
-        if (!$this->isAvailable() || !$this->bibleData) {
-            return null;
-        }
+        if (!$this->isAvailable() || empty($this->bibleData)) return null;
 
         $bookAbbrev = $this->getBookAbbrev($book);
-        if (!$bookAbbrev) {
-            return null;
-        }
+        if (!$bookAbbrev) return null;
 
+        $bookName = $this->books[$bookAbbrev]['name'];
         $verses = [];
-        $maxVerses = 200; // Limite de segurança
-
-        // Buscar versículos do capítulo específico
         foreach ($this->bibleData['verses'] as $verseData) {
-            // Verificar se o versículo pertence ao livro e capítulo desejados
-            // Usar o nome do livro em vez da abreviação
-            $bookName = $this->books[$bookAbbrev]['name'];
-            if ($verseData['book_name'] === $bookName && $verseData['chapter'] == $chapter) {
-                $reference = $verseData['book_name'] . ' ' . $verseData['chapter'] . ':' . $verseData['verse'];
-                
+            if ($verseData['book_name'] === $bookName && (int)$verseData['chapter'] === (int)$chapter) {
                 $verses[] = [
                     'text' => $verseData['text'],
-                    'verse' => $verseData['verse'],
-                    'reference' => $reference
+                    'verse' => (int)$verseData['verse'],
+                    'reference' => $bookName . ' ' . $chapter . ':' . $verseData['verse']
                 ];
-                
-                // Limitar o número de versículos
-                if (count($verses) >= $maxVerses) {
-                    break;
-                }
             }
         }
 
-        if (empty($verses)) {
-            return null;
-        }
+        if (empty($verses)) return null;
+
+        // Ordena os versículos para garantir a ordem correta
+        usort($verses, fn($a, $b) => $a['verse'] <=> $b['verse']);
 
         $versionInfo = $this->getCurrentVersionInfo();
         return [
-            'book' => $this->capitalizeBookName($this->books[$bookAbbrev]['name']),
+            'book' => $this->capitalizeBookName($bookName),
             'book_abbrev' => $bookAbbrev,
-            'chapter' => $chapter,
+            'chapter' => (int)$chapter,
             'verses' => $verses,
             'total_verses' => count($verses),
-            'version' => $versionInfo ? $versionInfo['name'] : 'N/A',
-            'version_abbrev' => $versionInfo ? $versionInfo['abbrev'] : 'N/A'
+            'version' => $versionInfo['name'] ?? 'N/A',
+            'version_abbrev' => $versionInfo['abbrev'] ?? 'N/A'
         ];
     }
 
@@ -290,17 +218,13 @@ class BibleService
     public function searchByKeyword($keyword, $limit = 50, $version = null, $options = [])
     {
         if ($version) {
-            $this->setVersion($version);
+            if (!$this->setVersion($version)) return [];
         }
 
-        if (!$this->isAvailable() || !$this->bibleData) {
-            return [];
-        }
+        if (!$this->isAvailable() || empty($this->bibleData)) return [];
 
         $keyword = mb_strtolower(trim($keyword));
-        if (mb_strlen($keyword) < 2) {
-            return [];
-        }
+        if (mb_strlen($keyword) < 2) return [];
 
         $exactMatch = $options['exact'] ?? false;
         $caseSensitive = $options['case_sensitive'] ?? false;
@@ -317,54 +241,31 @@ class BibleService
             }
 
             // Filtrar por capítulo se especificado
-            if ($chapterFilter && $verse['chapter'] != $chapterFilter) {
+            if ($chapterFilter && (int)$verse['chapter'] !== (int)$chapterFilter) {
                 continue;
             }
 
             $verseText = $verse['text'];
             $verseLower = mb_strtolower($verseText);
-            $found = false;
 
-            if ($exactMatch) {
-                // Busca exata
-                $words = explode(' ', $keyword);
-                $verseWords = explode(' ', $verseLower);
-                $found = count(array_intersect($words, $verseWords)) == count($words);
-            } else {
-                // Busca parcial
-                if ($caseSensitive) {
-                    $found = mb_strpos($verseText, $keyword) !== false;
-                } else {
-                    $found = mb_strpos($verseLower, $keyword) !== false;
-                }
-            }
+            $found = $exactMatch
+                ? in_array($keyword, explode(' ', $verseLower))
+                : mb_strpos($verseLower, $keyword) !== false;
 
             if ($found) {
-                $reference = $verse['book_name'] . ' ' . $verse['chapter'] . ':' . $verse['verse'];
-                
-                $versionInfo = $this->getCurrentVersionInfo();
-                $results[] = [
-                    'text' => $verse['text'],
-                    'reference' => $reference,
-                    'book' => $this->capitalizeBookName($verse['book_name']),
-                    'chapter' => $verse['chapter'],
-                    'verse' => $verse['verse'],
-                    'version' => $versionInfo ? $versionInfo['name'] : 'N/A',
-                    'version_abbrev' => $versionInfo ? $versionInfo['abbrev'] : 'N/A',
-                    'search_score' => $this->calculateSearchScore($verseText, $keyword)
-                ];
-                $count++;
-                
-                if ($count >= $limit) {
-                    break;
+                $bookAbbrev = $this->getBookAbbrev($verse['book_name']);
+                if ($bookAbbrev) {
+                    $result = $this->formatVerseOutput($verse, $bookAbbrev);
+                    $result['search_score'] = $this->calculateSearchScore($verseText, $keyword);
+                    $results[] = $result;
+                    $count++;
+                    if ($count >= $limit) break;
                 }
             }
         }
 
         // Ordenar por relevância
-        usort($results, function($a, $b) {
-            return $b['search_score'] <=> $a['search_score'];
-        });
+        usort($results, fn($a, $b) => $b['search_score'] <=> $a['search_score']);
 
         return array_slice($results, 0, $limit);
     }
@@ -396,68 +297,44 @@ class BibleService
     }
 
     /**
-     * Obter versículo aleatório
+     * Retorna um versículo aleatório da versão atual.
      */
     public function getRandomVerse($version = null)
     {
         if ($version) {
-            $this->setVersion($version);
+            if (!$this->setVersion($version)) return null;
         }
 
-        if (!$this->isAvailable() || !$this->bibleData) {
-            return null;
-        }
+        if (!$this->isAvailable() || empty($this->bibleData)) return null;
 
-        $verses = array_values($this->bibleData['verses']);
-        $randomVerse = $verses[array_rand($verses)];
+        $randomVerse = $this->bibleData['verses'][array_rand($this->bibleData['verses'])];
+        $bookAbbrev = $this->getBookAbbrev($randomVerse['book_name']);
 
-        // Construir a referência a partir dos dados disponíveis
-        $reference = $this->capitalizeBookName($randomVerse['book_name']) . ' ' . $randomVerse['chapter'] . ':' . $randomVerse['verse'];
-
-        $versionInfo = $this->getCurrentVersionInfo();
-        return [
-            'text' => $randomVerse['text'],
-            'reference' => $reference,
-            'version' => $versionInfo ? $versionInfo['name'] : 'N/A',
-            'version_abbrev' => $versionInfo ? $versionInfo['abbrev'] : 'N/A',
-            'source' => 'offline'
-        ];
+        return $bookAbbrev ? $this->formatVerseOutput($randomVerse, $bookAbbrev) : null;
     }
 
     /**
-     * Obter versículo do dia
+     * Retorna um versículo do dia, baseado no dia do ano para consistência.
      */
     public function getVerseOfTheDay($version = null)
     {
         if ($version) {
-            $this->setVersion($version);
+            if (!$this->setVersion($version)) return null;
         }
 
-        if (!$this->isAvailable() || !$this->bibleData) {
-            return null;
-        }
+        if (!$this->isAvailable() || empty($this->bibleData)) return null;
 
-        $verses = array_values($this->bibleData['verses']);
+        // Usa o dia do ano para ter um versículo consistente durante o dia
         $dayOfYear = Carbon::now()->dayOfYear;
-        $index = $dayOfYear % count($verses);
-        
-        $verse = $verses[$index];
+        $index = $dayOfYear % count($this->bibleData['verses']);
+        $verse = $this->bibleData['verses'][$index];
+        $bookAbbrev = $this->getBookAbbrev($verse['book_name']);
 
-        // Construir a referência a partir dos dados disponíveis
-        $reference = $this->capitalizeBookName($verse['book_name']) . ' ' . $verse['chapter'] . ':' . $verse['verse'];
-
-        $versionInfo = $this->getCurrentVersionInfo();
-        return [
-            'text' => $verse['text'],
-            'reference' => $reference,
-            'version' => $versionInfo ? $versionInfo['name'] : 'N/A',
-            'version_abbrev' => $versionInfo ? $versionInfo['abbrev'] : 'N/A',
-            'source' => 'offline'
-        ];
+        return $bookAbbrev ? $this->formatVerseOutput($verse, $bookAbbrev) : null;
     }
 
     /**
-     * Obter lista de livros
+     * Retorna a lista de todos os livros da Bíblia.
      */
     public function getBooks()
     {
@@ -465,28 +342,150 @@ class BibleService
     }
 
     /**
-     * Obter estatísticas da Bíblia
+     * Retorna estatísticas gerais sobre a Bíblia offline.
      */
-    public function getStatistics()
+    public function getStatistics(): ?array
     {
-        if (!$this->isAvailable() || !$this->bibleData) {
+        if (!$this->isAvailable() || empty($this->bibleData)) {
             return null;
         }
 
         $currentVersionInfo = $this->getCurrentVersionInfo();
-        
         return [
             'total_books' => count($this->books),
             'total_verses' => count($this->bibleData['verses']),
-            'total_chapters' => 1189, // Valor padrão da Bíblia
-            'available_versions' => count($this->getVersions()),
-            'current_version' => $currentVersionInfo ? $currentVersionInfo['name'] : 'N/A',
-            'current_version_abbrev' => $currentVersionInfo ? $currentVersionInfo['abbrev'] : 'N/A'
+            'total_chapters' => 1189, // Valor padrão da Bíblia protestante
+            'available_versions' => count($this->getFormattedVersions()),
+            'current_version' => $currentVersionInfo['name'] ?? 'N/A',
+            'current_version_abbrev' => $currentVersionInfo['abbrev'] ?? 'N/A',
+        ];
+    }
+
+    // --- Métodos de Interação do Usuário ---
+
+    /**
+     * Retorna os versículos favoritos de um usuário.
+     */
+    public function getFavorites(User $user): array
+    {
+        return $user->versiculos_favoritos ?? [];
+    }
+
+    /**
+     * Adiciona um versículo aos favoritos de um usuário.
+     * Retorna um array com o status, mensagem e o total de favoritos.
+     */
+    public function addToFavorites(User $user, array $verseData): array
+    {
+        $favoritos = $this->getFavorites($user);
+        $novoFavorito = [
+            'referencia' => $verseData['reference'],
+            'texto' => $verseData['text'],
+            'versao' => $verseData['version'] ?? $this->getCurrentVersion(),
+            'data' => now()->toIso8601String(),
+        ];
+
+        // Evita duplicatas
+        foreach ($favoritos as $favorito) {
+            if ($favorito['referencia'] === $novoFavorito['referencia'] && $favorito['versao'] === $novoFavorito['versao']) {
+                return ['success' => false, 'message' => 'Este versículo já está nos seus favoritos.', 'total' => count($favoritos)];
+            }
+        }
+
+        $favoritos[] = $novoFavorito;
+        $user->update(['versiculos_favoritos' => $favoritos]);
+        Log::info("Favorito adicionado para o usuário {$user->id}", ['referencia' => $novoFavorito['referencia']]);
+
+        return ['success' => true, 'message' => 'Versículo adicionado aos favoritos!', 'total' => count($favoritos)];
+    }
+
+    /**
+     * Remove um versículo dos favoritos de um usuário pelo seu índice.
+     */
+    public function removeFromFavorites(User $user, int $index): array
+    {
+        $favoritos = $this->getFavorites($user);
+
+        if (isset($favoritos[$index])) {
+            $removido = $favoritos[$index]['referencia'];
+            array_splice($favoritos, $index, 1);
+            $user->update(['versiculos_favoritos' => $favoritos]);
+            Log::info("Favorito removido para o usuário {$user->id}", ['referencia' => $removido]);
+            return ['success' => true, 'message' => 'Versículo removido dos favoritos!', 'total' => count($favoritos)];
+        }
+
+        return ['success' => false, 'message' => 'Favorito não encontrado!', 'total' => count($favoritos)];
+    }
+
+    /**
+     * Limpa todos os versículos favoritos de um usuário.
+     */
+    public function clearFavorites(User $user): void
+    {
+        $user->update(['versiculos_favoritos' => []]);
+        Log::info("Todos os favoritos foram removidos para o usuário {$user->id}");
+    }
+
+    /**
+     * Retorna o histórico de leitura de um usuário.
+     */
+    public function getReadingHistory(User $user): array
+    {
+        return $user->historico_leitura ?? [];
+    }
+
+    /**
+     * Salva uma referência no histórico de leitura de um usuário.
+     */
+    public function saveToHistory(User $user, array $verseData): void
+    {
+        $historico = $this->getReadingHistory($user);
+        $novaLeitura = [
+            'referencia' => $verseData['reference'],
+            'texto' => $verseData['text'],
+            'versao' => $verseData['version'],
+            'data' => now()->toIso8601String(),
+        ];
+
+        // Adiciona no início do array
+        array_unshift($historico, $novaLeitura);
+
+        // Remove duplicatas mantendo a mais recente
+        $historico = array_values(array_unique(array_map('json_encode', $historico), SORT_REGULAR));
+        $historico = array_map('json_decode', $historico, array_fill(0, count($historico), true));
+
+        // Limita o histórico aos últimos 50 itens
+        $historico = array_slice($historico, 0, 50);
+
+        $user->update(['historico_leitura' => $historico]);
+    }
+
+    // --- Métodos Privados e Auxiliares ---
+
+    /**
+     * Padroniza a saída de um versículo.
+     */
+    private function formatVerseOutput(array $verse, string $bookAbbrev): array
+    {
+        $versionInfo = $this->getCurrentVersionInfo();
+        $bookInfo = $this->books[$bookAbbrev];
+        $reference = $this->capitalizeBookName($bookInfo['name']) . ' ' . $verse['chapter'] . ':' . $verse['verse'];
+
+        return [
+            'text' => $verse['text'],
+            'reference' => $reference,
+            'book' => $this->capitalizeBookName($bookInfo['name']),
+            'book_abbrev' => $bookAbbrev,
+            'chapter' => (int)$verse['chapter'],
+            'verse' => (int)$verse['verse'],
+            'version' => $versionInfo['name'] ?? 'N/A',
+            'version_abbrev' => $versionInfo['abbrev'] ?? 'N/A',
+            'source' => 'offline'
         ];
     }
 
     /**
-     * Parsear referência bíblica
+     * Analisa uma string de referência (ex: "João 3:16") e a converte em um array estruturado.
      */
     private function parseReference($reference)
     {
@@ -495,18 +494,17 @@ class BibleService
         
         // Padrões: "João 3:16", "Jo 3:16", "João 3", "Rute 1:16", etc.
         $patterns = [
-            '/^([A-Za-zÀ-ÿ\s]+)\s+(\d+):(\d+)$/',
-            '/^([A-Za-zÀ-ÿ\s]+)\s+(\d+)$/'
+            '/^([0-9]?\s?[A-Za-zÀ-ÿ\s]+)\s+(\d+):(\d+)$/', // Ex: 1 João 3:16
+            '/^([0-9]?\s?[A-Za-zÀ-ÿ\s]+)\s+(\d+)$/'      // Ex: Salmos 23
         ];
 
         foreach ($patterns as $pattern) {
             if (preg_match($pattern, $reference, $matches)) {
-                $book = trim($matches[1]);
+                $bookName = trim($matches[1]);
                 $chapter = (int)$matches[2];
-                $verse = isset($matches[3]) ? (int)$matches[3] : 1;
+                $verse = isset($matches[3]) ? (int)$matches[3] : null; // Versículo pode ser nulo
 
-                $bookAbbrev = $this->getBookAbbrev($book);
-                
+                $bookAbbrev = $this->getBookAbbrev($bookName);
                 if ($bookAbbrev) {
                     return [
                         'book' => $bookAbbrev,
