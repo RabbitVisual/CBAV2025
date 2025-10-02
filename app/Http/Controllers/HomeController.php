@@ -244,4 +244,15 @@ class HomeController extends Controller
             return view('welcome', compact('configuracoes'));
         }
     }
+
+    /**
+     * Display the credits page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function credits(): \Illuminate\View\View
+    {
+        $dados = \Illuminate\Support\Facades\Config::get('credits');
+        return view('creditos', compact('dados'));
+    }
 } 
