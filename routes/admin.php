@@ -2,39 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\{
-    BirthdayController,
     CargoController,
-    CepController,
     ChatController,
     ConselhoController,
     DashboardController as AdminDashboardController,
     DepartmentController,
     DevocionalController,
-    DocumentoBaixaController,
-    DocumentoDeclaracaoAnualController,
-    EbdAlunoController,
-    EbdAulaController,
-    EbdAvaliacaoController,
-    EbdAvaliacaoGrupoController,
-    EbdCertificadoController,
-    EBD\GruposEstudoController as AdminEbdGruposEstudoController,
-    EbdLicaoController,
-    EbdProfessorController,
-    EbdQuizBiblicoController,
-    EbdQuestaoController,
-    EbdRelatorioController,
-    EbdTurmaController,
+    EBD\TurmaController as EbdTurmaController,
+    EBD\GrupoController as EbdGrupoController,
     EventoController,
     EventoInscricaoController,
     FinanceController,
     IntercessorController,
-    MemberController,
     MinistryController,
     PeopleDashboardController,
     PermissionController,
     ProfileController as AdminProfileController,
     ReportController,
-    System\NotificationController as AdminSystemNotificationController,
     SystemController,
     UserController
 };
@@ -43,86 +27,75 @@ use App\Http\Controllers\Admin\{
 |--------------------------------------------------------------------------
 | Rotas da Área Administrativa
 |--------------------------------------------------------------------------
+|
+| Rotas para o painel de administração. Totalmente refatoradas para
+| seguir as melhores práticas, com agrupamento lógico e permissões.
+|
 */
 
 Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin.access'])->group(function () {
 
+    // --- Dashboard Principal ---
     Route::get('/', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-    // Perfil
+    // --- Perfil do Administrador ---
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
         Route::put('/', [AdminProfileController::class, 'update'])->name('update');
     });
 
-    // Gestão de Pessoas
+    // --- Gestão de Pessoas ---
     Route::prefix('people')->name('people.')->middleware('permission:people.access')->group(function () {
-        Route::get('/', PeopleDashboardController::class)->name('index');
-        Route::resource('members', MemberController::class);
-        Route::resource('users', UserController::class);
+        Route::get('/', [PeopleDashboardController::class, 'index'])->name('index');
+        Route::resource('users', UserController::class)->except(['show']); // A view de 'show' é o perfil público
         Route::resource('ministries', MinistryController::class);
         Route::resource('departments', DepartmentController::class);
         Route::resource('cargos', CargoController::class);
-        Route::get('birthdays', [BirthdayController::class, 'index'])->name('birthdays.index');
     });
 
-    // Gestão Financeira
+    // --- Gestão Financeira ---
     Route::prefix('finance')->name('finance.')->middleware('permission:finance.access')->group(function () {
         Route::get('/', [FinanceController::class, 'index'])->name('dashboard');
-        Route::resource('documentos', DocumentoBaixaController::class);
-        Route::resource('documentos-declaracao-anual', DocumentoDeclaracaoAnualController::class);
+        // Adicionar outras rotas financeiras aqui (ex: transacoes, relatorios)
     });
 
-    // Gestão do Sistema
-    Route::prefix('system')->name('system.')->middleware('permission:system.access')->group(function () {
-        Route::get('/', [SystemController::class, 'index'])->name('index');
-
-        Route::prefix('settings')->name('settings.')->group(function () {
-            Route::get('/', [SystemController::class, 'settings'])->name('index');
-            Route::put('/', [SystemController::class, 'updateSettings'])->name('update');
-        });
-
-        Route::resource('notifications', AdminSystemNotificationController::class)->only(['index', 'create', 'store', 'show', 'destroy']);
-        Route::resource('permissions', PermissionController::class);
+    // --- Escola Bíblica Dominical (EBD) ---
+    Route::prefix('ebd')->name('ebd.')->middleware('permission:ebd.access')->group(function () {
+        Route::get('/', fn() => redirect()->route('admin.ebd.turmas.index'))->name('index');
+        Route::resource('turmas', EbdTurmaController::class);
+        Route::resource('turmas.users', EBD\TurmaUserController::class)->only(['store', 'destroy'])->names('turmas.users');
+        Route::resource('grupos', EbdGrupoController::class)->except('index');
+        Route::resource('grupos.users', EBD\GrupoUserController::class)->only(['store', 'destroy'])->names('grupos.users');
+        // Adicionar rotas para Licoes, Aulas, etc. aqui
     });
 
-    // Devocionais
+    // --- Módulos Adicionais ---
     Route::resource('devotionals', DevocionalController::class)->middleware('permission:devotionals.access');
-    Route::post('devotionals/batch', [DevocionalController::class, 'createBatch'])->name('devotionals.batch.create');
-    Route.::post('devotionals/{devocional}/toggle', [DevocionalController::class, 'toggleStatus'])->name('devotionals.toggle');
-
-    // Conselho
     Route::resource('council', ConselhoController::class)->middleware('permission:council.access');
-
-    // Intercessor (Pedidos de Oração)
     Route::resource('intercessor', IntercessorController::class)->middleware('permission:intercessor.access')->only(['index', 'show', 'update', 'destroy']);
-
-    // Eventos
     Route::resource('eventos', EventoController::class)->middleware('permission:eventos.access');
-    Route::resource('eventos.inscricoes', EventoInscricaoController::class)->except(['index', 'show', 'create', 'edit']);
+    Route::resource('eventos.inscricoes', EventoInscricaoController::class)->only(['destroy']);
 
-    // Chat
-    Route::prefix('chat')->name('chat.')->group(function () {
+    // --- Chat Administrativo ---
+    Route::prefix('chat')->name('chat.')->middleware('permission:chat.access')->group(function () {
         Route::get('/', [ChatController::class, 'index'])->name('index');
         Route::get('/manage', [ChatController::class, 'manage'])->name('manage');
-        Route::get('/stats', [ChatController::class, 'stats'])->name('stats');
-        Route::resource('rooms', ChatController::class, ['except' => ['index']]);
+        Route::resource('rooms', ChatController::class)->except(['index']);
     });
 
-    // EBD - ADMIN
-    Route::prefix('ebd')->name('ebd.')->middleware('permission:ebd.access')->group(function () {
-        Route::get('/', fn() => redirect()->route('admin.ebd.turmas.index'))->name('dashboard');
-        Route::resource('turmas', EbdTurmaController::class);
-        Route::resource('professores', EbdProfessorController::class);
-        Route::resource('alunos', EbdAlunoController::class);
-        Route::resource('licoes', EbdLicaoController::class);
-        Route::resource('aulas', EbdAulaController::class);
-        Route::resource('avaliacoes', EbdAvaliacaoController::class);
-        Route::resource('questoes', EbdQuestaoController::class);
-        Route::resource('certificados', EbdCertificadoController::class);
-        Route::resource('grupos-estudo', AdminEbdGruposEstudoController::class);
-        Route::resource('avaliacoes-grupo', AdminEbdAvaliacaoGrupoController::class);
-        Route::resource('quiz-biblico', AdminEbdQuizBiblicoController::class);
-        Route::get('relatorios', [EbdRelatorioController::class, 'index'])->name('relatorios.index');
+    // --- Gestão do Sistema ---
+    Route::prefix('system')->name('system.')->middleware('permission:system.access')->group(function () {
+        Route::get('/', [SystemController::class, 'index'])->name('index');
+        Route::get('/settings', [SystemController::class, 'settings'])->name('settings.index');
+        Route::put('/settings', [SystemController::class, 'updateSettings'])->name('settings.update');
+        Route::get('/home-config', [SystemController::class, 'homeConfig'])->name('home-config.index');
+        Route::put('/home-config', [SystemController::class, 'updateHomeConfig'])->name('home-config.update');
+        Route::post('/home-config/reset', [SystemController::class, 'resetHomeConfig'])->name('home-config.reset');
+        Route::get('/logs', [SystemController::class, 'logs'])->name('logs.index');
+        Route::delete('/logs', [SystemController::class, 'clearLogs'])->name('logs.clear');
+        Route::get('/maintenance', [SystemController::class, 'maintenance'])->name('maintenance.index');
+        Route::post('/maintenance/down', [SystemController::class, 'enableMaintenance'])->name('maintenance.down');
+        Route::post('/maintenance/up', [SystemController::class, 'disableMaintenance'])->name('maintenance.up');
+        Route::resource('permissions', PermissionController::class)->only(['index', 'edit', 'update']);
     });
 });
