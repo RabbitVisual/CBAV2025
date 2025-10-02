@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\{Transacao, Campanha, Membro, User};
+use App\Models\{Transacao, Campanha, User};
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -14,28 +14,32 @@ class FinanceService
     public function getAdminDashboardData(): array
     {
         $estatisticas = [
-            'total_recebido' => Transacao::where('status', 'confirmado')->where('tipo', 'entrada')->sum('valor'),
-            'total_despesas' => Transacao::where('status', 'confirmado')->where('tipo', 'saida')->sum('valor'),
-            'total_pendente' => Transacao::where('status', 'pendente')->sum('valor'),
+            'total_recebido' => Transacao::confirmed()->income()->sum('valor'),
+            'total_despesas' => Transacao::confirmed()->expense()->sum('valor'),
+            'total_pendente' => Transacao::pending()->sum('valor'),
             'campanhas_ativas' => Campanha::where('status', 'ativa')->count(),
         ];
         $estatisticas['saldo_atual'] = $estatisticas['total_recebido'] - $estatisticas['total_despesas'];
 
         return [
             'estatisticas' => $estatisticas,
-            'transacoesRecentes' => Transacao::with(['membro.user', 'campanha'])->latest()->limit(10)->get(),
+            'transacoesRecentes' => Transacao::with(['user', 'campanha'])->latest()->limit(10)->get(),
             'campanhasAtivas' => Campanha::where('status', 'ativa')->withCount('transacoes')->latest()->limit(5)->get(),
         ];
     }
 
     public function getTransactions(Request $request): array
     {
-        $query = Transacao::with(['membro.user', 'campanha']);
-        if ($request->filled('search')) $query->where('descricao', 'like', '%' . $request->search . '%');
+        $query = Transacao::with(['user', 'campanha']);
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(fn($q) =>
+                $q->where('descricao', 'like', "%{$search}%")
+                  ->orWhereHas('user', fn($uq) => $uq->where('name', 'like', "%{$search}%"))
+            );
+        }
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('tipo')) $query->where('tipo', $request->tipo);
-        if ($request->filled('data_inicio')) $query->whereDate('data_transacao', '>=', $request->data_inicio);
-        if ($request->filled('data_fim')) $query->whereDate('data_transacao', '<=', $request->data_fim);
 
         return ['transacoes' => $query->latest()->paginate(20)];
     }
@@ -68,12 +72,11 @@ class FinanceService
         return $campanha->update($data);
     }
 
-    // --- MÉTODOS DE MEMBRO (DOAÇÕES) ---
+    // --- MÉTODOS DE DOAÇÃO (MEMBRO & PÚBLICO) ---
 
-    public function getMemberDonationHistory(Membro $membro, Request $request)
+    public function getMemberDonationHistory(User $user, Request $request)
     {
-        $query = $membro->transacoes()->with('campanha');
-        if ($request->filled('periodo')) $query->where('created_at', '>=', now()->subDays((int)$request->periodo));
+        $query = $user->transacoes()->with('campanha');
         if ($request->filled('status')) $query->where('status', $request->status);
         if ($request->filled('search')) {
             $search = $request->search;
@@ -82,34 +85,23 @@ class FinanceService
         return $query->latest()->paginate(20);
     }
 
-    public function getMemberDonationStats(Membro $membro): array
+    public function getMemberDonationStats(User $user): array
     {
         return [
-            'total_doado' => $membro->transacoes()->where('tipo', 'entrada')->where('status', 'confirmado')->sum('valor'),
-            'total_doacoes' => $membro->transacoes()->where('tipo', 'entrada')->count(),
-            'doacoes_mes' => $membro->transacoes()->where('tipo', 'entrada')->where('status', 'confirmado')->where('created_at', '>=', now()->startOfMonth())->sum('valor'),
+            'total_doado' => $user->transacoes()->income()->confirmed()->sum('valor'),
+            'total_doacoes' => $user->transacoes()->income()->count(),
+            'doacoes_mes' => $user->transacoes()->income()->confirmed()->where('created_at', '>=', now()->startOfMonth())->sum('valor'),
         ];
     }
 
-    public function getActiveCampaignsForMember(): Collection
+    public function getActiveCampaigns(): Collection
     {
-        return Campanha::where('ativo', true)
-            ->where('data_fim', '>=', now())
-            ->orderBy('data_fim', 'asc')
-            ->get()
-            ->map(function ($campanha) {
-                $campanha->dias_restantes = now()->diffInDays($campanha->data_fim, false);
-                return $campanha;
-            });
+        return Campanha::where('ativo', true)->where('data_fim', '>=', now())->orderBy('data_fim', 'asc')->get();
     }
 
     public function processMemberDonation(User $user, array $data): Transacao
     {
-        if (!$user->membro) {
-            throw new \Exception('Perfil de membro não encontrado.');
-        }
-
-        $data['membro_id'] = $user->membro->id;
+        $data['user_id'] = $user->id;
         $data['tipo'] = 'entrada';
         $data['status'] = 'pendente';
         $data['data_transacao'] = now();
@@ -117,8 +109,6 @@ class FinanceService
 
         return $this->createTransaction($data);
     }
-
-    // --- MÉTODOS PÚBLICOS ---
 
     public function processPublicDonation(array $data): Transacao
     {
