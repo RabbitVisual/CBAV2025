@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Member;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\{Transacao, Campanha};
+use App\Models\{Transacao, Campanha, User};
 use App\Services\FinanceService;
 
 class DonationController extends Controller
@@ -22,7 +22,7 @@ class DonationController extends Controller
 
     public function publicIndex()
     {
-        $campanhas = $this->financeService->getActiveCampaignsForMember();
+        $campanhas = $this->financeService->getActiveCampaigns();
         return view('member.donations.public', compact('campanhas'));
     }
 
@@ -35,9 +35,7 @@ class DonationController extends Controller
         ]);
 
         try {
-            $transacao = $this->financeService->processPublicDonation($data);
-            // A lógica de redirecionamento para o gateway seria chamada aqui.
-            // Ex: return $this->gatewayRedirect($data['gateway'], $transacao);
+            $this->financeService->processPublicDonation($data);
             return redirect()->route('home')->with('success', 'Obrigado por sua doação! Você será redirecionado para o pagamento.');
         } catch (\Exception $e) {
             return back()->with('error', 'Erro ao processar doação: ' . $e->getMessage())->withInput();
@@ -49,12 +47,8 @@ class DonationController extends Controller
     public function index()
     {
         $user = Auth::user();
-        if (!$user->membro) {
-            return redirect()->route('member.dashboard')->with('error', 'Perfil de membro não encontrado.');
-        }
-        
-        $estatisticas = $this->financeService->getMemberDonationStats($user->membro);
-        $doacoes = $user->membro->transacoes()->with('campanha')->latest()->paginate(10);
+        $estatisticas = $this->financeService->getMemberDonationStats($user);
+        $doacoes = $user->transacoes()->with('campanha')->latest()->paginate(10);
 
         return view('member.donations.index', compact('doacoes', 'estatisticas'));
     }
@@ -62,19 +56,15 @@ class DonationController extends Controller
     public function history(Request $request)
     {
         $user = Auth::user();
-        if (!$user->membro) {
-            return redirect()->route('member.dashboard')->with('error', 'Perfil de membro não encontrado.');
-        }
-
-        $transacoes = $this->financeService->getMemberDonationHistory($user->membro, $request);
-        $estatisticas = $this->financeService->getMemberDonationStats($user->membro);
+        $transacoes = $this->financeService->getMemberDonationHistory($user, $request);
+        $estatisticas = $this->financeService->getMemberDonationStats($user);
 
         return view('member.donations.history', compact('transacoes', 'estatisticas'));
     }
 
     public function campaigns()
     {
-        $campanhas = $this->financeService->getActiveCampaignsForMember();
+        $campanhas = $this->financeService->getActiveCampaigns();
         return view('member.donations.campaigns', compact('campanhas'));
     }
 
@@ -89,7 +79,7 @@ class DonationController extends Controller
     public function donate(Request $request)
     {
         $campanha = $request->filled('campanha_id') ? Campanha::find($request->campanha_id) : null;
-        $campanhas = $this->financeService->getActiveCampaignsForMember();
+        $campanhas = $this->financeService->getActiveCampaigns();
         return view('member.donations.donate', compact('campanha', 'campanhas'));
     }
 
@@ -103,8 +93,7 @@ class DonationController extends Controller
         ]);
 
         try {
-            $transacao = $this->financeService->processMemberDonation(Auth::user(), $data);
-            // A lógica de redirecionamento para o gateway seria chamada aqui.
+            $this->financeService->processMemberDonation(Auth::user(), $data);
             return redirect()->route('home')->with('success', 'Obrigado por sua doação! Você será redirecionado para o pagamento.');
         } catch (\Exception $e) {
             return back()->with('error', 'Erro ao processar doação: ' . $e->getMessage())->withInput();
