@@ -1,208 +1,45 @@
-@extends('layouts.admin')
+@extends('layouts.app')
 
 @section('title', 'Configurações do Sistema')
 
 @section('content')
-<div class="container mx-auto px-4 py-8">
-<div class="flex justify-between items-center mb-6">
-<h1 class="text-3xl font-bold text-gray-900 dark:text-white">Configurações do Sistema</h1>
-<div class="flex space-x-3">
-<button type="button" onclick="limparCache()"
-class="bg-yellow-600 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
-<i class="fas fa-broom mr-2"></i>Limpar Cache
-</button>
-<button type="button" onclick="testarConfiguracoes()"
-class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
-<i class="fas fa-check mr-2"></i>Testar Configurações
-</button>
-<a href="{{ route('admin.system.home-config.index') }}"
-class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200">
-<i class="fas fa-home mr-2"></i>Configurar Homepage
-</a>
-</div>
-</div>
+    <x-admin.settings-layout :active-tab="session('active_tab', 'geral')">
 
-@if (session('success'))
-<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-{{ session('success') }}
-</div>
-@endif
+        {{-- O conteúdo de cada aba é inserido aqui. --}}
+        {{-- A lógica de qual aba mostrar é controlada pelo Alpine.js no componente settings-layout --}}
 
-<!-- Guia de orientação -->
-<div class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 mb-6">
-<div class="flex items-start">
-<div class="flex-shrink-0">
-<i class="fas fa-info-circle text-blue-600 text-xl"></i>
-</div>
-<div class="ml-4">
-<h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-Guia de Configuração
-</h3>
-<div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-<p><strong>Geral:</strong> Informações básicas, fuso horário e idioma</p>
-<p><strong>Pagamento:</strong> Gateways de pagamento e configurações de doação</p>
-<p><strong>Email:</strong> Configurações de servidor SMTP</p>
-<p><strong>Segurança:</strong> 2FA, sessões e proteções</p>
-<p><strong>Cache & Backup:</strong> Otimização e backup automático</p>
-</div>
-</div>
-</div>
-</div>
+        <x-admin.settings.general-tab :configuracoes="$configuracoes" />
 
-<!-- Abas de Navegação -->
-<div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl mb-8 overflow-hidden">
-<div class="border-b border-gray-200 dark:border-gray-700">
-<nav class="flex flex-wrap lg:flex-nowrap overflow-x-auto px-4 lg:px-6" aria-label="Tabs">
-<button type="button" onclick="showTab('geral', event)"
-class="tab-button active flex-shrink-0 py-4 px-4 lg:px-6 border-b-2 border-blue-500 font-semibold text-sm text-blue-600 dark:text-blue-400 transition-all duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-t-lg">
-<i class="fas fa-cog mr-2"></i>
-<span class="hidden sm:inline">Geral</span>
-<span class="sm:hidden">Geral</span>
-</button>
-<button type="button" onclick="showTab('pagamento', event)"
-class="tab-button flex-shrink-0 py-4 px-4 lg:px-6 border-b-2 border-transparent font-semibold text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-300 rounded-t-lg">
-<i class="fas fa-credit-card mr-2"></i>
-<span class="hidden sm:inline">Pagamento</span>
-<span class="sm:hidden">Pag.</span>
-</button>
-<button type="button" onclick="showTab('email', event)"
-class="tab-button flex-shrink-0 py-4 px-4 lg:px-6 border-b-2 border-transparent font-semibold text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-300 rounded-t-lg">
-<i class="fas fa-envelope mr-2"></i>
-<span class="hidden sm:inline">Email</span>
-<span class="sm:hidden">Email</span>
-</button>
-<button type="button" onclick="showTab('seguranca', event)"
-class="tab-button flex-shrink-0 py-4 px-4 lg:px-6 border-b-2 border-transparent font-semibold text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-300 rounded-t-lg">
-<i class="fas fa-shield-alt mr-2"></i>
-<span class="hidden sm:inline">Segurança</span>
-<span class="sm:hidden">Seg</span>
-</button>
-<button type="button" onclick="showTab('cache', event)"
-class="tab-button flex-shrink-0 py-4 px-4 lg:px-6 border-b-2 border-transparent font-semibold text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-300 rounded-t-lg">
-<i class="fas fa-database mr-2"></i>
-<span class="hidden sm:inline">Cache & Backup</span>
-<span class="sm:hidden">Cache</span>
-</button>
-</nav>
-</div>
+        {{-- As abas abaixo ainda precisam ser refatoradas para usar os componentes do Design System --}}
+        {{-- <x-admin.settings.payment-tab :configuracoes="$configuracoes" /> --}}
+        {{-- <x-admin.settings.email-tab :configuracoes="$configuracoes" /> --}}
+        {{-- <x-admin.settings.security-tab :configuracoes="$configuracoes" /> --}}
+        {{-- <x-admin.settings.cache-backup-tab :configuracoes="$configuracoes" /> --}}
 
-<!-- Conteúdo das Abas -->
-<div class="p-6 lg:p-8">
-<!-- Aba Geral -->
-<div id="tab-geral" class="tab-content">
-<x-admin.settings.general-tab :configuracoes="$configuracoes" :activeTab="$activeTab" />
-</div>
+        <div x-show="activeTab === 'pagamento'">
+             <p class="text-center text-gray-500 dark:text-gray-400 p-8">A refatoração da aba de Pagamento está em andamento.</p>
+        </div>
+        <div x-show="activeTab === 'email'">
+             <p class="text-center text-gray-500 dark:text-gray-400 p-8">A refatoração da aba de Email está em andamento.</p>
+        </div>
+        <div x-show="activeTab === 'seguranca'">
+             <p class="text-center text-gray-500 dark:text-gray-400 p-8">A refatoração da aba de Segurança está em andamento.</p>
+        </div>
+        <div x-show="activeTab === 'cache'">
+             <p class="text-center text-gray-500 dark:text-gray-400 p-8">A refatoração da aba de Cache & Backup está em andamento.</p>
+        </div>
 
-<!-- Aba Pagamento -->
-<div id="tab-pagamento" class="tab-content hidden">
-<x-admin.settings.payment-tab :configuracoes="$configuracoes" :activeTab="$activeTab" />
-</div>
+    </x-admin.settings-layout>
+@endsection
 
-<!-- Aba Email -->
-<div id="tab-email" class="tab-content hidden">
-<x-admin.settings.email-tab :configuracoes="$configuracoes" :activeTab="$activeTab" />
-</div>
-
-<!-- Aba Segurança -->
-<div id="tab-seguranca" class="tab-content hidden">
-<div id="seguranca">
-<x-admin.settings.security-tab :configuracoes="$configuracoes" :activeTab="$activeTab" />
-</div>
-</div>
-
-<!-- Aba Cache & Backup -->
-<div id="tab-cache" class="tab-content hidden">
-<div id="cache-backup">
-<x-admin.settings.cache-backup-tab :configuracoes="$configuracoes" :activeTab="$activeTab" />
-</div>
-</div>
-</div>
-
-<!-- Botões de Ação -->
-<div class="flex flex-col sm:flex-row justify-end gap-3 pt-8 border-t border-gray-200 dark:border-gray-700">
-<button type="button" onclick="window.location.reload()"
-class="w-full sm:w-auto px-6 py-3 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 font-medium border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500">
-<i class="fas fa-times mr-2"></i>Cancelar
-</button>
-<button type="submit"
-class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-<i class="fas fa-save mr-2"></i>Salvar Configurações
-</button>
-</div>
-</div>
-
+@push('scripts')
 <script>
-// Função para alternar entre as abas
-function showTab(tabName, event) {
-    // Esconder todas as abas
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.add('hidden');
-        tab.classList.remove('block');
-        // Fallback: garantir display none
-        tab.style.display = 'none';
-    });
-
-    // Remover classe ativa de todos os botões
-    document.querySelectorAll('.tab-button').forEach(button => {
-        button.classList.remove('border-blue-500', 'text-blue-600', 'dark:text-blue-400', 'active', 'hover:bg-blue-50', 'dark:hover:bg-blue-900/20');
-        button.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:bg-gray-50', 'dark:hover:bg-gray-700/50');
-    });
-
-    // Mostrar a aba selecionada
-    const targetTab = tabName.startsWith('tab-') ? tabName : 'tab-' + tabName;
-    const targetEl = document.getElementById(targetTab);
-    if (targetEl) {
-        targetEl.classList.remove('hidden');
-        targetEl.classList.add('block');
-        // Fallback: garantir display block
-        targetEl.style.display = 'block';
-    }
-
-    // Ativar o botão correspondente
-    if (event) {
-        const activeButton = event.target.closest('.tab-button');
-        if (activeButton) {
-            activeButton.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400', 'hover:bg-gray-50', 'dark:hover:bg-gray-700/50');
-            activeButton.classList.add('border-blue-500', 'text-blue-600', 'dark:text-blue-400', 'active', 'hover:bg-blue-50', 'dark:hover:bg-blue-900/20');
+    // Funções auxiliares, como limpar cache, podem ser movidas para um arquivo JS dedicado
+    function limparCache() {
+        if (confirm('Tem certeza que deseja limpar todo o cache da aplicação?')) {
+            // Implementar chamada AJAX para a rota de limpar cache
+            console.log('Limpando cache...');
         }
     }
-}
-
-// Inicializar com a primeira aba ativa
-document.addEventListener('DOMContentLoaded', function() {
-    const firstButton = document.querySelector('.tab-button');
-    if (firstButton) {
-        firstButton.click();
-    }
-});
-
-// Funções auxiliares para cache
-function limparCache() {
-    if (confirm('Tem certeza que deseja limpar todo o cache?')) {
-        fetch('{{ route("admin.system.cache.clear") }}', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Cache limpo com sucesso!');
-            } else {
-                alert('Erro ao limpar cache: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-            alert('Erro ao limpar cache');
-        });
-    }
-}
-
-function testarConfiguracoes() {
-    alert('Funcionalidade de teste em desenvolvimento');
-}
 </script>
-@endsection
+@endpush
