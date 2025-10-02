@@ -67,7 +67,7 @@ Route::prefix('payment')->name('payment.')->group(function () {
 });
 
 // --- Validação de Documentos ---
-Route_::prefix('validation')->name('validation.')->group(function () {
+Route::prefix('validation')->name('validation.')->group(function () {
     Route::get('/documento/{hash}', [DocumentoValidationController::class, 'validarDocumento'])->name('document');
     Route::get('/declaracao-anual/{hash}', [DocumentoValidationController::class, 'validarDeclaracaoAnual'])->name('annual-declaration');
     Route::get('/baixa/{hash}', [DocumentoValidationController::class, 'validarBaixa'])->name('baixa');
